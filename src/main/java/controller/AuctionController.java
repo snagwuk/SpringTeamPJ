@@ -24,7 +24,6 @@ import mybatis.MybatisAuctionDao;
 public class AuctionController
 { 
 	
-	//http://211.63.89.86:9080/test2/main
     @Autowired
     MybatisAuctionDao dbPro;
     
