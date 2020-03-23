@@ -15,7 +15,6 @@ public class MybatisAuctionDao extends AbstractRepository
 {
     private final String namespace = "mybatis.Auction";
 
-  
  
     public void insertauction(Auction auction)
     {
@@ -32,6 +31,7 @@ public class MybatisAuctionDao extends AbstractRepository
             sqlSession.close();
         }
     }
+    
     public int getAuctionCount()
     {
         SqlSession sqlSession = getSqlSessionFactory().openSession();

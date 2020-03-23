@@ -12,6 +12,7 @@ public abstract class AbstractRepository
     private SqlSessionFactory sqlSessionFactory;
     
     String resource;
+    String dbname = "Mysql";
     
     private void setSqlSessionFactory()
     {
@@ -19,7 +20,7 @@ public abstract class AbstractRepository
         InputStream inputStream;
         try
         {
-            inputStream = Resources.getResourceAsStream(resource);
+            inputStream = Resources.getResourceAsStream("mybatis/mybatis-" + dbname + ".xml");
         }
         catch (IOException e)
         {
@@ -34,8 +35,5 @@ public abstract class AbstractRepository
         return sqlSessionFactory;
     }
     
-    public void setDbname(String dbname)
-    {
-        resource = "mybatis/mybatis-" + "Mysql" + ".xml";
-    }
+ 
 }
