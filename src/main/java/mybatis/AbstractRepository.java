@@ -36,6 +36,6 @@ public abstract class AbstractRepository
     
     public void setDbname(String dbname)
     {
-        resource = "mybatis/mybatis-" + dbname + ".xml";
+        resource = "mybatis/mybatis-" + "Mysql" + ".xml";
     }
 }

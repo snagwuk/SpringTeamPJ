@@ -17,10 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import model.Auction;
-import mybatis.MybatisAuctionDao;
+import service.MybatisAuctionDao;
 
 
 @Controller
+
 public class AuctionController
 { 
 	
