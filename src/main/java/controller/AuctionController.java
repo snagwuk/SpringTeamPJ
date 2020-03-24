@@ -21,7 +21,6 @@ import service.MybatisAuctionDao;
 
 
 @Controller
-
 public class AuctionController
 { 
 	

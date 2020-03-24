@@ -2,23 +2,29 @@ package service;
 
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import model.Auction;
 import mybatis.AbstractRepository;
+
+
 @Component
-public class MybatisAuctionDao extends AbstractRepository
-{
+public class MybatisAuctionDao {
+	
     private final String namespace = "mybatis.Auction";
 
- 
+	@Autowired
+	public AbstractRepository opendb;
+	
     public void insertauction(Auction auction)
     {
-        SqlSession sqlSession = getSqlSessionFactory().openSession();
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
         try
         {
             int num = sqlSession.selectOne(namespace + ".insertAuction_num");
@@ -34,7 +40,7 @@ public class MybatisAuctionDao extends AbstractRepository
     
     public int getAuctionCount()
     {
-        SqlSession sqlSession = getSqlSessionFactory().openSession();
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
         try
         {
             return sqlSession.selectOne(namespace + ".getAuctionCount");
@@ -47,7 +53,7 @@ public class MybatisAuctionDao extends AbstractRepository
     
     public List<Auction> getAuctions(int startRow, int endRow)
     {
-        SqlSession sqlSession = getSqlSessionFactory().openSession();
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
         startRow = startRow - 1;
         endRow = endRow - startRow;
         Map map = new HashMap();
@@ -67,7 +73,7 @@ public class MybatisAuctionDao extends AbstractRepository
     
     public List<Auction> getAuctions(String id)
     {
-        SqlSession sqlSession = getSqlSessionFactory().openSession();
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
         try
         {
            return sqlSession.selectList(namespace + ".getAuctions_id",id);      
@@ -80,7 +86,7 @@ public class MybatisAuctionDao extends AbstractRepository
     
     public Auction getAuction(int num)
     {
-        SqlSession sqlSession = getSqlSessionFactory().openSession();
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
         try
         {     
            return sqlSession.selectOne(namespace + ".getAuction",num);   
@@ -95,7 +101,7 @@ public class MybatisAuctionDao extends AbstractRepository
     
     public void updateContent(Auction Auction) throws Exception
     {
-        SqlSession sqlSession = getSqlSessionFactory().openSession();
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
         try
         {
                sqlSession.update(namespace + ".updateContent",Auction);  
@@ -109,7 +115,7 @@ public class MybatisAuctionDao extends AbstractRepository
     
     public void deleteAuction(int num)
     {
-        SqlSession sqlSession = getSqlSessionFactory().openSession();
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
         try
         {
                sqlSession.delete(namespace + ".deleteAuction",num);  

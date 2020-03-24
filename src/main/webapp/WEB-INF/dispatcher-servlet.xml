@@ -12,8 +12,8 @@
 
 
 	<mvc:annotation-driven />
-
 	<context:component-scan base-package="controller,service" />
+
 	<mvc:default-servlet-handler />
 	<mvc:view-controller path="/index" view-name="main" />
 	<mvc:view-controller path="/main" view-name="main" />
@@ -25,15 +25,14 @@
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/view/auction/" /><!-- 여기 슬레시가 있으니까 java에 
-			안써도 됨 -->
+		<property name="prefix" value="/view/auction/" /><!-- 여기 슬레시가 
+			있으니까 java에 안써도 됨 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
-<!-- 
 
-	<bean class="mybatis.MybatisAuctionDao">
-		<property name="dbname" value="Mysql" />
+	<bean class="mybatis.AbstractRepository">
+		<constructor-arg value="Mysql" />
 	</bean>
 
- -->
+
 </beans>
