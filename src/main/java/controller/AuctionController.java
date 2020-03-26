@@ -77,13 +77,13 @@ public class AuctionController
         
         request.setAttribute("auctionList", auctionList);
         
-        return "list";
+        return "auction/list";
     }
     
     @RequestMapping(value = "write", method = RequestMethod.GET)
     public String auction_writeForm(Auction auction)
     {
-        return "writeForm";
+        return "auction/writeForm";
     }
     
     @RequestMapping(value = "write", method = RequestMethod.POST)
@@ -116,7 +116,7 @@ public class AuctionController
             Auction auction = dbPro.getAuction(num);
             m.addAttribute("auction", auction);
 
-            return "content";
+            return "auction/content";
         
     }
     
@@ -126,7 +126,7 @@ public class AuctionController
        Auction auction = dbPro.getAuction(num);
        m.addAttribute("auction", auction);
 
-       return "modify";
+       return "auction/modify";
     }
 
     @RequestMapping(value = "modify", method = RequestMethod.POST)

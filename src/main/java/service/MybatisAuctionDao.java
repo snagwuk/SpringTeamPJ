@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import model.Auction;
+import model.Cash;
 import model.Member;
 import mybatis.AbstractRepository;
 
@@ -97,7 +98,7 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	public int getMyBidCount(String id) // ³ªÀÇ ³«Âû»óÇ° Ä«¿îÆ®
+	public int getMyBidCount(String id) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç° Ä«ï¿½ï¿½Æ®
 	{
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
@@ -107,8 +108,8 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	public List<Auction> getMyBidList(int startRow, int endRow, String id) // ³ªÀÇ ³«Âû»óÇ° ¸ñ·Ï
-	{ //³ªÀÇ ³«Âû»óÇ°¸®½ºÆ® °¡Á®¿À±â
+	public List<Auction> getMyBidList(int startRow, int endRow, String id) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç° ï¿½ï¿½ï¿½
+	{ //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		startRow = startRow - 1;
 		endRow = endRow - startRow;
@@ -124,7 +125,7 @@ public class MybatisAuctionDao {
 		}
 	}
 	
-	public Auction getMyBid(String id, int num) { //³ªÀÇ ³«Âû»óÇ° ÄÁÅÙÆ® °¡Á®¿À±â
+	public Auction getMyBid(String id, int num) { //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		Map map = new HashMap();
 		map.put("id", id);
@@ -137,7 +138,7 @@ public class MybatisAuctionDao {
 		}
 	}
 	
-	public Member getWinnerMemberInfo(String id) //³«ÂûÀÚ Á¤º¸ °¡Á®¿À±â
+	public Member getWinnerMemberInfo(String id) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
@@ -146,5 +147,11 @@ public class MybatisAuctionDao {
 			sqlSession.close();
 		}
 	}
+
+    public void updateCash(Cash cash)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 
 }
