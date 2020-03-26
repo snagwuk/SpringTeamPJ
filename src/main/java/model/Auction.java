@@ -29,6 +29,8 @@ public class Auction implements Serializable
     
     private String winid;
     
+    private String pstatus;
+    
     private String filename;
     
     private int filesize;
@@ -172,5 +174,14 @@ public class Auction implements Serializable
     {
         this.winid = winid;
     }
+
+	public String getPstatus() {
+		return pstatus;
+	}
+
+	public void setPstatus(String pstatus) {
+		this.pstatus = pstatus;
+	}
+    
     
 }
