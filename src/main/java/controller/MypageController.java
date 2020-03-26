@@ -19,16 +19,27 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import model.Auction;
 import model.Member;
 import service.MybatisAuctionDao;
+import service.MybatisCashDao;
 
 
 @Controller
-@RequestMapping("/mypage")
 public class MypageController
 { 
 	
     @Autowired
     MybatisAuctionDao dbPro;
     
+    @Autowired
+    MybatisCashDao cashDbPro;
+    
+    @RequestMapping(value = "mypage")
+    public String mypage(Model m)
+    {
+        String id = "psw";
+        int mycash = cashDbPro.myCash(id);
+        m.addAttribute("mycash",mycash);
+        return "mypage/mypage";
+    }
        
     @RequestMapping(value = "bidList", method = RequestMethod.GET)
     public String myBidListGET(HttpServletRequest request)
@@ -85,72 +96,9 @@ public class MypageController
         request.setAttribute("myBidList", myBidList);
         request.setAttribute("WinnerMemberInfo", WinnerMemberInfo);
         
-        return "myBidList";
+        return "mypage/myBidList";
     }
     
-    @RequestMapping(value = "write", method = RequestMethod.GET)
-    public String auction_writeForm(Auction auction)
-    {
-        return "writeForm";
-    }
-    
-    @RequestMapping(value = "write", method = RequestMethod.POST)
-   public String auction_writePro(MultipartHttpServletRequest multipart, Auction auction) throws Exception {
-
-      MultipartFile multi = multipart.getFile("uploadfile");
-      
-      String filename = multi.getOriginalFilename();
-      if (filename != null && !filename.equals("")) {
-         String uploadPath = multipart.getRealPath("/") + "/uploadFile";
-         System.out.println(uploadPath);
-
-         FileCopyUtils.copy(multi.getInputStream(),
-               new FileOutputStream(uploadPath + "/" + multi.getOriginalFilename()));
-
-         auction.setFilename(filename);
-         auction.setFilesize((int) multi.getSize());
-      } else {
-         auction.setFilename("");
-         auction.setFilesize(0);
-      }
-      
-      dbPro.insertauction(auction);
-      return "redirect:/list";
-   }
-    
-    @RequestMapping(value = "content", method = RequestMethod.GET)
-    public String auction_content(int num, Model m)
-    {
-            Auction auction = dbPro.getAuction(num);
-            m.addAttribute("auction", auction);
-
-            return "content";
-        
-    }
-    
-    @RequestMapping("modify")
-    public String auction_modifyForm(int num, Model m) {
-    
-       Auction auction = dbPro.getAuction(num);
-       m.addAttribute("auction", auction);
-
-       return "modify";
-    }
-
-    @RequestMapping(value = "modify", method = RequestMethod.POST)
-    public String auction_modifyPro(Auction auction) throws Exception {
-       
-       dbPro.updateContent(auction);
-       System.out.println(auction);
-
-       return "redirect:/content?num=" + auction.getNum();
-    }
-    
-   @RequestMapping(value = "delete")
-    public String auction_delete(int num)
-    {
-        dbPro.deleteAuction(num);
-        return "redirect:/list";
-    }
+ 
 
 }

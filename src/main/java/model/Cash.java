@@ -1,14 +1,17 @@
 package model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-public class Cash {
+import org.springframework.format.annotation.DateTimeFormat;
+
+public class Cash implements Serializable {
 	
 	private String id;
-	private Date cashdate;
 	private int cash;
 	private String reason;
-	
+	@DateTimeFormat(pattern = "yyyy-MM-dd_HH:mm:ss")
+	private LocalDateTime  cashdate;
 	
 	public String getId() {
 		return id;
@@ -16,10 +19,11 @@ public class Cash {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Date getCashdate() {
+	public LocalDateTime getCashdate() {
 		return cashdate;
 	}
-	public void setCashdate(Date cashdate) {
+	@DateTimeFormat(pattern = "yyyy-MM-dd_HH:mm:ss")
+	public void setCashdate(LocalDateTime cashdate) {
 		this.cashdate = cashdate;
 	}
 	public int getCash() {
@@ -34,6 +38,11 @@ public class Cash {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+    @Override
+    public String toString()
+    {
+        return "Cash [id=" + id + ", cash=" + cash + ", reason=" + reason + ", cashdate=" + cashdate + "]";
+    }
 	
 	
 	

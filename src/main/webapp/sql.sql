@@ -11,7 +11,7 @@ STARTDATE DATETIME NOT NULL,
 ENDDATE DATETIME NOT NULL,
 DELIVERYPAY int,   
 WINID VARCHAR(100),
-PSTATUS VARCHAR(100), //°Å·¡»óÅÂ(ÀÔ±ÝÀü,¹è¼ÛÁß...)
+PSTATUS VARCHAR(100), //ï¿½Å·ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ô±ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½...)
 FILENAME VARCHAR(100),
 filesize int
 );
@@ -26,4 +26,11 @@ mstatus varchar(20),
 address varchar(200),
 account int,
 bank varchar(100)
+);
+
+create table aCash(
+id varchar(100) ,
+cash int,
+reason Varchar(20),
+cashdate datetime
 );
