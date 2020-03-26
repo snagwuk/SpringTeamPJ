@@ -8,13 +8,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into aAuction
 		values
 		(#{num},#{category},#{seller},#{pname},#{pdetail},#{immediateprice},
-		#{bidunit},#{beginsprice},#{startdate},#{enddate},#{deliverypay},#{winid},#{filename},#{filesize})
+		#{bidunit},#{beginsprice},#{startdate},#{enddate},#{deliverypay},#{winid},#{pstatus},#{filename},#{filesize})
 	</insert>
 
 	<select id="insertAuction_num" resultType="int">
 		select ifnull(max(num)+1,1) from aAuction
-	</select>
-	
+	</select>	
 	
 
 	<select id="getAuctionCount" resultType="int">
@@ -33,6 +32,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getAuction" parameterType="int" resultType="Auction">
 		select * from aAuction where num = #{num}
 	</select>
+	
+	
+	
+	
+	<select id="getMyBidCount" parameterType="String" resultType="int">
+		select ifnull(count(*),0) from aAuction where id = #{id}
+	</select>
+	
+	<select id="getMyBidList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where id = #{id} order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	<select id="getMyBid" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where id = #{id} and num = #{num}
+	</select>
+	
+	<select id="getWinnerMemberInfo" parameterType="String" resultType="Member">
+		select * from amember m, aauction a where m.id = #{a.winid}
+	</select>
+	
+	
+	
+	
 	
 
 	<update id="updateContent" parameterType="Auction">
