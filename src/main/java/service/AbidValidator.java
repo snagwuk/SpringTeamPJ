@@ -11,7 +11,7 @@ import model.Auction;
 public class AbidValidator implements Validator {
 	 @Autowired
 	    MybatisAuctionDao dbPro;
-	 
+	 Auction auction;
 	 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -23,7 +23,7 @@ public class AbidValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 	
 		Abid regReq = (Abid) target;
-		Auction auction = dbPro.getAuction(regReq.getNum());
+		auction = dbPro.getAuction(regReq.getNum());
 		int hprice = dbPro.gethightprice(regReq.getNum());
 		
 	
