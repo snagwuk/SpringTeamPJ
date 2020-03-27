@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import model.Abid;
 import model.Auction;
 import mybatis.AbstractRepository;
 
@@ -126,5 +127,49 @@ public class MybatisAuctionDao {
             sqlSession.close();
         }
     }
+    
+    /*지은파트*/
+    public int gethightprice(int num)
+    {
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+        try
+        {     
+           return sqlSession.selectOne(namespace + ".gethightprice",num);   
+        }
+        finally
+        {
+            sqlSession.close();
+        }
+    }
+
+
+	 public void insertbid(Abid abid)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        try
+	        {
+	         
+	            sqlSession.insert(namespace + ".insertbid",abid); 
+	            sqlSession.commit();
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    } 
+    
+	  public List<Abid> getbidlist(int num)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        try
+	        {
+	           return sqlSession.selectList(namespace + ".getbidlist",num);      
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
+	    
     
 }

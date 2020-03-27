@@ -3,6 +3,7 @@
 package controller;
 
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,22 +11,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import model.Abid;
 import model.Auction;
+import service.AbidValidator;
 import service.MybatisAuctionDao;
 
 
 @Controller
+
 public class AuctionController
 { 
 	
     @Autowired
     MybatisAuctionDao dbPro;
+    
+
     
        
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -144,5 +151,34 @@ public class AuctionController
         dbPro.deleteAuction(num);
         return "redirect:/list";
     }
-
+//지은파트
+   @RequestMapping(value = "bidding", method = RequestMethod.GET)
+   public String auction_bidding(int num, Model m)
+   {
+          
+	   int hprice = (int)dbPro.gethightprice(num);
+	   List<Abid> abid = dbPro.getbidlist(num);
+          SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+          
+          m.addAttribute("sf",sf);
+           m.addAttribute("hprice",hprice);
+           m.addAttribute("abid", abid);
+           m.addAttribute("num", num);
+           return "bidlist";
+       
+   }
+   
+   
+   @RequestMapping(value = "bidding", method = RequestMethod.POST )
+   public String auction_bidding(
+			@ModelAttribute("Abid") Abid abid,
+			BindingResult bindingResult) {
+		new AbidValidator().validate(abid, bindingResult);
+		if (bindingResult.hasErrors()) {
+			return "redirect:/bidlist";
+		}
+		dbPro.insertbid(abid);
+		return "bidlist";
+	}
+   
 }
