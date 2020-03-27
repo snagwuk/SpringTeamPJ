@@ -3,9 +3,21 @@ package model;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
+@Component
+public class Bid {
 
-public class Abid {
+public Bid(int num, String id, Date biddate, int bidprice) {
+	
+		this.num = num;
+		this.id = id;
+		this.biddate = biddate;
+		this.bidprice = bidprice;
+	}
+public Bid() {
+
+}
 
 private int num;
 private String id;
@@ -35,6 +47,10 @@ public int getBidprice() {
 }
 public void setBidprice(int bidprice) {
 	this.bidprice = bidprice;
+}
+@Override
+public String toString() {
+	return "Bid [num=" + num + ", id=" + id + ", biddate=" + biddate + ", bidprice=" + bidprice + "]";
 }
 
 

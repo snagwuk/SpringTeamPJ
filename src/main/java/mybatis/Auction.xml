@@ -49,21 +49,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 <select id="gethightprice" parameterType="int" resultType="int">
-		select ifnull(max(b.bidprice),a.beginsprice) from abid b,Aauction a where a.num=#{num};
+		select ifnull(max(b.bidprice),a.beginsprice) from abid b,Aauction a where a.num=#{num} and b.num=#{num};
 	</select>
 	
 
-<insert id="insertbid" parameterType="Abid">
+<insert id="insertbid" parameterType="Bid">
 		insert into abid
 		values
 		(#{num},#{id},now(),#{bidprice})
 	</insert>
 
-<select id="getbidlist" parameterType="int" resultType="Abid">
-		select * from abid where num=#{num}
+<select id="getbidlist" parameterType="int" resultType="Bid">
+		select * from abid where num=#{num} order by bidprice desc;
 	</select>
 	
-
+<select id="getbidunit" parameterType="int" resultType="int">
+		select bidunit from Aauction where num=#{num};
+	</select>
 	
 
 

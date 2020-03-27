@@ -18,20 +18,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import model.Abid;
 import model.Auction;
-import service.AbidValidator;
+import model.Bid;
+import service.BidValidator;
 import service.MybatisAuctionDao;
 
 
 @Controller
-
 public class AuctionController
 { 
 	
     @Autowired
     MybatisAuctionDao dbPro;
     
+
 
     
        
@@ -157,28 +157,35 @@ public class AuctionController
    {
           
 	   int hprice = (int)dbPro.gethightprice(num);
-	   List<Abid> abid = dbPro.getbidlist(num);
+	   List<Bid> bid = dbPro.getbidlist(num);
           SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
           
           m.addAttribute("sf",sf);
            m.addAttribute("hprice",hprice);
-           m.addAttribute("abid", abid);
+           m.addAttribute("bid", bid);
            m.addAttribute("num", num);
            return "bidlist";
        
    }
    
    
-   @RequestMapping(value = "bidding", method = RequestMethod.POST )
+/*   @RequestMapping(value = "bidding", method = RequestMethod.POST )
    public String auction_bidding(
-			@ModelAttribute("Abid") Abid abid,
+			@ModelAttribute("bid") Bid bid,
 			BindingResult bindingResult) {
-		new AbidValidator().validate(abid, bindingResult);
+	   bv.validate(bid, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return "redirect:/bidlist";
 		}
-		dbPro.insertbid(abid);
+		dbPro.insertbid(bid);
 		return "bidlist";
-	}
+   }*/
    
+ @RequestMapping(value = "bidding", method = RequestMethod.POST )
+   public String auction_bidding(
+			@ModelAttribute("bid") Bid bid) {
+		
+		dbPro.insertbid(bid);
+		return "redirect:/bidding?num=" + bid.getNum();
+ }
 }

@@ -3,7 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="model.Auction" alias="Auction" />
-			<typeAlias type="model.Abid" alias="Abid" />	
+			<typeAlias type="model.Bid" alias="Bid" />	
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">

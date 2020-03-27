@@ -106,35 +106,34 @@
 						</div>
 					</div>
 <h1>현재 최고가 : ${hprice}</h1>
-
 <form method="post">
+
 
 <input type="hidden" name="num" value="${num}">
 <input type="hidden" name="id" value="aaaa"/>
 <p>
-<input type="text" name = "bidprice">
-<form:errors path="smallprice"/>
-<form:errors path="wrongunit"/>
+<input type="text" name = "bidprice"/>
+
 </p>
 <input type="submit" value = "입찰하기"/>
 </form>
 <c:set var="sf" value="${sf}"/>
 
 					<div class="row align-items-center latest_product_inner">
-						<c:if test="${abid.isEmpty()}">
+						<c:if test="${bid.isEmpty()}">
 							<h4>입찰내역이 없습니다.</h4>
 						</c:if>
-						<c:if test="${!abid.isEmpty()}">
+						<c:if test="${!bid.isEmpty()}">
 							
 									<table class="single_product_item">
 										<tr>
 										<td>아이디</td><td>입찰일시</td><td>입찰금액</td>
 										</tr>
 							
-							<c:forEach var="abid" items="${abid}">
+							<c:forEach var="bid" items="${bid}">
 								
 											<tr>
-										<td>${abid.id}</td><td>${sf.format(abid.biddate)}</td><td>${abid.bidprice}</td>
+										<td>${bid.id}</td><td>${sf.format(bid.biddate)}</td><td>${bid.bidprice}</td>
 										</tr>
 										
 								
