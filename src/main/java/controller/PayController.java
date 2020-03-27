@@ -2,6 +2,7 @@
 package controller;
 
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,12 +20,16 @@ import model.Auction;
 import model.Cash;
 import model.Member;
 import service.MybatisAuctionDao;
+import service.MybatisCashDao;
 
 @Controller
 public class PayController {
 
 	@Autowired
 	MybatisAuctionDao dbPro;
+	
+	@Autowired
+	MybatisCashDao cashPro; 
 
 	@RequestMapping(value = "pay", method = RequestMethod.GET)
 	public String payGET(int num, Model m) {
@@ -37,11 +42,23 @@ public class PayController {
 	
 	
 	@RequestMapping(value = "pay", method = RequestMethod.POST)
-    public String payPOST(Cash cash) throws Exception { //ÀÔ±İÇÏ±â ´­·¶À»¶§
-	//ÀÔ±İÇÏ±â ´­·¶À»¶§ ³» Ä³½Ã Â÷°¨, ÆÇ¸ÅÀÚ Ä³½Ã ¿Ã¶ó°¨, ÀÔ±İÈ®ÀÎ »óÅÂ·Î º¯°æ, µ·ÀÌ ÀÏÄ¡ÇØ¾ß¸¸ ³Ñ¾î°¡°Ô
-       dbPro.updateCash(cash);
+    public String payPOST(Cash cash, Auction auction, HttpServletRequest request) throws Exception { //ï¿½Ô±ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//ëˆ ì¼ì¹˜ í• ë•Œë§Œ
+		
+		HttpSession session = request.getSession();
+		
+		cash.setId(session.getId());
+		cash.setCash((cash.getCash())*-1);
+		cash.setCashdate(LocalDateTime.now());
+        cash.setReason("ì…ê¸ˆ");        
+		cashPro.insertCash(cash); //êµ¬ë§¤ì ìºì‹œ ì¦ê°€
 
+		auction.setPstatus("ì…ê¸ˆì™„ë£Œ");		
+		dbPro.updateContent(auction); //ìƒí’ˆ ìƒíƒœ "ì…ê¸ˆì™„ë£Œ" ë¡œ ë³€ê²½
+		
        return "paySuccess";
     }
 
+	
+	
 }

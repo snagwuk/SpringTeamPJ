@@ -148,10 +148,8 @@ public class MybatisAuctionDao {
 		}
 	}
 
-    public void updateCash(Cash cash)
-    {
-        // TODO Auto-generated method stub
-        
-    }
+   
+    
+    
 
 }

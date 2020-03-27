@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 	<update id="updateContent" parameterType="Auction">
-		update aAuction set pname=#{pname},  pdetail=#{pdetail} where
+		update aAuction set pname=#{pname},  pdetail=#{pdetail}, pstatus=#{pstatus} where
 		num=#{num}
 	</update>
 
