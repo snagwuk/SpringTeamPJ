@@ -106,34 +106,38 @@
 						</div>
 					</div>
 <h1>현재 최고가 : ${hprice}</h1>
-<form method="post">
-
+<%-- <form method="post"> --%>
+<form:form commandName="bid">
 
 <input type="hidden" name="num" value="${num}">
 <input type="hidden" name="id" value="aaaa"/>
-<p>
-<input type="text" name = "bidprice"/>
 
-</p>
-<input type="submit" value = "입찰하기"/>
-</form>
+<form:input path="bidprice" /><input type="submit" value = "입찰하기"/>
+<br/>
+<p style="color : gray;">(입찰금액단위 : ${unit})</p>
+<form:errors path="bidprice"/>
+
+<br/>
+
+<%-- </form> --%>
+</form:form>
 <c:set var="sf" value="${sf}"/>
 
 					<div class="row align-items-center latest_product_inner">
-						<c:if test="${bid.isEmpty()}">
+						<c:if test="${bidlist.isEmpty()}">
 							<h4>입찰내역이 없습니다.</h4>
 						</c:if>
-						<c:if test="${!bid.isEmpty()}">
+						<c:if test="${!bidlist.isEmpty()}">
 							
 									<table class="single_product_item">
 										<tr>
 										<td>아이디</td><td>입찰일시</td><td>입찰금액</td>
 										</tr>
 							
-							<c:forEach var="bid" items="${bid}">
+							<c:forEach var="bidlist" items="${bidlist}">
 								
 											<tr>
-										<td>${bid.id}</td><td>${sf.format(bid.biddate)}</td><td>${bid.bidprice}</td>
+										<td>${bidlist.id}</td><td>${sf.format(bidlist.biddate)}</td><td>${bidlist.bidprice}</td>
 										</tr>
 										
 								

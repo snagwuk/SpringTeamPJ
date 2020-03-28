@@ -1,12 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Bid {
+public class Bid implements Serializable{
 
 public Bid(int num, String id, Date biddate, int bidprice) {
 	
@@ -21,7 +22,6 @@ public Bid() {
 
 private int num;
 private String id;
-@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 private Date biddate;
 private int bidprice;
 public int getNum() {
