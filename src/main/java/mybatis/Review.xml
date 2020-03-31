@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.Review">
+
+	<insert id="insertReview" parameterType="Review">
+		insert into aReview
+		values
+		(#{num},#{seller},#{id},#{productStar},#{deliveryStar},#{serviceStar})
+	</insert>
+
+	<select id="getReview" resultType="int">
+		select * from aReview where num = #{num}
+	</select>
+
+<!-- 
+	<select id="getAuctions_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction order by num desc limit #{startRow} ,#{endRow}
+	</select>
+
+	<select id="getAuctions_id" parameterType="String" resultType="Auction">
+		select * from aAuction where id = #{id} order by num desc
+	</select>
+
+	<select id="getAuction" parameterType="int" resultType="Auction">
+		select * from aAuction where num = #{num}
+	</select>
+	
+	
+	
+	
+	<select id="getMyBidCount" parameterType="String" resultType="int">
+		select ifnull(count(*),0) from aAuction where id = #{id}
+	</select>
+	
+	<select id="getMyBidList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where id = #{id} order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	<select id="getMyBid" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where id = #{id} and num = #{num}
+	</select>
+	
+	<select id="getWinnerMemberInfo" parameterType="String" resultType="Member">
+		select * from amember m, aauction a where m.id = #{a.winid}
+	</select>
+	
+	
+	
+	
+	
+
+	<update id="updateContent" parameterType="Auction">
+		update aAuction set pname=#{pname},  pdetail=#{pdetail} where
+		num=#{num}
+	</update>
+
+	<delete id="deleteAuction" parameterType="int">
+		delete from aAuction
+		where num=#{num}
+	</delete>
+
+	
+
+	 -->
+
+	
+
+
+	
+
+
+</mapper>
+
+
