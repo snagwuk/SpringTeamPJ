@@ -98,7 +98,11 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	public int getMyBidCount(String id) // ���� ������ǰ ī��Ʈ
+//////////////////////////////////////////////////////////////////////////////////////////////////////	
+	
+	
+	
+	/*public int getMyBidCount(String id) // ���� ������ǰ ī��Ʈ
 	{
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
@@ -106,9 +110,9 @@ public class MybatisAuctionDao {
 		} finally {
 			sqlSession.close();
 		}
-	}
+	}*/
 
-	public List<Auction> getMyBidList(int startRow, int endRow, String id) // ���� ������ǰ ���
+	/*public List<Auction> getMyBidList(int startRow, int endRow, String id) // ���� ������ǰ ���
 	{ //���� ������ǰ����Ʈ ��������
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		startRow = startRow - 1;
@@ -123,16 +127,13 @@ public class MybatisAuctionDao {
 		} finally {
 			sqlSession.close();
 		}
-	}
+	}*/
 	
-	public Auction getMyBid(String id, int num) { //���� ������ǰ ����Ʈ ��������
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		Map map = new HashMap();
-		map.put("id", id);
-		map.put("num", num);
+	public Auction getMyAuction(Auction auction) {
 		
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();		
 		try {
-			return sqlSession.selectOne(namespace + ".getMyBid", map);
+			return sqlSession.selectOne(namespace + ".getMyAuction", auction);
 		} finally {
 			sqlSession.close();
 		}

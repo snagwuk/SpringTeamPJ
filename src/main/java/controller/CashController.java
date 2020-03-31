@@ -21,11 +21,14 @@ public class CashController
     MybatisCashDao dbPro;
     
     @RequestMapping(value = "charge", method = RequestMethod.GET)
-    public String cash_chargeForm(Model m)
+    public String cash_chargeForm(String winid, Model m)
     {
-        String id = "psw";
-        int mycash = dbPro.myCash(id);
+    	
+        int mycash = dbPro.myCash(winid);
+        
+        m.addAttribute("winid", winid);
         m.addAttribute("mycash", mycash);
+        
         return "pay/charge";
     }
     
@@ -36,14 +39,14 @@ public class CashController
         cash.setReason("캐쉬충전");
         System.out.println(cash);
         dbPro.insertCash(cash);
-        return "redirect:/mypage";
+        return "redirect:/charge";
     }
     
     @RequestMapping(value = "withdraw", method = RequestMethod.GET)
     public String cash_withdrawForm(Model m)
     {
         // id
-        String id = "psw";
+        String id = "jjh";
         int mycash = dbPro.myCash(id);
         m.addAttribute("mycash", mycash);
         return "pay/withdraw";

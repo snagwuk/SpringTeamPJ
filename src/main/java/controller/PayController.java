@@ -4,6 +4,8 @@ package controller;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.security.auth.login.AccountException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,38 +29,49 @@ public class PayController {
 
 	@Autowired
 	MybatisAuctionDao dbPro;
-	
+
 	@Autowired
-	MybatisCashDao cashPro; 
+	MybatisCashDao cashPro;
 
 	@RequestMapping(value = "pay", method = RequestMethod.GET)
-	public String payGET(int num, Model m) {
-		Auction auction = dbPro.getAuction(num);
-		m.addAttribute("auction", auction);
+	public String payGET(Model m) {
 
-		return "content";
+		Auction temp = new Auction();
+		temp.setNum(2);
+	
+		Auction myAuction = dbPro.getMyAuction(temp);
+		m.addAttribute("myAuction", myAuction);
+
+		int cash = cashPro.myCash(myAuction.getWinid());
+		m.addAttribute("cash", cash);
+
+		int myBalance = cash - myAuction.getBeginsprice();
+		m.addAttribute("myBalance", myBalance); // 결제후 잔액구하기
+
+		return "pay/pay";
 	}
-	
-	
-	
+
 	@RequestMapping(value = "pay", method = RequestMethod.POST)
-    public String payPOST(Cash cash, Auction auction, HttpServletRequest request) throws Exception { //�Ա��ϱ� ��������
-	//돈 일치 할때만
+	public String payPOST(int num) throws Exception {
+
+		Auction temp = new Auction();
+		temp.setNum(num);
+		Auction myAuction = dbPro.getMyAuction(temp);
 		
-		HttpSession session = request.getSession();
+		System.out.println("aaaaaaaaaaaaa"+myAuction);
+		Cash cash = new Cash();
+		cash.setId(myAuction.getWinid());
 		
-		cash.setId(session.getId());
-		cash.setCash((cash.getCash())*-1);
+		cash.setCash((myAuction.getBeginsprice()) * -1);
 		cash.setCashdate(LocalDateTime.now());
-        cash.setReason("입금");        
-		cashPro.insertCash(cash); //구매자 캐시 증가
-
-		auction.setPstatus("입금완료");		
-		dbPro.updateContent(auction); //상품 상태 "입금완료" 로 변경
+		cash.setReason(myAuction.getNum() + "번 경매물품 대금 결제");
+		cashPro.insertCash(cash); 
 		
-       return "paySuccess";
-    }
+		myAuction.setPstatus("입금완료");
+		dbPro.updateContent(myAuction); // 상품 상태 "입금완료" 로 변경
+		
+	
+		return "pay/paySuccess";
+	}
 
-	
-	
 }

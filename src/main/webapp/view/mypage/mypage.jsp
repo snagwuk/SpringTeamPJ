@@ -44,7 +44,7 @@
 			<a href="${pageContext.request.contextPath}/charge">캐시충전</a> <br>
 			<a href="${pageContext.request.contextPath}/withdraw"> 출금신청</a> <br>
 			<a href="${pageContext.request.contextPath}/cashlist"> 나의 캐쉬 이력</a> <br>
-			<div>나의 캐쉬 : ${mycash}</div>
+			
 		</div>
 	</section>
 	<!--================End Category Product Area =================-->

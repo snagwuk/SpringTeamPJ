@@ -44,8 +44,8 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
       <div class="col-lg-8 col-md-8">
          <h3 class="mb-30">상품 등록</h3>
          <form action="${pageContext.request.contextPath}/write" enctype="multipart/form-data" method="POST">
-        			<input type="hidden" name="seller" value="testadmin">
-					<input type="hidden" name="winid" value="test">
+        			<input type="hidden" name="seller" value="psw">
+					<input type="hidden" name="winid" value="jjh">
    
             <div class="mt-10">
                상품 명&nbsp&nbsp&nbsp <input type="text" name="pname"    onfocus="this.placeholder = ''" 
