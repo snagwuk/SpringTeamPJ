@@ -110,7 +110,7 @@ background-color: #ff3368;
                         <li><span>배송방법</span>: 택배</li>
                         <li><span>선불</span> ${auction.deliverypay} 원</li>
                         <li><p></p></li>
-                        <li style="margin-bottom: 5%;"><a href="#" class="btn_3">입찰내역보기</a></li>
+                        <li style="margin-bottom: 5%;"><a href="bidding?num=${auction.num}" class="btn_3">입찰내역보기</a></li>
                       
                      
                      </ul>

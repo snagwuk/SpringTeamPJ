@@ -67,14 +67,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where num=#{num}
 	</delete>
 
+	<!-- 지은파트 -->
 	
 
+<select id="gethightprice" parameterType="int" resultType="int">
+		select ifnull(max(b.bidprice),a.beginsprice) from abid b,Aauction a where a.num=#{num} and b.num=#{num};
+	</select>
 	
 
+<insert id="insertbid" parameterType="Bid">
+		insert into abid
+		values
+		(#{num},#{id},now(),#{bidprice})
+	</insert>
+
+<select id="getbidlist" parameterType="int" resultType="Bid">
+		select * from abid where num=#{num} order by bidprice desc;
+	</select>
+	
+<select id="getbidunit" parameterType="int" resultType="int">
+		select bidunit from Aauction where num=#{num};
+	</select>
 	
 
 
-	
+		<select id="getmyseller" parameterType="hashmap" resultType="Auction">
+	select * from aAuction a , wishseller w  where a.seller = w.seller and w.id = #{id} order by STARTDATE desc limit #{startRow},#{endRow};
+
+	</select>
 
 
 </mapper>

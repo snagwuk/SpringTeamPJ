@@ -22,7 +22,7 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
   <link rel="icon" href="img/favicon.png">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- animate CSS --> 
+  <!-- animate CSS -->
   <link rel="stylesheet" href="css/animate.css">
   <!-- owl carousel CSS -->
   <link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -38,7 +38,7 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-   
+
 <div class="section-top-border">
    <div class="row">
       <div class="col-lg-8 col-md-8">
@@ -46,55 +46,55 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
          <form action="${pageContext.request.contextPath}/write" enctype="multipart/form-data" method="POST">
         			<input type="hidden" name="seller" value="psw">
 					<input type="hidden" name="winid" value="jjh">
-   
+
             <div class="mt-10">
-               상품 명&nbsp&nbsp&nbsp <input type="text" name="pname"    onfocus="this.placeholder = ''" 
+               상품 명&nbsp&nbsp&nbsp <input type="text" name="pname"    onfocus="this.placeholder = ''"
                required class="single-input wform">
             </div>
-            
-            <br>   
+
+            <br>
             <div class="mt-10">
                카테고리&nbsp&nbsp
                <input type="text" name="category" required class="single-input-parea">
             </div>
-            
-            <br>   
+
+            <br>
             <div class="mt-10">
                경매 시작가&nbsp&nbsp
                <input type="text" name="beginsprice" required class="single-input-parea">
             </div>
-            
-            <br>   
+
+            <br>
             <div class="mt-10">
                입찰 금액 단위&nbsp&nbsp
                <input type="text" name="bidunit" required class="single-input-parea">
             </div>
-            
-            <br>   
+
+            <br>
             <div class="mt-10">
                즉시 구매가&nbsp&nbsp
                <input type="text" name="immediateprice" required class="single-input-parea">
             </div>
-            
-            <br>   
+
+            <br>
             <div class="mt-10">
                경매 시간&nbsp&nbsp<input type="text" name="startdate" required class="single-input-a1 wform">
                   &nbsp&nbsp&nbsp&nbsp~&nbsp&nbsp&nbsp&nbsp
                   <input type="text" name="enddate" required class="single-input-a1 wform">
             </div>
-            
+
             <br>
             <div class="mt-10">
                상품 설명
                <textarea class="single-textarea" name="pdetail"></textarea>
             </div>
             <div class="mt-10">
-					상품사진&nbsp&nbsp <input type="file" name="uploadfile" required
+					상품사진&nbsp&nbsp <input type="file" name="uploadfile"
 						class="single-input-parea">
 				</div>
-				
+
 				<br>
-            
+
             <br>
             <div class="mt-10">
                배송 방법 선택 <br><br>
@@ -102,19 +102,19 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
                <input type="radio" name="dealtype" value="택배"> 택배
                <input type="radio" name="dealtype" value="직거래"> 직거래
                </li>
-             
+
             </div>
-            
-              <br>   
+
+              <br>
             <div class="mt-10">
              	  배송비&nbsp&nbsp
                <input type="text" name="deliverypay" required class="single-input-parea">
             </div>
-            
+
             <br><br><br><br>
             <input type="submit" name="confirm" value="글쓰기">
             <input type="submit" value="Cancel">
-            
+
          </form>
       </div>
    </div>

@@ -12,12 +12,12 @@
 
 
 	<mvc:annotation-driven />
-	<context:component-scan base-package="controller,service" />
+	<context:component-scan base-package="controller,service,model" />
 
 	<mvc:default-servlet-handler />
 	<mvc:view-controller path="/index" view-name="main" />
 	<mvc:view-controller path="/main" view-name="main" />
-
+	<mvc:view-controller path="/" view-name="main" />
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="utf-8" />
@@ -34,5 +34,12 @@
 		<constructor-arg value="Mysql" />
 	</bean>
 
+<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<value>message.error</value>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
 
 </beans>
