@@ -17,16 +17,16 @@ filesize int
 );
 
 create table amember(
-id varchar(200) not null,
-password int not null,
-name varchar(200),
-birthday datetime,
-phone varchar(20),
-mstatus varchar(20),
-address varchar(200),
-account int,
-bank varchar(100)
-);
+id varchar(100) primary key,
+password varchar(10) not null,
+name varchar(10),
+registdate datetime,
+phone varchar(10),
+position varchar(10),
+status varchar(10),
+address varchar(20),
+account varchar(20),
+bank varchar(10));
 
 create table aCash(
 id varchar(100) ,
