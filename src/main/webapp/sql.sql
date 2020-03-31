@@ -42,3 +42,16 @@ id varchar(100),
 biddate dateTime,
 bidprice int 
 );
+
+create table aReview
+(
+num int,
+seller varchar(100),
+id varchar(100),
+productStar int ,
+deliveryStar int ,
+serviceStar int 
+);
+
+
+

@@ -1,7 +1,6 @@
 package controller;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,25 +9,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import model.Cash;
-import service.MybatisCashDao;
+import service.MybatisReviewDao;
+
+
 
 @Controller
-public class CashController
+public class ReviewController
 {
     
     @Autowired
-    MybatisCashDao dbPro;
+    MybatisReviewDao dbPro;
     
     @RequestMapping(value = "charge", method = RequestMethod.GET)
-    public String cash_chargeForm(String winid, Model m)
+    public String cash_chargeForm(Model m)
     {
-    	
-        int mycash = dbPro.myCash(winid);
-        
-        m.addAttribute("winid", winid);
+        String id = "psw";
+        int mycash = dbPro.myCash(id);
         m.addAttribute("mycash", mycash);
-        
         return "pay/charge";
     }
     
@@ -39,14 +36,14 @@ public class CashController
         cash.setReason("캐쉬충전");
         System.out.println(cash);
         dbPro.insertCash(cash);
-        return "redirect:/charge";
+        return "redirect:/mypage";
     }
     
     @RequestMapping(value = "withdraw", method = RequestMethod.GET)
     public String cash_withdrawForm(Model m)
     {
         // id
-        String id = "jjh";
+        String id = "psw";
         int mycash = dbPro.myCash(id);
         m.addAttribute("mycash", mycash);
         return "pay/withdraw";

@@ -2,8 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		
 		<typeAlias type="model.Auction" alias="Auction" />
+			<typeAlias type="model.Bid" alias="Bid" />
+				<typeAlias type="model.Wishseller" alias="Wishseller" />
 		<typeAlias type="model.Member" alias="Member" />
 		<typeAlias type="model.Cash" alias="Cash" />
 	</typeAliases>
@@ -19,7 +20,7 @@
 		</environment>
 	</environments>
 	<mappers>
-	
+
 		<mapper resource="mybatis/Auction.xml" />
 		<mapper resource="mybatis/Cash.xml" />
 		<mapper resource="mybatis/Member.xml" />
