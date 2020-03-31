@@ -85,7 +85,7 @@ background-color: #ff3368;
                <div class="product_slider_img" style="position: inherit;">
                   <div id="vertical">
                      <div data-thumb="damagoci.png">
-                        <img src="<%=request.getContextPath()%>/uploadfile/${auction.filename}" />
+                        <img src="<%=request.getContextPath()%>/uploadFile/${auction.filename}" />
                      </div>
                   </div>
                </div>

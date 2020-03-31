@@ -114,7 +114,7 @@
 								<div class="col-lg-4 col-sm-6">
 									<div class="single_product_item">
 										<img
-											src="<%=request.getContextPath()%>/uploadfile/${auction.filename}"
+											src="<%=request.getContextPath()%>/uploadFile/${auction.filename}"
 											width="200" height="200">
 										<div class="single_product_text">
 											${auction.pname}<br /> 즉시 입찰가 : ${auction.immediateprice} <a

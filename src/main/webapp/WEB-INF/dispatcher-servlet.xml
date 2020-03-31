@@ -25,7 +25,7 @@
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/view/auction/" /><!-- 여기 슬레시가 
+		<property name="prefix" value="/view/" /><!-- 여기 슬레시가 
 			있으니까 java에 안써도 됨 -->
 		<property name="suffix" value=".jsp" />
 	</bean>

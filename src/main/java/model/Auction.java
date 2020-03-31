@@ -13,7 +13,16 @@ public class Auction implements Serializable
     
     private String pname;
     
-    private String pdetail;
+    @Override
+	public String toString() {
+		return "Auction [num=" + num + ", category=" + category + ", seller=" + seller + ", pname=" + pname
+				+ ", pdetail=" + pdetail + ", immediateprice=" + immediateprice + ", bidunit=" + bidunit
+				+ ", beginsprice=" + beginsprice + ", startdate=" + startdate + ", enddate=" + enddate
+				+ ", deliverypay=" + deliverypay + ", winid=" + winid + ", pstatus=" + pstatus + ", filename="
+				+ filename + ", filesize=" + filesize + "]";
+	}
+
+	private String pdetail;
     
     private int immediateprice;
     
@@ -28,6 +37,8 @@ public class Auction implements Serializable
     private int deliverypay;
     
     private String winid;
+    
+    private String pstatus;
     
     private String filename;
     
@@ -172,5 +183,14 @@ public class Auction implements Serializable
     {
         this.winid = winid;
     }
+
+	public String getPstatus() {
+		return pstatus;
+	}
+
+	public void setPstatus(String pstatus) {
+		this.pstatus = pstatus;
+	}
+    
     
 }

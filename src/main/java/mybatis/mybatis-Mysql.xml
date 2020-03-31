@@ -3,8 +3,11 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="model.Auction" alias="Auction" />
-			<typeAlias type="model.Bid" alias="Bid" />	
-				<typeAlias type="model.Wishseller" alias="Wishseller" />	
+
+			<typeAlias type="model.Bid" alias="Bid" />
+				<typeAlias type="model.Wishseller" alias="Wishseller" />
+		<typeAlias type="model.Member" alias="Member" />
+		<typeAlias type="model.Cash" alias="Cash" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -18,8 +21,9 @@
 		</environment>
 	</environments>
 	<mappers>
-	
+
 		<mapper resource="mybatis/Auction.xml" />
+		<mapper resource="mybatis/Cash.xml" />
 	</mappers>
 
 </configuration>
