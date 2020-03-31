@@ -11,7 +11,7 @@ STARTDATE DATETIME NOT NULL,
 ENDDATE DATETIME NOT NULL,
 DELIVERYPAY int,   
 WINID VARCHAR(100),
-PSTATUS VARCHAR(100), //�ŷ�����(�Ա���,�����...)
+PSTATUS VARCHAR(100), 
 FILENAME VARCHAR(100),
 filesize int
 );
@@ -33,4 +33,12 @@ id varchar(100) ,
 cash int,
 reason Varchar(20),
 cashdate datetime
+);
+
+create table abid
+(
+num int,
+id varchar(100),
+biddate dateTime,
+bidprice int 
 );
