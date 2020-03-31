@@ -2,7 +2,10 @@
 package controller;
 
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.security.auth.login.AccountException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import model.Auction;
 import model.Cash;
 import model.Member;
 import service.MybatisAuctionDao;
+import service.MybatisCashDao;
 
 @Controller
 public class PayController {
@@ -26,22 +30,48 @@ public class PayController {
 	@Autowired
 	MybatisAuctionDao dbPro;
 
+	@Autowired
+	MybatisCashDao cashPro;
+
 	@RequestMapping(value = "pay", method = RequestMethod.GET)
-	public String payGET(int num, Model m) {
-		Auction auction = dbPro.getAuction(num);
-		m.addAttribute("auction", auction);
+	public String payGET(Model m) {
 
-		return "content";
+		Auction temp = new Auction();
+		temp.setNum(2);
+	
+		Auction myAuction = dbPro.getMyAuction(temp);
+		m.addAttribute("myAuction", myAuction);
+
+		int cash = cashPro.myCash(myAuction.getWinid());
+		m.addAttribute("cash", cash);
+
+		int myBalance = cash - myAuction.getBeginsprice();
+		m.addAttribute("myBalance", myBalance); // ê²°ì œí›„ ì”ì•¡êµ¬í•˜ê¸°
+
+		return "pay/pay";
 	}
-	
-	
-	
-	@RequestMapping(value = "pay", method = RequestMethod.POST)
-    public String payPOST(Cash cash) throws Exception { //ÀÔ±İÇÏ±â ´­·¶À»¶§
-	//ÀÔ±İÇÏ±â ´­·¶À»¶§ ³» Ä³½Ã Â÷°¨, ÆÇ¸ÅÀÚ Ä³½Ã ¿Ã¶ó°¨, ÀÔ±İÈ®ÀÎ »óÅÂ·Î º¯°æ, µ·ÀÌ ÀÏÄ¡ÇØ¾ß¸¸ ³Ñ¾î°¡°Ô
-       dbPro.updateCash(cash);
 
-       return "paySuccess";
-    }
+	@RequestMapping(value = "pay", method = RequestMethod.POST)
+	public String payPOST(int num) throws Exception {
+
+		Auction temp = new Auction();
+		temp.setNum(num);
+		Auction myAuction = dbPro.getMyAuction(temp);
+		
+		System.out.println("aaaaaaaaaaaaa"+myAuction);
+		Cash cash = new Cash();
+		cash.setId(myAuction.getWinid());
+		
+		cash.setCash((myAuction.getBeginsprice()) * -1);
+		cash.setCashdate(LocalDateTime.now());
+		cash.setReason(myAuction.getNum() + "ë²ˆ ê²½ë§¤ë¬¼í’ˆ ëŒ€ê¸ˆ ê²°ì œ");
+		cashPro.insertCash(cash); 
+		
+		myAuction.setPstatus("ì…ê¸ˆì™„ë£Œ");
+		dbPro.updateContent(myAuction); // ìƒí’ˆ ìƒíƒœ "ì…ê¸ˆì™„ë£Œ" ë¡œ ë³€ê²½
+		
+	
+		return "pay/paySuccess";
+	}
 
 }

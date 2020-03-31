@@ -45,8 +45,8 @@ public class MypageController
     public String myBidListGET(HttpServletRequest request)
     {
         HttpSession session = request.getSession();
-        String id = session.getId();
-        
+        //String id = session.getId();
+        String id = "psw";
         Member WinnerMemberInfo = dbPro.getWinnerMemberInfo(id);
         
         int currentPage = 1;
@@ -100,5 +100,12 @@ public class MypageController
     }
     
  
-
+    
+    @RequestMapping(value = "myAuctionList", method = RequestMethod.GET)
+    public String myAuctionList(HttpServletRequest request)
+    {
+        //한별언니가 할 수도 있어서 (회원기능이라) 비워뒀어요 -진희-
+    	return "mypage/myAuctionList";
+}
+    
 }

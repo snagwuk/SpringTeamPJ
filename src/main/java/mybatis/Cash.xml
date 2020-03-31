@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select ifnull(count(*),0) from aCash where id = #{id}
 	</select>
 	
-
+	
 
 	
 

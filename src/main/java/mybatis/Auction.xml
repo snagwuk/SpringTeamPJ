@@ -44,8 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from aAuction where id = #{id} order by num desc limit #{startRow} ,#{endRow}
 	</select>
 	
-	<select id="getMyBid" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where id = #{id} and num = #{num}
+	<select id="getMyAuction" parameterType="Auction" resultType="Auction">
+		select * from aAuction where num = #{num}
 	</select>
 	
 	<select id="getWinnerMemberInfo" parameterType="String" resultType="Member">
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 	<update id="updateContent" parameterType="Auction">
-		update aAuction set pname=#{pname},  pdetail=#{pdetail} where
+		update aAuction set pname=#{pname},  pdetail=#{pdetail}, pstatus=#{pstatus} where
 		num=#{num}
 	</update>
 
