@@ -44,7 +44,7 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
       <div class="col-lg-8 col-md-8">
          <h3 class="mb-30">상품 등록</h3>
          <form action="${pageContext.request.contextPath}/write" enctype="multipart/form-data" method="POST">
-        			<input type="hidden" name="seller" value="testadmin">
+        			<input type="hidden" name="seller" value="aaa">
 					<input type="hidden" name="winid" value="test">
    
             <div class="mt-10">
@@ -89,7 +89,7 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
                <textarea class="single-textarea" name="pdetail"></textarea>
             </div>
             <div class="mt-10">
-					상품사진&nbsp&nbsp <input type="file" name="uploadfile" required
+					상품사진&nbsp&nbsp <input type="file" name="uploadfile" 
 						class="single-input-parea">
 				</div>
 				

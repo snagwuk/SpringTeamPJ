@@ -129,7 +129,7 @@ public class MybatisAuctionDao {
         }
     }
     
-    /*ÁöÀºÆÄÆ®*/
+    /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®*/
     public int gethightprice(int num)
     {
         SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
@@ -185,4 +185,24 @@ public class MybatisAuctionDao {
 	        }
 	    }
     
+	  public List<Auction> getmyseller(int startRow, int endRow,String id)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        startRow = startRow - 1;
+	        endRow = endRow - startRow;
+	        Map map = new HashMap();
+	        map.put("startRow", startRow);
+	        map.put("endRow", endRow);
+	        map.put("id", id);
+	        
+	        List<Auction> result = new ArrayList<>();
+	        try
+	        {
+	            return sqlSession.selectList(namespace + ".getmyseller",map);
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
 }

@@ -69,7 +69,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 
-	
+		<select id="getmyseller" parameterType="hashmap" resultType="Auction">
+	select * from aAuction a , wishseller w  where a.seller = w.seller and w.id = #{id} order by STARTDATE desc limit #{startRow},#{endRow};
+
+	</select>
 
 
 </mapper>

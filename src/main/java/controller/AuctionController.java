@@ -32,9 +32,8 @@ import service.MybatisAuctionDao;
 public class AuctionController
 { 
 	
-    @Autowired
+ @Autowired
     MybatisAuctionDao dbPro;
-    
  @Autowired
  BidValidator bidvalidator;
  

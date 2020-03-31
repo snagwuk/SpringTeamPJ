@@ -4,6 +4,7 @@
 	<typeAliases>
 		<typeAlias type="model.Auction" alias="Auction" />
 			<typeAlias type="model.Bid" alias="Bid" />	
+				<typeAlias type="model.Wishseller" alias="Wishseller" />	
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
