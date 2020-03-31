@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zxx">
 
@@ -49,6 +51,13 @@
 					<ul class="navbar-nav">
 
 						<li class="nav-item"><a class="nav-link" href="list">경매</a></li>
+						
+<c:if test="${user==null }">
+						<li class="nav-item"><a class="nav-link" href="regist">회원가입</a></li>
+						<li class="nav-item"><a class="nav-link" href="login">로그인</a></li>
+						</c:if>
+						
+						<c:if test="${user!=null }">
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="blog.html"
 							id="navbarDropdown_3" role="button" data-toggle="dropdown"
@@ -62,12 +71,17 @@
 									class="dropdown-item" href="confirmation.html">confirmation</a>
 								<a class="dropdown-item" href="elements.html">elements</a>
 							</div></li>
+						
+
+
 
 
 						<li class="nav-item"><a class="nav-link" href="contact.html">고객센터</a>
 						</li>
 							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/mypage">마이페이지</a>
+							<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a>
 						</li>
+						</c:if>
 					</ul>
 				</div>
 				<div class="hearer_icon d-flex">

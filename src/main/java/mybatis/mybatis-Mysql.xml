@@ -22,6 +22,7 @@
 	
 		<mapper resource="mybatis/Auction.xml" />
 		<mapper resource="mybatis/Cash.xml" />
+		<mapper resource="mybatis/Member.xml" />
 	</mappers>
 
 </configuration>
