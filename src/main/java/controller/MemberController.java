@@ -69,5 +69,13 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/main";
 	}
+	@RequestMapping(value = "seller", method = RequestMethod.GET)
+	public String seller(){
+		return "member/sellerForm";
+	}
+	@RequestMapping(value = "grade", method = RequestMethod.GET)
+	public String grade(){
+		return "member/gradeManage";
+	}
 	
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.Member">
+
+	<insert id="insertMember" parameterType="Member">
+		insert into aMember
+		values
+		(#{id},#{password},#{name},now(),#{phone},#{position},
+		#{status},#{address},#{account},#{bank})
+	</insert>
+
+	 <select id="authenticate" parameterType="String" resultType="Member">
+		select * from amember where id=#{id}
+	</select>
+	
+	
+<!--
+	<select id="getAuctionCount" resultType="int">
+		select ifnull(count(*),0) from aAuction
+	</select>
+
+
+	<select id="getAuctions_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction order by num desc limit #{startRow} ,#{endRow}
+	</select>
+
+	<select id="getAuctions_id" parameterType="String" resultType="Auction">
+		select * from aAuction where id = #{id} order by num desc
+	</select>
+
+	<select id="getAuction" parameterType="int" resultType="Auction">
+		select * from aAuction where num = #{num}
+	</select>
+	
+
+	<update id="updateContent" parameterType="Auction">
+		update aAuction set pname=#{pname},  pdetail=#{pdetail} where
+		num=#{num}
+	</update>
+
+	<delete id="deleteAuction" parameterType="int">
+		delete from aAuction
+		where num=#{num}
+	</delete>
+ -->
+	
+
+	
+
+	
+
+
+	
+
+
+</mapper>
