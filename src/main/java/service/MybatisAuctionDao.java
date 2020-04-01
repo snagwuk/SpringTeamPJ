@@ -71,14 +71,7 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	public List<Auction> getAuctions(String id) {
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		try {
-			return sqlSession.selectList(namespace + ".getAuctions_id", id);
-		} finally {
-			sqlSession.close();
-		}
-	}
+	
 
 	public void updateContent(Auction Auction) throws Exception {
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
@@ -103,19 +96,18 @@ public class MybatisAuctionDao {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-	/*public int getMyBidCount(String id) // ���� ������ǰ ī��Ʈ
-	{
+	public int getMyAuctionCount(String id) {
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
-			return sqlSession.selectOne(namespace + ".getMyBidCount", id);
+			return sqlSession.selectOne(namespace + ".getMyAuctionCount", id);
 		} finally {
 			sqlSession.close();
 		}
-	}*/
+	}
+	
+	
 
-	/*public List<Auction> getMyBidList(int startRow, int endRow, String id) // ���� ������ǰ ���
-	{ //���� ������ǰ����Ʈ ��������
+	public List<Auction> getMyAuctions(int startRow, int endRow, String id) {
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		startRow = startRow - 1;
 		endRow = endRow - startRow;
@@ -125,11 +117,11 @@ public class MybatisAuctionDao {
 		map.put("id", id);
 
 		try {
-			return sqlSession.selectList(namespace + ".getMyBidList_limit", map);
+			return sqlSession.selectList(namespace + ".getAuctions_limit", map);
 		} finally {
 			sqlSession.close();
 		}
-	}*/
+	}
 
 	public Auction getMyAuction(Auction auction) {
 
@@ -141,11 +133,11 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	public Member getWinnerMemberInfo(String id) //������ ���� ��������
-	{
+	public Auction getMyBidCompleteAuction(Auction auction) { //나의 낙찰상품 가져오기
+		
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
-			return sqlSession.selectOne(namespace + ".getWinnerMemberInfo", id);
+			return sqlSession.selectOne(namespace + ".getMyBidCompleteAuction", auction);
 		} finally {
 			sqlSession.close();
 		}

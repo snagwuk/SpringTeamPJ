@@ -15,6 +15,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from amember where id=#{id}
 	</select>
 	
+	<select id="getMemberinfo" parameterType="String" resultType="Member">
+		select * from amember where id=#{id}
+	</select>
+	
 	
 <!--
 	<select id="getAuctionCount" resultType="int">

@@ -20,10 +20,19 @@
 						상품명: <a
 							href="${pageContext.request.contextPath}/myContent?num=${myAuctionList.num}">${myAuctionList.pname}</a><br /> 
 						현재 가격 : ${myAuctionList.beginsprice}<br />						 
-						상태 : ${myAuctionList.pstatus}<br />
 						
-						낙찰일시 : ${여기 모르겠어 -진희-}<br />
-
+						
+						상태 : ${myAuctionList.pstatus}<br />
+						<c:if test="${myAuctionList.pstatus eq '입금완료'}">
+						<form action="${pageContext.request.contextPath}/shipping?winid=${myAuctionList.winid}&num=${myAuctionList.num}">
+							<input type="submit" value="배송정보보기">
+						</form>
+						
+						</c:if>
+						
+						
+						낙찰일시 : <br />
+						상품번호 :${myAuctionList.num} 
 					</div>
 				</div>
 			</div>
