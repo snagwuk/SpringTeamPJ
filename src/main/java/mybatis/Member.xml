@@ -24,6 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update amember set position=#{position},
 		account=#{account},bank=#{bank} where id=#{id}
 	</update>
+	
+	<select id="getMemberinfo" parameterType="String" resultType="Member">
+		select * from amember where id=#{id}
+	</select>
 
 
 

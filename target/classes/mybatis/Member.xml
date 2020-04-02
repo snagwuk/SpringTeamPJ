@@ -15,16 +15,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="authenticate" parameterType="String" resultType="Member">
 		select * from amember where id=#{id}
 	</select>
-	
+
 	<select id="selectmember" parameterType="String" resultType="Member">
 		select * from amember where id=#{id}
 	</select>
-	
+
 	<update id="updatemember" parameterType="Member">
 		update amember set position=#{position},
 		account=#{account},bank=#{bank} where id=#{id}
 	</update>
 	
+	<select id="getMemberinfo" parameterType="String" resultType="Member">
+		select * from amember where id=#{id}
+	</select>
+
 
 
 </mapper>

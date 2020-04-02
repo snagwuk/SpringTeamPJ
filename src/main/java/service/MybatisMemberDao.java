@@ -59,5 +59,13 @@ public class MybatisMemberDao {
 	        	sqlSession.close();
 	        }
 	    }
+	 public Member getMemberinfo(String id) {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				return sqlSession.selectOne(namespace + ".getMemberinfo", id);
+			} finally {
+				sqlSession.close();
+			}
+		}
 
 }
