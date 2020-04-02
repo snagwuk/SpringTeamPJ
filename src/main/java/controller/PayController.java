@@ -44,7 +44,7 @@ public class PayController {
 
 		Auction auction = new Auction();
 		auction.setWinid(user.getId());
-		auction.setNum(2); //나중에 연결(이 전 페이지 없어서 임의 지정)
+		auction.setNum(1); //나중에 연결(이 전 페이지 없어서 임의 지정)
 
 		Auction myBidCompleteAuction = dbPro.getMyBidCompleteAuction(auction);
 		m.addAttribute("myBidCompleteAuction", myBidCompleteAuction);
@@ -125,7 +125,7 @@ public class PayController {
 		auction.setWinid(user.getId());
 		auction.setNum(num);
 		Auction myAuction = dbPro.getMyAuction(auction);
-		myAuction.setPstatus("수취확인(거래종료)");
+		myAuction.setPstatus("거래종료");
 		dbPro.updateAuctionStatus(myAuction);
 		
 		return "pay/pay";

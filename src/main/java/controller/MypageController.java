@@ -63,7 +63,12 @@ public class MypageController {
 	        
 	        int count = dbPro.getMyAuctionCount(user.getId());
 	        
+	        
+	        
 	        List<Auction> MyAuctionList = dbPro.getMyAuctions(startRow, endRow, user.getId());
+	        
+	        
+	        
 	        
 	        int number = count - (currentPage - 1) * pageSize;
 	        int bottomLine = 3;

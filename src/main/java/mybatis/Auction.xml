@@ -22,11 +22,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="getAuctions_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where seller = #{id} order by num desc limit #{startRow} ,#{endRow}
+		select * from aAuction order by num desc limit #{startRow} ,#{endRow}
 	</select>
 
 	<select id="getAuctions_id" parameterType="String" resultType="Auction">
-		select * from aAuction where id = #{id} order by num desc
+		select * from aAuction where seller = #{seller} order by num desc
 	</select>
 
 	<select id="getAuction" parameterType="int" resultType="Auction">
@@ -41,11 +41,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMyAuctionList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where id = #{id} order by num desc limit #{startRow} ,#{endRow}
+		select * from aAuction where seller = #{seller} order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	<select id="getMyBidList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where winid = #{winid} order by num desc limit #{startRow} ,#{endRow}
 	</select>
 	
 	<select id="getMyAuction" parameterType="Auction" resultType="Auction">
 		select * from aAuction where num = #{num}
+	</select>
+	
+	<select id="getMyBid" parameterType="Auction" resultType="Auction">
+		select * from aAuction where winid = #{winid} and num = #{num}
 	</select>
 	
 	<select id="getMyBidCompleteAuction" parameterType="Auction" resultType="Auction">

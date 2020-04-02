@@ -105,6 +105,14 @@ public class MybatisAuctionDao {
 		}
 	}
 	
+	public int getMyBidCount(String id) {
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectOne(namespace + ".getMyBidCount", id);
+		} finally {
+			sqlSession.close();
+		}
+	}
 	
 
 	public List<Auction> getMyAuctions(int startRow, int endRow, String id) {

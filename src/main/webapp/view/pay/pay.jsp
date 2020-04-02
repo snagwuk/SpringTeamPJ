@@ -34,7 +34,7 @@
 	<form action="${pageContext.request.contextPath}/confirmShipping" method="POST">
 		<c:if test="${myBidCompleteAuction.pstatus eq '배송중'}">
 			<input type="hidden" name="num" value="${myBidCompleteAuction.num}">
-			<input type="submit" value="수취확인(거래종료)">
+			<input type="submit" value="수취확인">
 		</c:if>
 	</form>
 

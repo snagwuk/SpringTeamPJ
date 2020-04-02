@@ -161,7 +161,7 @@ public class AuctionController
         dbPro.deleteAuction(num);
         return "redirect:/list";
     }
-//������Ʈ
+//지은
    @RequestMapping(value = "bidding", method = RequestMethod.GET)
    public String auction_bidding(int num, Model m)
    {
@@ -206,11 +206,13 @@ public class AuctionController
 		return "redirect:/bidding?num=" + bid.getNum();
    }
    
- /*@RequestMapping(value = "bidding", method = RequestMethod.POST )
-   public String auction_bidding(
-			@ModelAttribute("bid") Bid bid) {
-		
-		dbPro.insertbid(bid);
-		return "redirect:/bidding?num=" + bid.getNum();
- }*/
+ 
+   
+   
+   
+   
+   
+   
+   
+   
 }
