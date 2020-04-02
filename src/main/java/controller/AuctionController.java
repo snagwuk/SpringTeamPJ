@@ -3,13 +3,19 @@
 package controller;
 
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import model.Auction;
+import model.Bid;
+import service.BidValidator;
 import service.MybatisAuctionDao;
 
 
@@ -24,8 +32,17 @@ import service.MybatisAuctionDao;
 public class AuctionController
 { 
 	
-    @Autowired
+ @Autowired
     MybatisAuctionDao dbPro;
+ @Autowired
+ BidValidator bidvalidator;
+ 
+ 
+ @InitBinder("bid")
+	protected void initBinder(WebDataBinder binder) {
+		binder.addValidators(bidvalidator);
+	}
+
     
        
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -144,5 +161,56 @@ public class AuctionController
         dbPro.deleteAuction(num);
         return "redirect:/list";
     }
-
+//������Ʈ
+   @RequestMapping(value = "bidding", method = RequestMethod.GET)
+   public String auction_bidding(int num, Model m)
+   {
+          
+	   int hprice = (int)dbPro.gethightprice(num);
+	  Auction auction = dbPro.getAuction(num);
+	   List<Bid> bidlist = dbPro.getbidlist(num);
+          SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+          
+          m.addAttribute("sf",sf);
+           m.addAttribute("hprice",hprice);
+           m.addAttribute("unit",auction.getBidunit());
+           m.addAttribute("bidlist", bidlist);
+           m.addAttribute("num", num);
+           m.addAttribute("bid", new Bid());
+           return "bidlist";
+       
+   }
+   
+   
+   @RequestMapping(value = "bidding", method = RequestMethod.POST )
+   public String auction_bidding(
+			@ModelAttribute("bid") Bid bid,
+			BindingResult bindingResult,Model m) {
+	   bidvalidator.validate(bid, bindingResult);
+		if (bindingResult.hasErrors()) {
+			 Auction auction = dbPro.getAuction(bid.getNum());
+			int hprice = (int)dbPro.gethightprice(bid.getNum());
+			   List<Bid> bidlist = dbPro.getbidlist(bid.getNum());
+		          SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		       m.addAttribute("unit",auction.getBidunit());
+		       m.addAttribute("sf",sf);
+	           m.addAttribute("hprice",hprice);
+	           m.addAttribute("bidlist", bidlist);
+	           m.addAttribute("num", bid.getNum());
+			 
+		          
+			System.out.println("error");
+			return "bidlist";
+		}
+		dbPro.insertbid(bid);
+		return "redirect:/bidding?num=" + bid.getNum();
+   }
+   
+ /*@RequestMapping(value = "bidding", method = RequestMethod.POST )
+   public String auction_bidding(
+			@ModelAttribute("bid") Bid bid) {
+		
+		dbPro.insertbid(bid);
+		return "redirect:/bidding?num=" + bid.getNum();
+ }*/
 }

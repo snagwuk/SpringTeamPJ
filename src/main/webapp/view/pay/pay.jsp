@@ -7,27 +7,37 @@
 </head>
 <body>
 	<img
-		src="<%=request.getContextPath()%>/uploadfile/${myAuction.filename}"
+		src="<%=request.getContextPath()%>/uploadFile/${myBidCompleteAuction.filename}"
 		width="200" height="200">
-	<br /> 상품명: ${myAuction.pname}
-	<br /> 분류: ${myAuction.category}
-	<br /> 낙찰가 : ${myAuction.beginsprice}
-	<br /> 낙찰일시 : ${myAuction.enddate}
-	<br /> 현재상태 : ${myAuction.pstatus}
+	<br /> 상품명: ${myBidCompleteAuction.pname}
+	<br /> 분류: ${myBidCompleteAuction.category}
+	<br /> 낙찰가 : ${myBidCompleteAuction.beginsprice}
+	<br /> 낙찰일시 : ${myBidCompleteAuction.enddate}
+	<br /> 현재상태 : ${myBidCompleteAuction.pstatus}
 	<br />
-	<br />
-	<br />번호 : 
 	<br />
 	<br /> 내 캐시 : ${cash}
 	<br />
 	<a
-		href="${pageContext.request.contextPath}/charge?winid=${myAuction.winid}">캐시충전</a>
-	<br /> 총 결제 금액 : ${myAuction.beginsprice}
+		href="${pageContext.request.contextPath}/charge?winid=${myBidCompleteAuction.winid}">캐시충전</a>
+	<br /> 총 결제 금액 : ${myBidCompleteAuction.beginsprice}
 	<br /> 결제 후 내 캐시 : ${myBalance}
+
 	<form action="${pageContext.request.contextPath}/pay" method="POST">
-		<input type="hidden" name="num" value="${myAuction.num}"> <input
-			type="submit" value="결제하기">
+
+		<c:if test="${myBidCompleteAuction.pstatus eq '입금전'}">
+			<input type="hidden" name="num" value="${myBidCompleteAuction.num}">
+			<input type="submit" value="결제하기">
+		</c:if>
 	</form>
+
+	<form action="${pageContext.request.contextPath}/confirmShipping" method="POST">
+		<c:if test="${myBidCompleteAuction.pstatus eq '배송중'}">
+			<input type="hidden" name="num" value="${myBidCompleteAuction.num}">
+			<input type="submit" value="수취확인(거래종료)">
+		</c:if>
+	</form>
+
 
 </body>
 </html>

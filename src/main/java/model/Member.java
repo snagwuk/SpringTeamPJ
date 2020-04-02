@@ -6,13 +6,14 @@ import java.util.Date;
 public class Member implements Serializable{
 	
 	private String id;
-	private int password;
+	private String password;
 	private String name;
-	private Date birthday;
+	private Date registdate;
 	private String phone;
-	private String mstatus;
+	private String position;
+	private String status;
 	private String address;
-	private int account;
+	private String account;
 	private String bank;
 	public String getId() {
 		return id;
@@ -20,10 +21,10 @@ public class Member implements Serializable{
 	public void setId(String id) {
 		this.id = id;
 	}
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 	public String getName() {
@@ -32,11 +33,11 @@ public class Member implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getBirthday() {
-		return birthday;
+	public Date getRegistdate() {
+		return registdate;
 	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	public void setRegistdate(Date registdate) {
+		this.registdate = registdate;
 	}
 	public String getPhone() {
 		return phone;
@@ -44,11 +45,17 @@ public class Member implements Serializable{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getMstatus() {
-		return mstatus;
+	public String getPosition() {
+		return position;
 	}
-	public void setMstatus(String mstatus) {
-		this.mstatus = mstatus;
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public String getAddress() {
 		return address;
@@ -56,10 +63,10 @@ public class Member implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getAccount() {
+	public String getAccount() {
 		return account;
 	}
-	public void setAccount(int account) {
+	public void setAccount(String account) {
 		this.account = account;
 	}
 	public String getBank() {
@@ -68,7 +75,5 @@ public class Member implements Serializable{
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
-	
-	
 
 }

@@ -9,7 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 import model.Auction;
+import model.Bid;
 import model.Cash;
 import model.Member;
 import mybatis.AbstractRepository;
@@ -58,7 +60,7 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	
+
 
 	public Auction getAuction(int num) {
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
@@ -68,15 +70,8 @@ public class MybatisAuctionDao {
 			sqlSession.close();
 		}
 	}
+
 	
-	public List<Auction> getAuctions(String id) {
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		try {
-			return sqlSession.selectList(namespace + ".getAuctions_id", id);
-		} finally {
-			sqlSession.close();
-		}
-	}
 
 	public void updateContent(Auction Auction) throws Exception {
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
@@ -98,22 +93,21 @@ public class MybatisAuctionDao {
 		}
 	}
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////	
-	
-	
-	
-	/*public int getMyBidCount(String id) // ���� ������ǰ ī��Ʈ
-	{
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	public int getMyAuctionCount(String id) {
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
-			return sqlSession.selectOne(namespace + ".getMyBidCount", id);
+			return sqlSession.selectOne(namespace + ".getMyAuctionCount", id);
 		} finally {
 			sqlSession.close();
 		}
-	}*/
+	}
+	
+	
 
-	/*public List<Auction> getMyBidList(int startRow, int endRow, String id) // ���� ������ǰ ���
-	{ //���� ������ǰ����Ʈ ��������
+	public List<Auction> getMyAuctions(int startRow, int endRow, String id) {
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		startRow = startRow - 1;
 		endRow = endRow - startRow;
@@ -123,34 +117,123 @@ public class MybatisAuctionDao {
 		map.put("id", id);
 
 		try {
-			return sqlSession.selectList(namespace + ".getMyBidList_limit", map);
+			return sqlSession.selectList(namespace + ".getAuctions_limit", map);
 		} finally {
 			sqlSession.close();
 		}
-	}*/
-	
+	}
+
 	public Auction getMyAuction(Auction auction) {
-		
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();		
+
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectOne(namespace + ".getMyAuction", auction);
 		} finally {
 			sqlSession.close();
 		}
 	}
-	
-	public Member getWinnerMemberInfo(String id) //������ ���� ��������
-	{
+
+	public Auction getMyBidCompleteAuction(Auction auction) { //나의 낙찰상품 가져오기
+		
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
-			return sqlSession.selectOne(namespace + ".getWinnerMemberInfo", id);
+			return sqlSession.selectOne(namespace + ".getMyBidCompleteAuction", auction);
 		} finally {
 			sqlSession.close();
 		}
 	}
 
-   
-    
-    
+	
+	
+	public void updateAuctionStatus(Auction Auction) throws Exception { //나의 상품 상태 "배송중"으로 업데이트
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		try {
+			sqlSession.update(namespace + ".updateAuctionStatus", Auction);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
 
+
+	
+	
+	
+	
+    /*������Ʈ*/
+    public int gethightprice(int num)
+    {
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+        try
+        {
+           return sqlSession.selectOne(namespace + ".gethightprice",num);
+        }
+        finally
+        {
+            sqlSession.close();
+        }
+    }
+
+
+	 public void insertbid(Bid abid)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        try
+	        {
+
+	            sqlSession.insert(namespace + ".insertbid",abid);
+	            sqlSession.commit();
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
+
+	  public List<Bid> getbidlist(int num)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        try
+	        {
+	           return sqlSession.selectList(namespace + ".getbidlist",num);
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
+
+	  public int getbidunit(int num)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        try
+	        {
+	           return sqlSession.selectOne(namespace + ".getbidunit",num);
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
+
+	  public List<Auction> getmyseller(int startRow, int endRow,String id)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        startRow = startRow - 1;
+	        endRow = endRow - startRow;
+	        Map map = new HashMap();
+	        map.put("startRow", startRow);
+	        map.put("endRow", endRow);
+	        map.put("id", id);
+
+	        List<Auction> result = new ArrayList<>();
+	        try
+	        {
+	            return sqlSession.selectList(namespace + ".getmyseller",map);
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
 }

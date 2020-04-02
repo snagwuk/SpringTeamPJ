@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="getAuctions_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction order by num desc limit #{startRow} ,#{endRow}
+		select * from aAuction where seller = #{id} order by num desc limit #{startRow} ,#{endRow}
 	</select>
 
 	<select id="getAuctions_id" parameterType="String" resultType="Auction">
@@ -34,13 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<!--  진희   -->
 	
-	
-	<select id="getMyBidCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where id = #{id}
+	<select id="getMyAuctionCount" resultType="int">
+		select ifnull(count(*),0) from aAuction
 	</select>
 	
-	<select id="getMyBidList_limit" parameterType="hashmap" resultType="Auction">
+	<select id="getMyAuctionList_limit" parameterType="hashmap" resultType="Auction">
 		select * from aAuction where id = #{id} order by num desc limit #{startRow} ,#{endRow}
 	</select>
 	
@@ -48,9 +48,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from aAuction where num = #{num}
 	</select>
 	
-	<select id="getWinnerMemberInfo" parameterType="String" resultType="Member">
-		select * from amember m, aauction a where m.id = #{a.winid}
+	<select id="getMyBidCompleteAuction" parameterType="Auction" resultType="Auction">
+		select * from aAuction where winid = #{winid} and num = #{num}
 	</select>
+	
+	<update id="updateAuctionStatus" parameterType="Auction">
+		update aAuction set pstatus=#{pstatus} where seller=#{seller} and num=#{num}
+	</update>
 	
 	
 	
@@ -67,14 +71,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where num=#{num}
 	</delete>
 
+	<!-- 지은파트 -->
 	
 
+<select id="gethightprice" parameterType="int" resultType="int">
+		select ifnull(max(b.bidprice),a.beginsprice) from abid b,Aauction a where a.num=#{num} and b.num=#{num};
+	</select>
 	
 
+<insert id="insertbid" parameterType="Bid">
+		insert into abid
+		values
+		(#{num},#{id},now(),#{bidprice})
+	</insert>
+
+<select id="getbidlist" parameterType="int" resultType="Bid">
+		select * from abid where num=#{num} order by bidprice desc;
+	</select>
+	
+<select id="getbidunit" parameterType="int" resultType="int">
+		select bidunit from Aauction where num=#{num};
+	</select>
 	
 
 
-	
+		<select id="getmyseller" parameterType="hashmap" resultType="Auction">
+	select * from aAuction a , wishseller w  where a.seller = w.seller and w.id = #{id} order by STARTDATE desc limit #{startRow},#{endRow};
+
+	</select>
 
 
 </mapper>
