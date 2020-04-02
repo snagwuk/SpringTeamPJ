@@ -1,13 +1,11 @@
 package controller;
 
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -44,17 +42,14 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	@RequestMapping(value = "login",method=RequestMethod.POST)
-	public String loginPro(Member member, HttpServletRequest request){
+	public String loginPro(Member member, HttpSession session){
 		
 		Member check = dbPro.authenticate(member.getId()); 
-		
-		
-		
+	
 		if(check==null){
 			return "member/loginForm";
 		}else {
-			if(member.getPassword().equals(check.getPassword())){
-				HttpSession session = request.getSession(); 
+			if(member.getPassword().equals(check.getPassword())){ 
 				User user = new User(check.getId(), check.getPosition(), check.getStatus());
 				session.setAttribute("user", user);
 				return "redirect:/main";
@@ -64,18 +59,31 @@ public class MemberController {
 		}
 	}
 	@RequestMapping(value = "logout")
-	public String logoutPro(HttpServletRequest request){
-		HttpSession session = request.getSession();
+	public String logoutPro(HttpSession session){
 		session.invalidate();
 		return "redirect:/main";
 	}
-	@RequestMapping(value = "seller", method = RequestMethod.GET)
-	public String seller(){
-		return "member/sellerForm";
+	@RequestMapping(value = "tobeseller", method = RequestMethod.GET)
+	public String seller(Model m, HttpSession session){
+		User user = (User) session.getAttribute("user");
+		Member member = dbPro.selectmember(user.getId());
+		m.addAttribute("member", member);	
+		return "member/tobeSellerForm";
+	}
+	@RequestMapping(value = "tobeseller", method = RequestMethod.POST)
+	public String sellerPro(Member member,HttpSession session)throws Exception{
+		System.out.println(member.getId()+"=======");
+		System.out.println(member);
+		dbPro.updatemember(member);
+		System.out.println(member);
+		/*User user = new User(member.getId(), member.getPosition(), member.getStatus());
+		session.setAttribute("user", user);*/
+		
+		return "member/sucess";
 	}
 	@RequestMapping(value = "grade", method = RequestMethod.GET)
-	public String grade(){
-		return "member/gradeManage";
+	public String upGrade(){
+		return "member/upGrade";
 	}
 	
 }

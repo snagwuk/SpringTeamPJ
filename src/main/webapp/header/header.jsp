@@ -65,7 +65,7 @@
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
 								<a class="dropdown-item"
 									href="${pageContext.request.contextPath}/write"> 상품등록</a> <a
-									class="dropdown-item" href="${pageContext.request.contextPath}/seller">판매자등록</a> <a
+									class="dropdown-item" href="${pageContext.request.contextPath}/tobeseller">판매자등록</a> <a
 									class="dropdown-item" href="checkout.html">product checkout</a>
 								<a class="dropdown-item" href="cart.html">shopping cart</a> <a
 									class="dropdown-item" href="confirmation.html">confirmation</a>

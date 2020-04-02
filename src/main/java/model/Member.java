@@ -10,11 +10,22 @@ public class Member implements Serializable{
 	private String name;
 	private Date registdate;
 	private String phone;
+	private String postcode;
+	private String address;
+	private String detailAddress;
+	private String extraAddress;
 	private String position;
 	private String status;
-	private String address;
 	private String account;
 	private String bank;
+	
+	@Override
+	public String toString() {
+		return "Member [id=" + id + ", password=" + password + ", name=" + name + ", registdate=" + registdate
+				+ ", phone=" + phone + ", postcode=" + postcode + ", address=" + address + ", detailAddress="
+				+ detailAddress + ", extraAddress=" + extraAddress + ", position=" + position + ", status=" + status
+				+ ", account=" + account + ", bank=" + bank + "]";
+	}
 	public String getId() {
 		return id;
 	}
@@ -45,6 +56,30 @@ public class Member implements Serializable{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	public String getPostcode() {
+		return postcode;
+	}
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
+	public String getExtraAddress() {
+		return extraAddress;
+	}
+	public void setExtraAddress(String extraAddress) {
+		this.extraAddress = extraAddress;
+	}
 	public String getPosition() {
 		return position;
 	}
@@ -56,12 +91,6 @@ public class Member implements Serializable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
 	}
 	public String getAccount() {
 		return account;
@@ -75,5 +104,6 @@ public class Member implements Serializable{
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
+	
 
 }

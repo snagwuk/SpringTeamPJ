@@ -38,5 +38,26 @@ public class MybatisMemberDao{
 	            sqlSession.close();
 	        }
 	    }
+	 public Member selectmember(String id){
+		 System.out.println(id);
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try {	             
+	            return sqlSession.selectOne(namespace + ".selectmember",id);    
+	        }
+	        finally {
+	            sqlSession.close();
+	        }
+	    }
+	 public void updatemember(Member member){
+		 
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try {
+	            sqlSession.update(namespace + ".updatemember",member);  
+	            sqlSession.commit();
+	        }
+	        finally {
+	        	sqlSession.close();
+	        }
+	    }
 
 }
