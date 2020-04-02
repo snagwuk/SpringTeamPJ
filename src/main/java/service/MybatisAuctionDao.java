@@ -143,9 +143,23 @@ public class MybatisAuctionDao {
 		}
 	}
 
+	
+	
+	public void updateAuctionStatus(Auction Auction) throws Exception { //나의 상품 상태 "배송중"으로 업데이트
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		try {
+			sqlSession.update(namespace + ".updateAuctionStatus", Auction);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+	}
 
 
-
+	
+	
+	
+	
     /*������Ʈ*/
     public int gethightprice(int num)
     {

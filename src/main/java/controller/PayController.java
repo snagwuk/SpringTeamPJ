@@ -44,7 +44,7 @@ public class PayController {
 
 		Auction auction = new Auction();
 		auction.setWinid(user.getId());
-		auction.setNum(6);
+		auction.setNum(2); //나중에 연결(이 전 페이지 없어서 임의 지정)
 
 		Auction myBidCompleteAuction = dbPro.getMyBidCompleteAuction(auction);
 		m.addAttribute("myBidCompleteAuction", myBidCompleteAuction);
@@ -52,7 +52,11 @@ public class PayController {
 		int cash = cashPro.myCash(user.getId());
 		m.addAttribute("cash", cash);
 
+		System.out.println(myBidCompleteAuction.getBeginsprice());
+		System.out.println(cash);
+		
 		int myBalance = cash - myBidCompleteAuction.getBeginsprice();
+		
 		m.addAttribute("myBalance", myBalance); // 결제후 잔액구하기
 
 		return "pay/pay";
@@ -80,12 +84,12 @@ public class PayController {
 		return "pay/paySuccess";
 	}
 	
-	@RequestMapping(value = "shipping", method = RequestMethod.GET)
+	@RequestMapping(value = "shippingInfo", method = RequestMethod.POST)
 	public String shippingInfo(String winid, int num, Model m) {
 		
 		Auction auction = new Auction();
 		auction.setWinid(winid);
-		auction.setNum(num);//여기서 num을 못 가져옴
+		auction.setNum(num);
 		Auction myAuction = dbPro.getMyAuction(auction);
 		m.addAttribute("myAuction", myAuction);	
 		
@@ -97,4 +101,35 @@ public class PayController {
 		
 	}
 
+	
+	
+	@RequestMapping(value = "shippingComplete", method = RequestMethod.POST)
+	public String shippingComplete(String seller, int num, Model m) throws Exception {
+		Auction auction = new Auction();
+		auction.setSeller(seller);
+		auction.setNum(num);
+		
+		Auction myAuction = dbPro.getMyAuction(auction);
+		myAuction.setPstatus("배송중");
+		dbPro.updateAuctionStatus(myAuction);
+		m.addAttribute("auction", auction);	
+		
+		return "mypage/myAuctionList";
+	}
+	
+	
+	@RequestMapping(value = "confirmShipping", method = RequestMethod.POST)
+	public String confirmShipping(HttpServletRequest req, int num, Model m) throws Exception {
+		User user = (User) req.getSession().getAttribute("user");
+		Auction auction = new Auction();
+		auction.setWinid(user.getId());
+		auction.setNum(num);
+		Auction myAuction = dbPro.getMyAuction(auction);
+		myAuction.setPstatus("수취확인(거래종료)");
+		dbPro.updateAuctionStatus(myAuction);
+		
+		return "pay/pay";
+		
+	}
+	
 }

@@ -52,6 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from aAuction where winid = #{winid} and num = #{num}
 	</select>
 	
+	<update id="updateAuctionStatus" parameterType="Auction">
+		update aAuction set pstatus=#{pstatus} where seller=#{seller} and num=#{num}
+	</update>
+	
 	
 	
 	

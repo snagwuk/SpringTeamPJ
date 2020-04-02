@@ -24,7 +24,9 @@
 						
 						상태 : ${myAuctionList.pstatus}<br />
 						<c:if test="${myAuctionList.pstatus eq '입금완료'}">
-						<form action="${pageContext.request.contextPath}/shipping?winid=${myAuctionList.winid}&num=${myAuctionList.num}">
+						<form action="${pageContext.request.contextPath}/shippingInfo" method="POST">
+							<input type="hidden" name="winid" value="${myAuctionList.winid}">
+							<input type="hidden" name="num" value="${myAuctionList.num}">
 							<input type="submit" value="배송정보보기">
 						</form>
 						
