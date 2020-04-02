@@ -17,32 +17,47 @@ public class MybatisMemberDao {
 	@Autowired
 	public AbstractRepository dbPro;
 
-	public void insertmember(Member member) {
-		SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
-		try {
-			sqlSession.insert(namespace + ".insertMember", member);
-			sqlSession.commit();
-		} finally {
-			sqlSession.close();
-		}
-	}
+	 public void insertmember(Member member){
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try
+	        {
+	            sqlSession.insert(namespace + ".insertMember",member);
+	            sqlSession.commit();
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
+	 public Member authenticate(String id){
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try {
+	            return sqlSession.selectOne(namespace + ".authenticate",id);
+	        }
+	        finally {
+	            sqlSession.close();
+	        }
+	    }
+	 public Member selectmember(String id){
+		 System.out.println(id);
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try {
+	            return sqlSession.selectOne(namespace + ".selectmember",id);
+	        }
+	        finally {
+	            sqlSession.close();
+	        }
+	    }
+	 public void updatemember(Member member){
 
-	public Member authenticate(String id) {
-		SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
-		try {
-			return sqlSession.selectOne(namespace + ".authenticate", id);
-		} finally {
-			sqlSession.close();
-		}
-	}
-
-	public Member getMemberinfo(String id) {
-		SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
-		try {
-			return sqlSession.selectOne(namespace + ".getMemberinfo", id);
-		} finally {
-			sqlSession.close();
-		}
-	}
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try {
+	            sqlSession.update(namespace + ".updatemember",member);
+	            sqlSession.commit();
+	        }
+	        finally {
+	        	sqlSession.close();
+	        }
+	    }
 
 }

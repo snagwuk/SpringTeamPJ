@@ -21,12 +21,17 @@ id varchar(100) primary key,
 password varchar(10) not null,
 name varchar(10),
 registdate datetime,
-phone varchar(10),
+phone varchar(20),
+postcode varchar(100),
+address varchar(100),
+detailAddress varchar(100),
+extraAddress varchar(100),
 position varchar(10),
 status varchar(10),
-address varchar(20),
 account varchar(20),
 bank varchar(10));
+관리자 아이디 admin 비밀번호 1111 등록
+insert into amember values("admin",1111,"관리자",now(),010,1234,"집주소","자세히","참고","관리자","가능",123,"국민");
 
 create table aCash(
 id varchar(100) ,
