@@ -1,8 +1,10 @@
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import model.Amessage;
 import model.Auction;
 import model.User;
 import service.MybatisAuctionDao;
@@ -170,7 +174,7 @@ public class MypageController {
 	    
 	 
 	 
-	 /*@RequestMapping(value = "mywishseller", method = RequestMethod.GET)
+	@RequestMapping(value = "mywishseller", method = RequestMethod.GET)
 	    public String auction_listGET(HttpServletRequest request)
 	    {
 	        HttpSession session = request.getSession();
@@ -224,6 +228,27 @@ public class MypageController {
 
 	        request.setAttribute("auctionList", auctionList);
 
-	        return "list";
+	        return "list";}
+
+	 
+	
+	/* @RequestMapping("messagebox")
+	    public String message(Model m,HttpServletRequest request)
+	    {
+		 
+		 HttpSession session = request.getSession();
+		 String id = request.getParameter("id");
+		 session.setAttribute("id", id);
+		
+		 int i =dbPro.getunreadMessage(id);
+		 m.addAttribute("unreadcount",i);
+		 m.addAttribute("id",id);
+
+		 return "messagebox";
 	    }*/
+	
+
+	 
+	
+
 }

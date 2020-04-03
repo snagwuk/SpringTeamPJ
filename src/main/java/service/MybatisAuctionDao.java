@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+import model.Amessage;
 import model.Auction;
 import model.Bid;
 import model.Cash;
@@ -18,6 +18,7 @@ import mybatis.AbstractRepository;
 
 @Component
 public class MybatisAuctionDao {
+
 
 	private final String namespace = "mybatis.Auction";
 
@@ -262,4 +263,45 @@ public class MybatisAuctionDao {
 	            sqlSession.close();
 	        }
 	    }
+
+
+
+	  public List<Auction> getsellerstore(int startRow, int endRow,String id)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        startRow = startRow - 1;
+	        endRow = endRow - startRow;
+	        Map map = new HashMap();
+	        map.put("startRow", startRow);
+	        map.put("endRow", endRow);
+	        map.put("id", id);
+	        
+	        List<Auction> result = new ArrayList<>();
+	        try
+	        {
+	            return sqlSession.selectList(namespace + ".getsellerstore",map);
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
+
+	/*public int getunreadMessage(String toid) {
+	
+		   
+		        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		        try
+		        {     
+		           return sqlSession.selectOne(namespace2 + ".getunreadMessage",toid);   
+		        }
+		        finally
+		        {
+		            sqlSession.close();
+		        }
+		    
+	}*/
+	  
+	  
 }
+

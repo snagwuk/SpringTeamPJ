@@ -16,6 +16,7 @@ FILENAME VARCHAR(100),
 filesize int
 );
 
+<<<<<<< HEAD
 create table amember(
 id varchar(100) primary key,
 password varchar(10) not null,
@@ -60,3 +61,7 @@ serviceStar int
 
 
 
+=======
+
+create table Amessage (toid varchar(50), fromid varchar(50),content varchar(300),sendtime DATETIME ,readcount int);
+>>>>>>> refs/heads/jieun

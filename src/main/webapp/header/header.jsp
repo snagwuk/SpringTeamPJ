@@ -151,7 +151,7 @@
 	<script src="js/slick.min.js"></script>
 	<script src="js/jquery.counterup.min.js"></script>
 	<script src="js/waypoints.min.js"></script>
-	<script src="js/contact.js"></script>
+	
 	<script src="js/jquery.ajaxchimp.min.js"></script>
 	<script src="js/jquery.form.js"></script>
 	<script src="js/jquery.validate.min.js"></script>
