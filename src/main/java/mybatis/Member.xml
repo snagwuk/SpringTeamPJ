@@ -28,6 +28,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMemberinfo" parameterType="String" resultType="Member">
 		select * from amember where id=#{id}
 	</select>
+	<select id="selectposition" parameterType="String" resultType="Member">
+		select * from amember where position="신청함"
+	</select>
+	<update id="upposition" parameterType="String">
+		update amember set position="판매자" where id=#{id}
+	</update>
+	<update id="downposition" parameterType="String">
+		update amember set position="구매자" where id=#{id}
+	</update>
 
 
 
