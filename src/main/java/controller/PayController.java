@@ -44,7 +44,7 @@ public class PayController {
 
 		Auction auction = new Auction();
 		auction.setWinid(user.getId());
-		auction.setNum(2); //나중에 연결(이 전 페이지 없어서 임의 지정)
+		auction.setNum(1); //나중에 연결(이 전 페이지 없어서 임의 지정)
 
 		Auction myBidCompleteAuction = dbPro.getMyBidCompleteAuction(auction);
 		m.addAttribute("myBidCompleteAuction", myBidCompleteAuction);
@@ -69,7 +69,7 @@ public class PayController {
 
 		Auction auction = new Auction();
 		auction.setNum(num);
-		Auction myAuction = dbPro.getMyAuction(auction);
+		Auction myAuction = dbPro.getMyAuctionContent(auction);
 
 		Cash cash = new Cash();
 		cash.setId(user.getId());
@@ -90,7 +90,7 @@ public class PayController {
 		Auction auction = new Auction();
 		auction.setWinid(winid);
 		auction.setNum(num);
-		Auction myAuction = dbPro.getMyAuction(auction);
+		Auction myAuction = dbPro.getMyAuctionContent(auction);
 		m.addAttribute("myAuction", myAuction);	
 		
 		Member member = memPro.getMemberinfo(winid); //낙찰자 배송정보 가져오기
@@ -109,7 +109,7 @@ public class PayController {
 		auction.setSeller(seller);
 		auction.setNum(num);
 		
-		Auction myAuction = dbPro.getMyAuction(auction);
+		Auction myAuction = dbPro.getMyAuctionContent(auction);
 		myAuction.setPstatus("배송중");
 		dbPro.updateAuctionStatus(myAuction);
 		m.addAttribute("auction", auction);	
@@ -124,8 +124,8 @@ public class PayController {
 		Auction auction = new Auction();
 		auction.setWinid(user.getId());
 		auction.setNum(num);
-		Auction myAuction = dbPro.getMyAuction(auction);
-		myAuction.setPstatus("수취확인(거래종료)");
+		Auction myAuction = dbPro.getMyAuctionContent(auction);
+		myAuction.setPstatus("거래종료");
 		dbPro.updateAuctionStatus(myAuction);
 		
 		return "pay/pay";

@@ -1,24 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>나의 경매상품 목록</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>나의 입찰중인 상품 목록</title>
 </head>
 <body>
-<br /><br /><br /><br /><h1>나의 판매목록:</h1><br /><br /><br /><br /><br /><br /><br />
-    
-    
-    <div>
-    <a href="${pageContext.request.contextPath}/statusBidList"><input type="button" value="입찰${statusBidCount}건"></a><br>
-    <a href="${pageContext.request.contextPath}/statusDealing"><input type="button" value="낙찰(거래 중)${statusDealingCount}건"></a><br>
-    <a href="${pageContext.request.contextPath}/statusComplete"><input type="button" value="낙찰(거래 완료)${statusCompleteCount}건"></a><br>
-
-	</div>
-	
-	
-	
-	<c:if test="${count==0}">
+<c:if test="${count==0}">
 		<h4>등록된 물품이 없음</h4>
 	</c:if>
 	<c:if test="${count!=0}">
@@ -47,10 +36,5 @@
 			</div>
 		</c:forEach>
 	</c:if>
-
-
-
-
-
 </body>
 </html>
