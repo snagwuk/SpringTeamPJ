@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import model.Auction;
 import model.Bid;
+import model.User;
+import model.Wishseller;
 import service.BidValidator;
 import service.MybatisAuctionDao;
 
@@ -47,9 +49,9 @@ public class AuctionController
     
        
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String auction_listGET(HttpServletRequest request)
+    public String auction_listGET(HttpServletRequest request, HttpSession session)
     {
-        HttpSession session = request.getSession();
+      
         
         int currentPage = 1;
         
@@ -94,6 +96,9 @@ public class AuctionController
         request.setAttribute("pageCount", pageCount);
         
         request.setAttribute("auctionList", auctionList);
+        session.setAttribute("seller", null);
+        session.setAttribute("pagename","list");
+        
         
         return "auction/list";
     }
@@ -222,12 +227,21 @@ public class AuctionController
    
    
    @RequestMapping(value = "sellerstore", method = RequestMethod.GET)
-   public String sellerstore(HttpServletRequest request)
+   public String sellerstore(HttpServletRequest request,HttpSession session)
    {
-       HttpSession session = request.getSession();
+     
+	   User user = (User) session.getAttribute("user");
        
        int currentPage = 1;
        String id = request.getParameter("seller");
+       Wishseller ws = new Wishseller();
+       ws.setId(user.getId());
+       ws.setSeller(id);
+      
+       System.out.println(ws);
+       int check = dbPro.selectseller(ws);
+       System.out.println(check);
+       
        try
        {
            currentPage = Integer.parseInt(request.getParameter("pageNum"));
@@ -257,20 +271,24 @@ public class AuctionController
        
        if (endPage > pageCount) endPage = pageCount;
        
-       request.setAttribute("currentPage", currentPage);
-       request.setAttribute("startRow", startRow);
-       request.setAttribute("endRow", endRow);
-       request.setAttribute("count", count);
-       request.setAttribute("pageSize", pageSize);
-       request.setAttribute("number", number);
-       request.setAttribute("bottomLine", bottomLine);
-       request.setAttribute("startPage", startPage);
-       request.setAttribute("endPage", endPage);
-       request.setAttribute("pageCount", pageCount);
+       session.setAttribute("currentPage", currentPage);
+       session.setAttribute("startRow", startRow);
+       session.setAttribute("endRow", endRow);
+       session.setAttribute("count", count);
+       session.setAttribute("pageSize", pageSize);
+       session.setAttribute("number", number);
+       session.setAttribute("bottomLine", bottomLine);
+       session.setAttribute("startPage", startPage);
+       session.setAttribute("endPage", endPage);
+       session.setAttribute("pageCount", pageCount);
        
-       request.setAttribute("auctionList", auctionList);
-       request.setAttribute("seller", id);
-       return "list";
+       session.setAttribute("auctionList", auctionList);
+       session.setAttribute("seller", id);
+       
+       session.setAttribute("already", check);
+       
+       System.out.println(auctionList);
+       return "auction/list";
    }
 
    

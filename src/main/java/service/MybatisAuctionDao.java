@@ -14,6 +14,7 @@ import model.Auction;
 import model.Bid;
 import model.Cash;
 import model.Member;
+import model.Wishseller;
 import mybatis.AbstractRepository;
 
 @Component
@@ -286,6 +287,32 @@ public class MybatisAuctionDao {
 	            sqlSession.close();
 	        }
 	    }
+
+	public void addseller(Wishseller seller) {
+	
+			SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+			try {
+			
+				sqlSession.insert(namespace + ".addseller", seller);
+				sqlSession.commit();
+			} finally {
+				sqlSession.close();
+			}
+		}
+
+	public int selectseller(Wishseller ws) {
+		  SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        try
+	        {
+	           return sqlSession.selectOne(namespace + ".selectseller",ws);
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	}
+		
+	
 
 	/*public int getunreadMessage(String toid) {
 	

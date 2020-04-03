@@ -117,6 +117,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 
+<insert id="addseller" parameterType="Wishseller">
+		insert into wishseller
+		values
+		(#{seller},#{id},now())
+	</insert>
+
+
+<select id="selectseller" parameterType="Wishseller" resultType="int">
+		select count(*) from wishseller where seller=#{seller} and id = #{id};
+	</select>
+
 
 </mapper>
 

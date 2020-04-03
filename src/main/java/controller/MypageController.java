@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import model.Amessage;
 import model.Auction;
 import model.User;
+import model.Wishseller;
 import service.MybatisAuctionDao;
 import service.MybatisCashDao;
 
@@ -171,24 +172,29 @@ public class MypageController {
 	    
 	
 	    
+
 	    
 	 
 	 
 	@RequestMapping(value = "mywishseller", method = RequestMethod.GET)
-	    public String auction_listGET(HttpServletRequest request)
+	    public String mywishseller(HttpSession session,HttpServletRequest request)
 	    {
-	        HttpSession session = request.getSession();
-
-
-	        String id = request.getParameter("id");
-
-
+		  User user = (User) session.getAttribute("user");
+		  int pageNum ;
+			  
+				  
+				
+		 if(request.getParameter("pageNum")==null){
+			 pageNum=1;
+		 }else{
+			 pageNum= Integer.parseInt(request.getParameter("pageNum"));
+		 }
 
 	        int currentPage = 1;
 
 	        try
 	        {
-	            currentPage = Integer.parseInt(request.getParameter("pageNum"));
+	            currentPage = pageNum;
 	            session.setAttribute("pageNum", currentPage);
 	        }
 	        catch (Exception e)
@@ -205,7 +211,7 @@ public class MypageController {
 
 	        int count = dbPro.getAuctionCount();
 
-	        List<Auction> auctionList = dbPro.getmyseller(startRow, endRow, id);
+	        List<Auction> auctionList = dbPro.getmyseller(startRow, endRow, user.getId());
 
 	        int number = count - (currentPage - 1) * pageSize;
 	        int bottomLine = 3;
@@ -215,22 +221,45 @@ public class MypageController {
 
 	        if (endPage > pageCount) endPage = pageCount;
 
-	        request.setAttribute("currentPage", currentPage);
-	        request.setAttribute("startRow", startRow);
-	        request.setAttribute("endRow", endRow);
-	        request.setAttribute("count", count);
-	        request.setAttribute("pageSize", pageSize);
-	        request.setAttribute("number", number);
-	        request.setAttribute("bottomLine", bottomLine);
-	        request.setAttribute("startPage", startPage);
-	        request.setAttribute("endPage", endPage);
-	        request.setAttribute("pageCount", pageCount);
+	        session.setAttribute("currentPage", currentPage);
+	        session.setAttribute("startRow", startRow);
+	        session.setAttribute("endRow", endRow);
+	        session.setAttribute("count", count);
+	        session.setAttribute("pageSize", pageSize);
+	        session.setAttribute("number", number);
+	        session.setAttribute("bottomLine", bottomLine);
+	        session.setAttribute("startPage", startPage);
+	        session.setAttribute("endPage", endPage);
+	        session.setAttribute("pageCount", pageCount);
 
-	        request.setAttribute("auctionList", auctionList);
-
-	        return "list";}
+	        session.setAttribute("auctionList", auctionList);
+	        session.setAttribute("user", user);
+	        session.setAttribute("seller", null);
+	        
+	        session.setAttribute("pagename", "mywishseller");
+	        return "auction/list";
+	        
+	    }
 
 	 
+	
+	 @RequestMapping(value = "addmyseller", method = RequestMethod.GET)
+	    public String mypage(HttpSession session,HttpServletRequest request)
+	    {
+		 
+		 User user = (User) session.getAttribute("user");
+		 
+	   
+		 
+		 Wishseller seller = new Wishseller();
+		 seller.setId(user.getId());
+		 seller.setSeller(request.getParameter("seller"));
+	
+		 dbPro.addseller(seller);
+	     //insert하기 전에 같이 게 있으면 이미 등록된 판매자입니다라는 창띄워야함 //  
+	        return "redirect:/mywishseller";
+	    }
+
 	
 	/* @RequestMapping("messagebox")
 	    public String message(Model m,HttpServletRequest request)

@@ -64,6 +64,7 @@ public class MemberController {
 			if(member.getPassword().equals(check.getPassword())){ 
 				User user = new User(check.getId(), check.getPosition(), check.getStatus());
 				session.setAttribute("user", user);
+				
 				return "redirect:/main";
 			}else{
 				return "member/loginForm";

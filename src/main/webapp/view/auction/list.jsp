@@ -31,6 +31,18 @@
 <link rel="stylesheet" href="css/price_rangs.css">
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
+<script type="text/javascript">
+
+function check(){
+	var already = ${already}
+	if (already==1){
+		alert('이미 등록된 상점입니다.')
+		return false;
+	}else{
+	confirm("관심상점으로 추가하시겠습니까?");
+	}
+}
+</script>
 
 
 </head>
@@ -44,7 +56,8 @@
 		<c:if test="${seller!=null}">
 	
 	<h1>${seller}님의 상점입니다.</h1>
-	<h5><a href="addmyseller">관심상점 등록하기</a></h5>
+	<h5><a href="addmyseller?seller=${seller}&id=${user.id}" onclick="return check();"  >관심상점 등록하기</a>
+	</h5>
 <div class="row">
 				<div class="col-lg-6">
 </c:if>
