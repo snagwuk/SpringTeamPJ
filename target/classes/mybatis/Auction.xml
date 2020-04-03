@@ -33,6 +33,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from aAuction where num = #{num}
 	</select>
 	
+	<update id="updateContent" parameterType="Auction">
+		update aAuction set pname=#{pname},  pdetail=#{pdetail}, pstatus=#{pstatus} where
+		num=#{num}
+	</update>
+
+	<delete id="deleteAuction" parameterType="int">
+		delete from aAuction
+		where num=#{num}
+	</delete>
 	
 	<!--  진희   -->
 	
@@ -40,17 +49,65 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select ifnull(count(*),0) from aAuction where seller = #{seller}
 	</select>
 	
+	<select id="getMyOnSaleCount" parameterType="String" resultType="int">
+		select ifnull(count(*),0) from aAuction where seller = #{seller} and pstatus='입찰중'
+	</select>
+	
+	<select id="getMyDealingCount" parameterType="String" resultType="int">
+		select ifnull(count(*),0) from aAuction where seller = #{seller} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료')
+	</select>
+	
+	<select id="getMyEndSaleCount" parameterType="String" resultType="int">
+		select ifnull(count(*),0) from aAuction where seller = #{seller} and pstatus='거래종료'
+	</select>
+	
+	<select id="getMyOnSaleList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where seller = #{seller} and pstatus='입찰중' order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	<select id="getMyDealingList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where seller = #{seller} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료') order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	<select id="getMyEndSaleList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where seller = #{seller} and pstatus='거래종료' order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ위는 판매상품 아래는 구매상품ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	
 	<select id="getMyBidCount" parameterType="String" resultType="int">
 		select ifnull(count(*),0) from aAuction where winid = #{winid}
 	</select>
 	
-	<select id="getMyAuctionList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where seller = #{seller} order by num desc limit #{startRow} ,#{endRow}
+	<select id="getMyBiddingCount" parameterType="String" resultType="int">
+		select ifnull(count(*),0) from aAuction where winid = #{winid} and pstatus='입찰중'
+	</select>
+	
+	<select id="getMyBiddingDealingCount" parameterType="String" resultType="int">
+		select ifnull(count(*),0) from aAuction where winid = #{winid} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료')
+	</select>
+	
+	<select id="getMyBiddingCompleteCount" parameterType="String" resultType="int">
+		select ifnull(count(*),0) from aAuction where winid = #{winid} and pstatus='거래종료'
 	</select>
 	
 	<select id="getMyBidList_limit" parameterType="hashmap" resultType="Auction">
 		select * from aAuction where winid = #{winid} order by num desc limit #{startRow} ,#{endRow}
 	</select>
+	
+	<select id="getMyBiddingList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where winid = #{winid} and pstatus='입찰중' order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	<select id="getMyBiddingDealingList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where winid = #{winid} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료') order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	<select id="getMyBiddingCompleteList_limit" parameterType="hashmap" resultType="Auction">
+		select * from aAuction where winid = #{winid} and pstatus='거래종료' order by num desc limit #{startRow} ,#{endRow}
+	</select>
+	
+	
 	
 	<select id="getMyAuctionContent" parameterType="Auction" resultType="Auction">
 		select * from aAuction where num = #{num}
@@ -73,15 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 
-	<update id="updateContent" parameterType="Auction">
-		update aAuction set pname=#{pname},  pdetail=#{pdetail}, pstatus=#{pstatus} where
-		num=#{num}
-	</update>
-
-	<delete id="deleteAuction" parameterType="int">
-		delete from aAuction
-		where num=#{num}
-	</delete>
+	
 
 	<!-- 지은파트 -->
 	
