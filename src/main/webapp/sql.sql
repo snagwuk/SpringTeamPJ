@@ -14,3 +14,6 @@ WINID VARCHAR(100),
 FILENAME VARCHAR(100),
 filesize int
 );
+
+
+create table Amessage (toid varchar(50), fromid varchar(50),content varchar(300),sendtime DATETIME ,readcount int);
