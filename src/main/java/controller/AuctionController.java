@@ -200,6 +200,7 @@ public class AuctionController
 	           m.addAttribute("num", bid.getNum());
 			 
 		          
+	           
 			System.out.println("error");
 			return "bidlist";
 		}

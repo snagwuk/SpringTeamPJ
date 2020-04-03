@@ -81,7 +81,7 @@ public class MypageController {
 	        return "list";
 	    }
 	 
-	
+/*	
 	 @RequestMapping("messagebox")
 	    public String message(Model m,HttpServletRequest request)
 	    {
@@ -96,7 +96,7 @@ public class MypageController {
 
 		 return "messagebox";
 	    }
-	 
+	 */
 
 	 
 	
