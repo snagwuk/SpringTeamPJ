@@ -40,7 +40,18 @@
 	<!--================Category Product Area =================-->
 	<section class="cat_product_area section_padding">
 		<div class="container">
-			<div class="row">
+		
+		<c:if test="${seller!=null}">
+	
+	<h1>${seller}님의 상점입니다.</h1>
+	<h5><a href="addmyseller">관심상점 등록하기</a></h5>
+<div class="row">
+				<div class="col-lg-6">
+</c:if>
+		
+			
+				<c:if test="${seller==null}">
+					<div class="row">
 				<div class="col-lg-3">
 					<div class="left_sidebar_area">
 						<aside class="left_widgets p_filter_widgets">
@@ -84,6 +95,8 @@
 							</div>
 						</aside>
 					</div>
+					
+					</c:if>
 				</div>
 				<div class="col-lg-9">
 					<div class="row">
@@ -104,6 +117,7 @@
 							</div>
 						</div>
 					</div>
+
 
 					<div class="row align-items-center latest_product_inner">
 						<c:if test="${count==0}">

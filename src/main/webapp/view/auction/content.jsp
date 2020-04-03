@@ -106,7 +106,7 @@ background-color: #ff3368;
                   <p></p>
                   <div style="margin-top: -2%;">
                      <ul>
-                        <li><span>판매자</span>: ${auction.seller}</li>
+                        <li><span>판매자</span>: ${auction.seller} <a href="sellerstore?seller=${auction.seller}"> [판매자 상점가기]</a></li> 
                         <li><span>배송방법</span>: 택배</li>
                         <li><span>선불</span> ${auction.deliverypay} 원</li>
                         <li><p></p></li>
