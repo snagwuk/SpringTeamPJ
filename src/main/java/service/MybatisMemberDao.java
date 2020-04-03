@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import model.Auction;
 import model.Member;
 import mybatis.AbstractRepository;
 
@@ -63,6 +64,32 @@ public class MybatisMemberDao {
 			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
 			try {
 				return sqlSession.selectOne(namespace + ".getMemberinfo", id);
+			} finally {
+				sqlSession.close();
+			}
+		}
+	 public List<Member> selectposition() {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				return sqlSession.selectList(namespace + ".selectposition");
+			} finally {
+				sqlSession.close();
+			}
+		}
+	 public void upposition(String id) {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				sqlSession.update(namespace + ".upposition",id);
+				sqlSession.commit();
+			} finally {
+				sqlSession.close();
+			}
+		}
+	 public void downposition(String id) {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				sqlSession.update(namespace + ".downposition",id);
+				sqlSession.commit();
 			} finally {
 				sqlSession.close();
 			}

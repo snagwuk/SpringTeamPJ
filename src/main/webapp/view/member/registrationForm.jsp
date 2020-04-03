@@ -52,6 +52,36 @@
             }
         }).open();
     }
+    function inputPhoneNumber(obj) {
+
+
+
+        var number = obj.value.replace(/[^0-9]/g, "");
+        var phone = "";
+
+
+
+        if(number.length < 4) {
+            return number;
+        } else if(number.length < 7) {
+            phone += number.substr(0, 3);
+            phone += "-";
+            phone += number.substr(3);
+        } else if(number.length < 11) {
+            phone += number.substr(0, 3);
+            phone += "-";
+            phone += number.substr(3, 3);
+            phone += "-";
+            phone += number.substr(6);
+        } else {
+            phone += number.substr(0, 3);
+            phone += "-";
+            phone += number.substr(3, 4);
+            phone += "-";
+            phone += number.substr(7);
+        }
+        obj.value = phone;
+    }
 </script>
 <style>
 .col-lg-8 {flex:0 0 66.6666667%; margin:0 auto; max-width:80%;}
@@ -122,7 +152,7 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
             
             <br>
             <div class="mt-10">
-               핸드폰번호&nbsp&nbsp&nbsp <input type="text" name="phone" required class="single-input-parea">
+               핸드폰번호&nbsp&nbsp&nbsp <input type="text" onKeyup="inputPhoneNumber(this);" name="phone" required class="single-input-parea">
             </div>
             예:01012345678
             <div class="mt-10">
@@ -137,8 +167,8 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
                
             </div>
          
-            <input type="hidden" name="position" value="구매자"/>
-            <input type="hidden" name="status" value="가능"/>
+            <input type="hidden" name="position" value="구매자">
+            <input type="hidden" name="status" value="가능">
          
             <br><br><br><br>
             <input type="submit" name="confirm" value="가입하기">
