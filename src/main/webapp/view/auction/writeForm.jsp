@@ -45,7 +45,7 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
          <h3 class="mb-30">상품 등록</h3>
          <form action="${pageContext.request.contextPath}/write" enctype="multipart/form-data" method="POST">
         			<input type="hidden" name="seller" value="${user.id}">
-        			<input type="hidden" name="winid" value="mask">
+        			<input type="hidden" name="winid" value="cake">
         			<input type="hidden" name="pstatus" value="입금전">
 
 				

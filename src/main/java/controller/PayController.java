@@ -69,7 +69,7 @@ public class PayController {
 
 		Auction auction = new Auction();
 		auction.setNum(num);
-		Auction myAuction = dbPro.getMyAuction(auction);
+		Auction myAuction = dbPro.getMyAuctionContent(auction);
 
 		Cash cash = new Cash();
 		cash.setId(user.getId());
@@ -90,7 +90,7 @@ public class PayController {
 		Auction auction = new Auction();
 		auction.setWinid(winid);
 		auction.setNum(num);
-		Auction myAuction = dbPro.getMyAuction(auction);
+		Auction myAuction = dbPro.getMyAuctionContent(auction);
 		m.addAttribute("myAuction", myAuction);	
 		
 		Member member = memPro.getMemberinfo(winid); //낙찰자 배송정보 가져오기
@@ -109,7 +109,7 @@ public class PayController {
 		auction.setSeller(seller);
 		auction.setNum(num);
 		
-		Auction myAuction = dbPro.getMyAuction(auction);
+		Auction myAuction = dbPro.getMyAuctionContent(auction);
 		myAuction.setPstatus("배송중");
 		dbPro.updateAuctionStatus(myAuction);
 		m.addAttribute("auction", auction);	
@@ -124,7 +124,7 @@ public class PayController {
 		Auction auction = new Auction();
 		auction.setWinid(user.getId());
 		auction.setNum(num);
-		Auction myAuction = dbPro.getMyAuction(auction);
+		Auction myAuction = dbPro.getMyAuctionContent(auction);
 		myAuction.setPstatus("거래종료");
 		dbPro.updateAuctionStatus(myAuction);
 		
