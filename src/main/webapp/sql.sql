@@ -61,7 +61,14 @@ serviceStar int
 
 
 
-=======
+create table wishseller(
+seller varchar(50),
+id varchar(50),
+registtime DATETIME
+);
 
-create table Amessage (toid varchar(50), fromid varchar(50),content varchar(300),sendtime DATETIME ,readcount int);
->>>>>>> refs/heads/jieun
+create table amessage (num int primary key,sender varchar(50),
+receiver varchar(50),content varchar(500),
+sendtime DATETIME,readtime DATETIME,
+readcount int);
+

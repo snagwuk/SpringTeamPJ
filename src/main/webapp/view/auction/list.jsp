@@ -38,8 +38,11 @@ function check(){
 	if (already==1){
 		alert('이미 등록된 상점입니다.')
 		return false;
+	}if(confirm("관심상점으로 추가하시겠습니까?")==true){
+		alert('관심상점으로 등록되었습니다.')
+		return true;
 	}else{
-	confirm("관심상점으로 추가하시겠습니까?");
+	return false;
 	}
 }
 </script>
@@ -56,7 +59,7 @@ function check(){
 		<c:if test="${seller!=null}">
 	
 	<h1>${seller}님의 상점입니다.</h1>
-	<h5><a href="addmyseller?seller=${seller}&id=${user.id}" onclick="return check();"  >관심상점 등록하기</a>
+	<h5><a href="addmyseller?seller=${seller}" onclick="return check(); "  >관심상점 등록하기</a>
 	</h5>
 <div class="row">
 				<div class="col-lg-6">

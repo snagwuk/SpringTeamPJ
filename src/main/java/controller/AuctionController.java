@@ -169,9 +169,9 @@ public class AuctionController
     }
 //지은
    @RequestMapping(value = "bidding", method = RequestMethod.GET)
-   public String auction_bidding(int num, Model m)
+   public String auction_bidding(int num, Model m,HttpSession session)
    {
-          
+	   User user = (User) session.getAttribute("user");
 	   int hprice = (int)dbPro.gethightprice(num);
 	  Auction auction = dbPro.getAuction(num);
 	   List<Bid> bidlist = dbPro.getbidlist(num);
@@ -183,7 +183,8 @@ public class AuctionController
            m.addAttribute("bidlist", bidlist);
            m.addAttribute("num", num);
            m.addAttribute("bid", new Bid());
-           return "bidlist";
+           m.addAttribute("user", user);
+           return "auction/bidlist";
        
    }
    
@@ -207,7 +208,7 @@ public class AuctionController
 		          
 	           
 			System.out.println("error");
-			return "bidlist";
+			return "auction/bidlist";
 		}
 		dbPro.insertbid(bid);
 		return "redirect:/bidding?num=" + bid.getNum();
@@ -230,7 +231,7 @@ public class AuctionController
    public String sellerstore(HttpServletRequest request,HttpSession session)
    {
      
-	   User user = (User) session.getAttribute("user");
+	   User user = (User) request.getSession().getAttribute("user");
        
        int currentPage = 1;
        String id = request.getParameter("seller");

@@ -311,23 +311,10 @@ public class MybatisAuctionDao {
 	            sqlSession.close();
 	        }
 	}
-		
-	
 
-	/*public int getunreadMessage(String toid) {
-	
-		   
-		        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		        try
-		        {     
-		           return sqlSession.selectOne(namespace2 + ".getunreadMessage",toid);   
-		        }
-		        finally
-		        {
-		            sqlSession.close();
-		        }
-		    
-	}*/
+
+
+
 	  
 	  
 }

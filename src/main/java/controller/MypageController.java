@@ -257,7 +257,7 @@ public class MypageController {
 	
 		 dbPro.addseller(seller);
 	     //insert하기 전에 같이 게 있으면 이미 등록된 판매자입니다라는 창띄워야함 //  
-	        return "redirect:/mywishseller";
+	        return "redirect:/sellerstore?seller="+seller.getSeller();
 	    }
 
 	

@@ -17,6 +17,7 @@ import model.Member;
 import model.User;
 import service.MybatisCashDao;
 import service.MybatisMemberDao;
+import service.MybatisMessageDao;
 
 
 
@@ -29,6 +30,9 @@ public class MemberController {
 	
 	@Autowired
 	MybatisCashDao cashPro;
+	
+	@Autowired
+	MybatisMessageDao mePro;
 	
 	@RequestMapping(value = "regist",method = RequestMethod.GET)
 	public String member_registForm(Member member){
@@ -57,7 +61,16 @@ public class MemberController {
 	public String loginPro(Member member, HttpSession session){
 		
 		Member check = dbPro.authenticate(member.getId()); 
-	
+			
+		int unreadcount = mePro.getunreaccount(member.getId());
+		if(unreadcount==0){
+			session.setAttribute("unreadcount", null);
+		}else{
+			 session.setAttribute("unreadcount", unreadcount);}
+			
+			 System.out.println(unreadcount);
+		
+		
 		if(check==null){
 			return "member/loginForm";
 		}else {

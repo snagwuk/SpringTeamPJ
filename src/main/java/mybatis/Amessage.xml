@@ -4,8 +4,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mybatis.Amessage">
 
-<select id="getunreadMessage" parameterType="String" resultType="int">
-		select count(readcount) from message where readcount=0 and toid = #{toid};
+<select id="getunreaccount" parameterType="String" resultType="int">
+		select count(readcount) from amessage where readcount=0 and receiver = #{receiver};
 	</select>
 
+<update id="readcountupdate" parameterType="String" >
+update amessage set readcount = 1 where receiver = #{receiver};
+</update>
+
+<select id="recentmessage" parameterType="Amessage" resultType="Amessage">
+    <!-- SELECT t1.* FROM amessage t1
+  JOIN (SELECT sender , receiver, MAX(sendtime) sendtime FROM amessage GROUP BY receiver) t2
+    ON t1.sendtime = t2.sendtime
+    where t1.sender = #{receiver} or t1.receiver = #{receiver}; -->
+    SELECT *FROM 
+(SELECT * FROM amessage a 
+where a.sender = 'ii'or a.receiver = 'ii' order by a.sendtime desc) b
+GROUP BY b.sender order by sendtime desc;
+</select>
+
+<select id="recentsender" parameterType="Amessage" resultType="Amessage">
+select * from amessage where sender = (
+SELECT receiver 
+FROM amessage
+WHERE sendtime = (SELECT MAX(sendtime)
+FROM amessage WHERE receiver = #{receiver} or sender = #{receiver})) or receiver = (SELECT receiver 
+FROM amessage
+WHERE sendtime = (SELECT MAX(sendtime)
+FROM amessage WHERE receiver = #{receiver} or sender = #{receiver}));
+</select>
+
+<select id="selectAllms" parameterType="Amessage" resultType="Amessage">
+    SELECT * FROM amessage where sender=#{receiver} and  receiver=#{sender}or 
+    sender =#{sender} and receiver=#{receiver} ;
+</select>
+
+
+  
 </mapper>

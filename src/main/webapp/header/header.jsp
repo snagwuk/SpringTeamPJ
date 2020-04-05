@@ -29,6 +29,45 @@
 <link rel="stylesheet" href="css/slick.css">
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
+
+<script type="text/javascript">
+function chat() {
+	window.open('message/messagelist','child','toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=800')
+	}
+	
+
+</script>
+<style type="text/css">
+.main_menu .comment i:after {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #f13d80;
+    width: 14px;
+    height: 14px;
+    right: -8px;
+    top: -8px;
+    text-align: center;
+    line-height: 15px;
+    font-size: 10px;
+    color: #fff;
+}
+</style>
+
+
+<c:if test="${unreadcount!=null}">
+<c:set var="unreadcount" value="${unreadcount}"/>
+<style type="text/css">
+.main_menu .comment i:after { 
+
+
+ content : '${unreadcount}'
+ }
+</style>
+
+
+
+
+</c:if>
 </head>
 
 <body>
@@ -101,6 +140,13 @@
 				</div>
 				<div class="hearer_icon d-flex">
 					<a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
+					<c:if test="${user!=null }">
+					<div class="dropdown comment">
+						<a  href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="ti-comment" onclick="chat()"></i>
+						</a>
+					</div>
+					</c:if>
+					
 					<a href=""><i class="ti-heart"></i></a>
 					<div class="dropdown cart">
 						<a class="dropdown-toggle" href="#" id="navbarDropdown3"
