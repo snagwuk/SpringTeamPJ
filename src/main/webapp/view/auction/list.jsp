@@ -162,7 +162,7 @@ function check(){
 
 										<c:if test="${startPage > bottomLine}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${startPage - bottomLine}"
+												href="${pagename}?pageNum=${startPage - bottomLine}"
 												aria-label="Previous"> <i class="ti-angle-double-left"></i>
 											</a></li>
 										</c:if>
@@ -184,13 +184,13 @@ function check(){
 
 										<c:forEach var="i" begin="${startPage}" end="${endPage}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${i}">${i}</a></li>
+												href="${pagename}?pageNum=${i}">${i}</a></li>
 
 										</c:forEach>
 
 										<c:if test="${endPage < pageCount}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${startPage + bottomLine}"
+												href="${pagename}?pageNum=${startPage + bottomLine}"
 												aria-label="Next"> <i class="ti-angle-double-right"></i>
 											</a></li>
 										</c:if>
