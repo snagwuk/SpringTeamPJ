@@ -16,7 +16,7 @@ FILENAME VARCHAR(100),
 filesize int
 );
 
-<<<<<<< HEAD
+
 create table amember(
 id varchar(100) primary key,
 password varchar(10) not null,
@@ -31,14 +31,15 @@ position varchar(10),
 status varchar(10),
 account varchar(20),
 bank varchar(10));
-관리자 아이디 admin 비밀번호 1111 등록
+--관리자 아이디 admin 비밀번호 1111 등록
 insert into amember values("admin",1111,"관리자",now(),010,1234,"집주소","자세히","참고","관리자","가능",123,"국민");
 
 create table aCash(
 id varchar(100) ,
 cash int,
 reason Varchar(20),
-cashdate datetime
+cashdate DATETIME,
+cstatus int
 );
 
 create table abid
@@ -61,7 +62,7 @@ serviceStar int
 
 
 
-=======
+
 
 create table Amessage (toid varchar(50), fromid varchar(50),content varchar(300),sendtime DATETIME ,readcount int);
->>>>>>> refs/heads/jieun
+

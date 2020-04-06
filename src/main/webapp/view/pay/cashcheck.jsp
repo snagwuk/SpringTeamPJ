@@ -82,46 +82,33 @@ li {
 	<div class="section-top-border">
 		<div class="row">
 			<div class="col-lg-8 col-md-8">
-				<h3 class="mb-30">나의 캐쉬 내역  </h3><br>
-				<h2 >현재 캐쉬 : ${mycash}</h2>
-				
-
-				<c:if test="${count==0}">
-					<table border="1" class="coure_table">
+				<h3 class="mb-30">캐쉬 요청 리스트</h3>
+				<br>
+				<table border="1" class="coure_table">
+					<tr>
+						<td>날짜</td>
+						<td>ID</td>
+						<td>변동 금액</td>
+						<td>변동 사유</td>
+						<td>승인/거절</td>
+					</tr>
+					<c:forEach var="cash" items="${cashchecklist}">
 						<tr>
-							<td align="center">캐쉬내역이 없습니다.</td>
+							<form method="POST" action="${pageContext.request.contextPath}/cashcheck">
+							<td><input type="text" readonly="readonly" name="cashdate" value="${fn:replace(cash.cashdate, 'T', ' ')}"/></td>
+							<td><input type="text" readonly="readonly" name="id" value="${cash.id}"/></td>
+							<td><input type="text" readonly="readonly" name="cash" value="${cash.cash}"/></td>
+							<td><input type="text" readonly="readonly" name="reason" value="${cash.reason}"/></td>
+							<td>
+								<input type="hidden"  name="cstatus" value="1"/>
+								<input type="submit" value="승인"/> / <input type="submit" value="반려"/>
+							</td>
+							</form>
 						</tr>
-					</table>
-				</c:if>
-				<c:if test="${count!=0}">
-					<table border="1" class="coure_table">
-						<tr>
-							<td>날짜</td>
-							<td>변동 금액</td>
-							<td>변동 사유</td>
-							<td>승인여부</td>
-						</tr>
+					</c:forEach>
 
-
-						<c:forEach var="cash" items="${cashlist}">
-							<tr>
-								<td>${fn:replace(cash.cashdate, 'T', ' ')}</td>
-								<td>${cash.cash}</td>
-								<td>${cash.reason}</td>
-								<c:if test="${cash.cstatus == 0}">
-									<td>대기</td>
-								</c:if>
-								<c:if test="${cash.cstatus == 1}">
-									<td>승인</td>
-								</c:if>
-								<c:if test="${cash.cstatus == 2}">
-									<td>반려</td>
-								</c:if>
-							</tr>
-						</c:forEach>
-
-					</table>
-					<%-- 
+				</table>
+				<%-- 
 					<nav class="blog-pagination justify-content-center d-flex">
 						<ul class="pagination">
 							<li class="page-item"><a href="#" class="page-link"
@@ -144,7 +131,7 @@ li {
 						</ul>
 					</nav>
  --%>
-				</c:if>
+
 
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-/controller/
+/model/
 /mybatis/
 /service/
-/model/
+/controller/

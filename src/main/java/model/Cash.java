@@ -12,8 +12,17 @@ public class Cash implements Serializable {
 	private String reason;
 	@DateTimeFormat(pattern = "yyyy-MM-dd_HH:mm:ss")
 	private LocalDateTime  cashdate;
+	private int cstatus;
 	
-	public String getId() {
+    	public int getCstatus()
+        {
+            return cstatus;
+        }
+        public void setCstatus(int cstatus)
+        {
+            this.cstatus = cstatus;
+        }
+        public String getId() {
 		return id;
 	}
 	public void setId(String id) {

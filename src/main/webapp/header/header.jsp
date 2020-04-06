@@ -90,7 +90,7 @@
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
 								<a class="dropdown-item"
 									href="${pageContext.request.contextPath}/grade"> 등급관리</a> <a
-									class="dropdown-item" href="tracking.html">tracking</a> <a
+									class="dropdown-item" href="${pageContext.request.contextPath}/cashcheck">캐쉬 승인</a> <a
 									class="dropdown-item" href="checkout.html">product checkout</a>
 								<a class="dropdown-item" href="cart.html">shopping cart</a> <a
 									class="dropdown-item" href="confirmation.html">confirmation</a>

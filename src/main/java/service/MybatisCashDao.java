@@ -57,6 +57,7 @@ public class MybatisCashDao
             sqlSession.close();
         }
     }
+    
     public int getMyCashCount(String id)
     {
         SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
@@ -70,6 +71,30 @@ public class MybatisCashDao
         }
     }
     
- 
+    public List<Cash> getCashCheckList()
+    {
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+        try
+        {
+            return sqlSession.selectList(namespace + ".getCashCheckList");
+        }
+        finally
+        {
+            sqlSession.close();
+        }
+    }
     
+    public void adminCheck(Cash cash) throws Exception 
+    {
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+        try 
+        {
+                sqlSession.update(namespace + ".adminCheck", cash);
+                sqlSession.commit();
+        } 
+        finally 
+        {
+                sqlSession.close();
+        }
+    }
 }

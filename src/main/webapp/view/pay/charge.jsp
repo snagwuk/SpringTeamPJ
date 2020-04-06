@@ -85,7 +85,7 @@ li {
 
 					<div class="mt-10">
 						ID &nbsp&nbsp&nbsp <input type="text" name="id"
-							value="${winid}" onfocus="this.placeholder = ''" required
+							value="${user.id}" readonly="readonly" onfocus="this.placeholder = ''" required
 							class="single-input wform">
 					</div>
 					
