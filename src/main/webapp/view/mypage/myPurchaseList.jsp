@@ -48,9 +48,10 @@
 				<div class="col-lg-9">
 
 					
-					<a href="${pageContext.request.contextPath}/myBidding"><input type="button" value="판매중"></a>
-					<a href="${pageContext.request.contextPath}/myBiddingDealing"><input type="button" value="거래중"></a>
-					<a href="${pageContext.request.contextPath}/myBiddingComplete"><input type="button" value="판매완료	"></a> <br>
+					<a href="${pageContext.request.contextPath}/myBidding"><input type="button" value="입찰"></a>
+					<a href="${pageContext.request.contextPath}/myBiddingDealing"><input type="button" value="낙찰(거래중)"></a>
+					<a href="${pageContext.request.contextPath}/myBiddingComplete"><input type="button" value="낙찰(거래완료)"></a> <br>
+					<a href="${pageContext.request.contextPath}/myBiddingComplete"><input type="button" value="유찰/신고/취소"></a> <br>
 
 
 					<div class="row align-items-center latest_product_inner">
@@ -60,28 +61,16 @@
 						<c:if test="${count!=0}">
 							<c:forEach var="myBidList" items="${myBidList}">
 								<div>
-									<img
+									<a href="${pageContext.request.contextPath}/content?num=${myBidList.num}"><img
 										src="<%=request.getContextPath()%>/uploadFile/${myBidList.filename}"
-										width="200" height="200">
-									<div>
-										상품명: <a
-											href="${pageContext.request.contextPath}/myContent?num=${myBidList.num}">${myAuctionList.pname}</a><br />
-										현재 가격 : ${myBidList.beginsprice}<br /> 
-										상태 :${myBidList.pstatus}<br />
-										<c:if test="${myBidList.pstatus eq '입금완료'}">
-											<form
-												action="${pageContext.request.contextPath}/shippingInfo"
-												method="POST">
-												<input type="hidden" name="winid"
-													value="${myBidList.winid}"> <input
-													type="hidden" name="num" value="${myBidList.num}">
-												<input type="submit" value="배송정보보기">
-											</form>
-
+										width="200" height="200"></a>
+										<div>
+										상품명: ${myBidList.pname}<br />	
+										<c:if test="${myBidList.pstatus eq '입찰중'}">
+										입찰마감시간: ${myBidList.enddate}
 										</c:if>
-										판매자ID: ${myBidList.seller}
-										낙찰자ID: ${myBidList.winid}<br /> 낙찰일시 : <br />
-									</div>
+																				
+									</div>								
 								</div>
 							</c:forEach>
 						</c:if>

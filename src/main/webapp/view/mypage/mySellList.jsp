@@ -50,7 +50,8 @@
 					
 					<a href="${pageContext.request.contextPath}/myOnSale"><input type="button" value="판매중"></a>
 					<a href="${pageContext.request.contextPath}/myDealing"><input type="button" value="거래중"></a>
-					<a href="${pageContext.request.contextPath}/myEndSale"><input type="button" value="판매완료	"></a> <br>
+					<a href="${pageContext.request.contextPath}/myEndSale"><input type="button" value="판매완료"></a> <br>
+					<a href="${pageContext.request.contextPath}/myEndSale"><input type="button" value="유찰/신고/취소"></a> <br>
 
 
 					<div class="row align-items-center latest_product_inner">
@@ -60,27 +61,15 @@
 						<c:if test="${count!=0}">
 							<c:forEach var="myAuctionList" items="${myAuctionList}">
 								<div>
-									<img
+									<a href="${pageContext.request.contextPath}/content?num=${myAuctionList.num}"><img
 										src="<%=request.getContextPath()%>/uploadFile/${myAuctionList.filename}"
-										width="200" height="200">
+										width="200" height="200"></a>
 									<div>
-										상품명: <a
-											href="${pageContext.request.contextPath}/myContent?num=${myAuctionList.num}">${myAuctionList.pname}</a><br />
-										현재 가격 : ${myAuctionList.beginsprice}<br /> 
-										상태 :${myAuctionList.pstatus}<br />
-										<c:if test="${myAuctionList.pstatus eq '입금완료'}">
-											<form
-												action="${pageContext.request.contextPath}/shippingInfo"
-												method="POST">
-												<input type="hidden" name="winid"
-													value="${myAuctionList.winid}"> <input
-													type="hidden" name="num" value="${myAuctionList.num}">
-												<input type="submit" value="배송정보보기">
-											</form>
-
+										상품명: ${myAuctionList.pname}<br />	
+										<c:if test="${myAuctionList.pstatus eq '입찰중'}">
+										입찰마감시간: ${myAuctionList.enddate}
 										</c:if>
-										판매자ID: ${myAuctionList.seller}
-										낙찰자ID: ${myAuctionList.winid}<br /> 낙찰일시 : <br />
+																				
 									</div>
 								</div>
 							</c:forEach>

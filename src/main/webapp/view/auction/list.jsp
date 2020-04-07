@@ -106,6 +106,7 @@
 					</div>
 
 					<div class="row align-items-center latest_product_inner">
+						
 						<c:if test="${count==0}">
 							<h4>등록된 물품이 없음</h4>
 						</c:if>

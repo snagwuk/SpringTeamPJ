@@ -234,14 +234,14 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	public List<Auction> getMyBiddingDealingList(int startRow, int endRow, String seller) { // 내 거래중 리스트 불러오기(구매)
+	public List<Auction> getMyBiddingDealingList(int startRow, int endRow, String winid) { // 내 거래중 리스트 불러오기(구매)
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		startRow = startRow - 1;
 		endRow = endRow - startRow;
 		Map map = new HashMap();
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		map.put("seller", seller);
+		map.put("winid", winid);
 
 		try {
 			return sqlSession.selectList(namespace + ".getMyBiddingDealingList_limit", map);
@@ -250,30 +250,17 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	public List<Auction> getMyBiddingCompleteList(int startRow, int endRow, String seller) { // 내 거래종료 리스트 (구매)
+	public List<Auction> getMyBiddingCompleteList(int startRow, int endRow, String winid) { // 내 거래종료 리스트 (구매)
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		startRow = startRow - 1;
 		endRow = endRow - startRow;
 		Map map = new HashMap();
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		map.put("seller", seller);
+		map.put("winid", winid);
 
 		try {
 			return sqlSession.selectList(namespace + ".getMyBiddingCompleteList_limit", map);
-		} finally {
-			sqlSession.close();
-		}
-	}
-	
-	
-	
-	
-	public Auction getMyAuctionContent(Auction auction) {
-
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		try {
-			return sqlSession.selectOne(namespace + ".getMyAuctionContent", auction);
 		} finally {
 			sqlSession.close();
 		}

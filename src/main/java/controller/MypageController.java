@@ -194,8 +194,75 @@ public class MypageController {
 
 		return "mypage/mySellList";
 	}
+	
+	/*@RequestMapping(value = "myFailureBidding", method = RequestMethod.GET) //유찰 신고 취소
+	public String myFailureBidding(HttpServletRequest req, Model m) {
+		
+		User user = (User) req.getSession().getAttribute("user");
+		HttpSession session = req.getSession();
 
-	//////////////////////////////////위는 구매 아래는 판매/////////////////////////////////
+		int currentPage = 1;
+
+		try {
+			currentPage = Integer.parseInt(req.getParameter("pageNum"));
+			session.setAttribute("pageNum", currentPage);
+		} catch (Exception e) {
+
+			if (session.getAttribute("pageNum") == null)
+				session.setAttribute("pageNum", 1);
+		}
+		currentPage = (int) session.getAttribute("pageNum");
+
+		int pageSize = 9;
+		int startRow = (currentPage - 1) * pageSize + 1;
+		int endRow = currentPage * pageSize;
+
+		int myEndSaleCount = dbPro.getMyFailureBiddingCount(user.getId());
+		
+		List<Auction> myEndSaleList = dbPro.getMyEndSaleList(startRow, endRow, user.getId());
+
+		int number = myEndSaleCount - (currentPage - 1) * pageSize;
+		int bottomLine = 3;
+		int pageCount = myEndSaleCount / pageSize + (myEndSaleCount % pageSize == 0 ? 0 : 1);
+		int startPage = 1 + (currentPage - 1) / bottomLine * bottomLine;
+		int endPage = startPage + bottomLine - 1;
+
+		if (endPage > pageCount)
+			endPage = pageCount;
+
+		req.setAttribute("currentPage", currentPage);
+		req.setAttribute("startRow", startRow);
+		req.setAttribute("endRow", endRow);
+		req.setAttribute("count", myEndSaleCount);
+		req.setAttribute("pageSize", pageSize);
+		req.setAttribute("number", number);
+		req.setAttribute("bottomLine", bottomLine);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		req.setAttribute("pageCount", pageCount);
+
+		req.setAttribute("myAuctionList", myEndSaleList);
+
+		return "mypage/mySellList";
+	}*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	//////////////////////////////////위는 판매 아래는 구매 /////////////////////////////////
 	
 	@RequestMapping(value = "myBidding", method = RequestMethod.GET)
 	public String myBidList(HttpServletRequest req, Model m) {
@@ -270,13 +337,13 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myBiddingCount = dbPro.getMyBiddingDealingCount(user.getId());
+		int myBiddingDealingCount = dbPro.getMyBiddingDealingCount(user.getId());
 
 		List<Auction> myBiddingDealingList = dbPro.getMyBiddingDealingList(startRow, endRow, user.getId());
 
-		int number = myBiddingCount - (currentPage - 1) * pageSize;
+		int number = myBiddingDealingCount - (currentPage - 1) * pageSize;
 		int bottomLine = 3;
-		int pageCount = myBiddingCount / pageSize + (myBiddingCount % pageSize == 0 ? 0 : 1);
+		int pageCount = myBiddingDealingCount / pageSize + (myBiddingDealingCount % pageSize == 0 ? 0 : 1);
 		int startPage = 1 + (currentPage - 1) / bottomLine * bottomLine;
 		int endPage = startPage + bottomLine - 1;
 
@@ -286,7 +353,7 @@ public class MypageController {
 		req.setAttribute("currentPage", currentPage);
 		req.setAttribute("startRow", startRow);
 		req.setAttribute("endRow", endRow);
-		req.setAttribute("count", myBiddingCount);
+		req.setAttribute("count", myBiddingDealingCount);
 		req.setAttribute("pageSize", pageSize);
 		req.setAttribute("number", number);
 		req.setAttribute("bottomLine", bottomLine);
@@ -321,13 +388,13 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myBiddingCount = dbPro.getMyBiddingCount(user.getId());
+		int getMyBiddingCompleteCount = dbPro.getMyBiddingCompleteCount(user.getId());
 
 		List<Auction> myBiddingCompleteList = dbPro.getMyBiddingCompleteList(startRow, endRow, user.getId());
 
-		int number = myBiddingCount - (currentPage - 1) * pageSize;
+		int number = getMyBiddingCompleteCount - (currentPage - 1) * pageSize;
 		int bottomLine = 3;
-		int pageCount = myBiddingCount / pageSize + (myBiddingCount % pageSize == 0 ? 0 : 1);
+		int pageCount = getMyBiddingCompleteCount / pageSize + (getMyBiddingCompleteCount % pageSize == 0 ? 0 : 1);
 		int startPage = 1 + (currentPage - 1) / bottomLine * bottomLine;
 		int endPage = startPage + bottomLine - 1;
 
@@ -337,7 +404,7 @@ public class MypageController {
 		req.setAttribute("currentPage", currentPage);
 		req.setAttribute("startRow", startRow);
 		req.setAttribute("endRow", endRow);
-		req.setAttribute("count", myBiddingCount);
+		req.setAttribute("count", getMyBiddingCompleteCount);
 		req.setAttribute("pageSize", pageSize);
 		req.setAttribute("number", number);
 		req.setAttribute("bottomLine", bottomLine);
@@ -349,6 +416,8 @@ public class MypageController {
 
 		return "mypage/myPurchaseList";
 	}
+	
+	
 
 	/*
 	 * @RequestMapping(value = "mywishseller", method = RequestMethod.GET)
