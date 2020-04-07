@@ -56,13 +56,10 @@ public class Cash implements Serializable {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-    @Override
-    public String toString()
-    {
-        return "Cash [id=" + id + ", cash=" + cash + ", reason=" + reason + ", cashdate=" + cashdate + "]";
-    }
-	
-	
-	
+        @Override
+        public String toString()
+        {
+            return "Cash [id=" + id + ", cash=" + cash + ", reason=" + reason + ", cashdate=" + cashdate + "]";
+        }
 
 }
