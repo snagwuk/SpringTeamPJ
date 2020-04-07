@@ -116,5 +116,29 @@ public class MemberController {
 		dbPro.downposition(member.getId());
 		return "redirect:/admin/grade";
 	}
+	@RequestMapping(value = "beformodify", method = RequestMethod.GET)
+	public String beformodify(Model m, HttpSession session){
+		User user = (User) session.getAttribute("user");
+		m.addAttribute("user", user);	
+		return "member/beforModify";
+	}
+	@RequestMapping(value = "beformodify", method = RequestMethod.POST)
+	public String modifyPro(Member member){
+		Member check = dbPro.selectmember(member.getId()); 
+		String encryption = dbPro.authenticate(member.getPassword());
+			if(encryption.equals(check.getPassword())){
+				System.out.println("여기");
+				return "redirect:/modifyForm";
+			}else{
+				return "redirect:/main";
+			}
+	}
+	@RequestMapping(value = "modifyForm", method = RequestMethod.GET)
+	public String modifyForm(Model m,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		Member member = dbPro.selectmember(user.getId());
+		m.addAttribute("member", member);
+		return "member/modifyForm";
+	}
 	
 }

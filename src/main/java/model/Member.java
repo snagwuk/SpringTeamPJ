@@ -103,8 +103,6 @@ public class Member implements Serializable{
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
-	public boolean matchPassword(String inputPassword){
-		return password.equals(inputPassword);
-	}
+
 	
 }

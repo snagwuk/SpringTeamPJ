@@ -15,6 +15,38 @@
                background:#f9f9ff; padding:0 20px; }
 li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
 </style>
+<script>
+function inputPhoneNumber(obj) {
+
+
+
+    var number = obj.value.replace(/[^0-9]/g, "");
+    var phone = "";
+
+
+
+    if(number.length < 4) {
+        return number;
+    } else if(number.length < 7) {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3);
+    } else if(number.length < 11) {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3, 3);
+        phone += "-";
+        phone += number.substr(6);
+    } else {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3, 4);
+        phone += "-";
+        phone += number.substr(7);
+    }
+    obj.value = phone;
+}
+</script>
 <meta charset="UTF-8">
 <!-- Required meta tags -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,16 +75,16 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
    <div class="row">
       <div class="col-lg-8 col-md-8">
          <h3 class="mb-30">판매자 등록</h3>
-         <form action="${pageContext.request.contextPath}/regist" method="POST">
+         <form action="${pageContext.request.contextPath}/modifyForm" method="POST">
        
    			<br>
             <div class="mt-10">
-               아이디&nbsp&nbsp&nbsp <input type="text" name="id" required class="single-input-parea">
+               아이디&nbsp&nbsp&nbsp ${member.id }
             </div>
             
             <br>   
             <div class="mt-10">
-               비밀번호&nbsp&nbsp
+               새로운 비밀번호&nbsp&nbsp
                <input type="password" name="password" required class="single-input-parea">
             </div>
             <br>   
@@ -64,22 +96,19 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
             <br>   
             <div class="mt-10">
                이름&nbsp&nbsp
-               <input type="text" name="name" required class="single-input-parea">
+               <input type="text" name="name" value="${member.name }" required class="single-input-parea">
             </div>
             
             
             <br>
             <div class="mt-10">
-               핸드폰번호&nbsp&nbsp&nbsp <input type="number" name="phone" required class="single-input-parea">
+               핸드폰번호&nbsp&nbsp&nbsp <input type="text" onKeyup="inputPhoneNumber(this);" name="phone" value="${member.phone }" required class="single-input-parea">
             </div>
-            예:01012345678
          
-            <input type="hidden" name="position" value="판매자"/>
-            <input type="hidden" name="status" value="가능"/>
          
             <br><br><br><br>
-            <input type="submit" name="confirm" value="가입하기">
-            <input type="submit" value="Cancel">
+            <input type="submit" name="confirm" value="수정하기">
+            <input type="submit" value="취소">
             
          </form>
       </div>
