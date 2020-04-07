@@ -6,15 +6,24 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Cash implements Serializable {
-	
+    
+        private int cnum;
 	private String id;
 	private int cash;
 	private String reason;
 	@DateTimeFormat(pattern = "yyyy-MM-dd_HH:mm:ss")
 	private LocalDateTime  cashdate;
 	private int cstatus;
-	
-    	public int getCstatus()
+
+    	public int getCnum()
+        {
+            return cnum;
+        }
+        public void setCnum(int cnum)
+        {
+            this.cnum = cnum;
+        }
+        public int getCstatus()
         {
             return cstatus;
         }

@@ -23,6 +23,8 @@ public class MybatisCashDao
         SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
         try
         {
+            int cnum = sqlSession.selectOne(namespace + ".getCnum");
+            cash.setCnum(cnum);
             sqlSession.insert(namespace + ".insertCash", cash);
             sqlSession.commit();
         }
@@ -97,4 +99,18 @@ public class MybatisCashDao
                 sqlSession.close();
         }
     }
+    
+    public Cash getCashCnum(int cnum)
+    {
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+        try
+        {
+            return sqlSession.selectOne(namespace + ".getCashCnum",cnum);
+        }
+        finally
+        {
+            sqlSession.close();
+        }
+    }
+    
 }

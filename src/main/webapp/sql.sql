@@ -35,6 +35,7 @@ bank varchar(10));
 insert into amember values("admin",1111,"관리자",now(),010,1234,"집주소","자세히","참고","관리자","가능",123,"국민");
 
 create table aCash(
+cnum int,
 id varchar(100) ,
 cash int,
 reason Varchar(20),

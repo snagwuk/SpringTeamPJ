@@ -76,8 +76,8 @@ public class CashController
         return "pay/cashlist";
     }
     
-    @RequestMapping(value = "cashcheck", method = RequestMethod.GET)
-    public String cash_cashcheck(HttpSession session, Model m)
+    @RequestMapping(value = "cashchecklist", method = RequestMethod.GET)
+    public String cash_cashchecklist(HttpSession session, Model m)
     {
         User user = (User) session.getAttribute("user");
         if(!user.getPosition().equals("관리자"))
@@ -87,16 +87,16 @@ public class CashController
         return "pay/cashcheck";
     }
     
-    @RequestMapping(value = "cashcheck", method = RequestMethod.POST)
-    public String cash_cashcheckPro(HttpSession session, int cstatus, Cash cash) throws Exception
+    @RequestMapping(value = "cashcheck", method = RequestMethod.GET)
+    public String cash_cashcheck(int cnum, int cstatus, HttpSession session, Model m) throws Exception
     {
-        System.out.println("asdasd");
         User user = (User) session.getAttribute("user");
         if(!user.getPosition().equals("관리자"))
             return "redirect:/main";
+        Cash cash = dbPro.getCashCnum(cnum);
         cash.setCstatus(cstatus);
         dbPro.adminCheck(cash);
-        return "redirect:/cashcheck";
+        return "redirect:/cashchecklist";
     }
     
 }

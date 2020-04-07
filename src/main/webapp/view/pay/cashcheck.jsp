@@ -94,14 +94,15 @@ li {
 					</tr>
 					<c:forEach var="cash" items="${cashchecklist}">
 						<tr>
-							<form method="POST" action="${pageContext.request.contextPath}/cashcheck">
+							
 							<td><input type="text" readonly="readonly" name="cashdate" value="${fn:replace(cash.cashdate, 'T', ' ')}"/></td>
 							<td><input type="text" readonly="readonly" name="id" value="${cash.id}"/></td>
 							<td><input type="text" readonly="readonly" name="cash" value="${cash.cash}"/></td>
 							<td><input type="text" readonly="readonly" name="reason" value="${cash.reason}"/></td>
 							<td>
-								<input type="hidden"  name="cstatus" value="1"/>
-								<input type="submit" value="승인"/> / <input type="submit" value="반려"/>
+							<button type="button" onclick="location.href='${pageContext.request.contextPath}/cashcheck?cnum=${cash.cnum}&cstatus=1'">승인</button>
+       						<button type="button" onclick="location.href='${pageContext.request.contextPath}/cashcheck?cnum=${cash.cnum}&cstatus=2'">거절</button>
+								
 							</td>
 							</form>
 						</tr>
