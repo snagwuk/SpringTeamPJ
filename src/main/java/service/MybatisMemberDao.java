@@ -30,10 +30,10 @@ public class MybatisMemberDao {
 	            sqlSession.close();
 	        }
 	    }
-	 public Member authenticate(String id){
+	 public String authenticate(String password){
 	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
 	        try {
-	            return sqlSession.selectOne(namespace + ".authenticate",id);
+	            return sqlSession.selectOne(namespace + ".authenticate",password);
 	        }
 	        finally {
 	            sqlSession.close();

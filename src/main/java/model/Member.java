@@ -14,11 +14,10 @@ public class Member implements Serializable{
 	private String address;
 	private String detailAddress;
 	private String extraAddress;
-	private String position;
-	private String status;
+	private int position;
+	private int status;
 	private String account;
 	private String bank;
-	
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", password=" + password + ", name=" + name + ", registdate=" + registdate
@@ -80,16 +79,16 @@ public class Member implements Serializable{
 	public void setExtraAddress(String extraAddress) {
 		this.extraAddress = extraAddress;
 	}
-	public String getPosition() {
+	public int getPosition() {
 		return position;
 	}
-	public void setPosition(String position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	public String getAccount() {
@@ -104,6 +103,8 @@ public class Member implements Serializable{
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
+	public boolean matchPassword(String inputPassword){
+		return password.equals(inputPassword);
+	}
 	
-
 }

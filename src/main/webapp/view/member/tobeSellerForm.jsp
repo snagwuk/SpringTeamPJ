@@ -73,10 +73,10 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
                <input type="text" name="account" required class="single-input-parea">
             </div>
             
-         	<input type="hidden" name="position" value="신청함">
+         	<input type="hidden" name="position" value="3">
          	<input type="hidden" name="id" value=${member.id }>
             <br><br><br><br>
-            <input type="submit" name="confirm" value="구매자 신청">
+            <input type="submit" name="confirm" value="판매자 신청">
             <input type="submit" value="취소">
             
          </form>

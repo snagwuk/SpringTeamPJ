@@ -60,8 +60,8 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
     <td>${member.address}</td>
     <td>${member.bank}</td>
     <td>${member.account}</td>
-    <td>${member.position}</td>
-    <td>${member.status}</td>
+    <td>구매자</td>
+    <td>가능</td>
     <td> 
     	<button type="button" onclick="location.href='${pageContext.request.contextPath}/upgrade?id=${member.id }'">승인</button>
         <button type="button" onclick="location.href='${pageContext.request.contextPath}/downgrade?id=${member.id }'">거절</button>

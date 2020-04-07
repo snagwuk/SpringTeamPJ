@@ -7,17 +7,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertMember" parameterType="Member">
 		insert into aMember
 		values
-		(#{id},#{password},#{name},now(),#{phone},#{postcode},
+		(#{id},hex(aes_encrypt(#{password},'password')),#{name},now(),#{phone},#{postcode},
 		#{address},#{detailAddress},#{extraAddress},#{position},
 		#{status},#{account},#{bank})
 	</insert>
 
-	 <select id="authenticate" parameterType="String" resultType="Member">
-		select * from amember where id=#{id}
+	 <select id="authenticate" parameterType="String" resultType="String">
+		select hex(aes_encrypt(#{password},'password')) from dual
 	</select>
 
 	<select id="selectmember" parameterType="String" resultType="Member">
-		select * from amember where id=#{id}
+		select * from amember where id=#{id} 
 	</select>
 
 	<update id="updatemember" parameterType="Member">
@@ -29,13 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from amember where id=#{id}
 	</select>
 	<select id="selectposition" parameterType="String" resultType="Member">
-		select * from amember where position="신청함"
+		select * from amember where position=3
 	</select>
 	<update id="upposition" parameterType="String">
-		update amember set position="판매자" where id=#{id}
+		update amember set position=1 where id=#{id}
 	</update>
 	<update id="downposition" parameterType="String">
-		update amember set position="구매자" where id=#{id}
+		update amember set position=2 where id=#{id}
 	</update>
 
 

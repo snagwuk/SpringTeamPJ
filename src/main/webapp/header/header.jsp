@@ -38,7 +38,7 @@
 		<div class="row align-items-center">
 			<div class="col-lg-12">
 				<nav class="navbar navbar-expand-lg navbar-light"> <a
-					class="navbar-brand" href="main"> 갬성경매 </a>
+					class="navbar-brand" href="main"> <img src="img/logo.png" alt=""> </a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -63,9 +63,11 @@
 							id="navbarDropdown_3" role="button" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false"> 마이갬성 </a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+								<c:if test="${user.position!=2}"><c:if test="${user.position!=3}">
 								<a class="dropdown-item"
-									href="${pageContext.request.contextPath}/write"> 상품등록</a> <a
-									class="dropdown-item" href="${pageContext.request.contextPath}/tobeseller">판매자등록</a> <a
+									href="${pageContext.request.contextPath}/write"> 상품등록</a></c:if> </c:if>
+									<c:if test="${user.position==2 }"><a
+									class="dropdown-item" href="${pageContext.request.contextPath}/tobeseller">판매자등록</a></c:if> <a
 									class="dropdown-item" href="checkout.html">product checkout</a>
 								<a class="dropdown-item" href="cart.html">shopping cart</a> <a
 									class="dropdown-item" href="confirmation.html">confirmation</a>
@@ -82,20 +84,8 @@
 							<li class="nav-item"><a class="nav-link" href="logout">로그아웃${user.id }</a>
 						</li>
 						</c:if>
-						<c:if test="${user.position.equals('관리자') }">
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="blog.html"
-							id="navbarDropdown_3" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false"> 관리자 </a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-								<a class="dropdown-item"
-									href="${pageContext.request.contextPath}/grade"> 등급관리</a> <a
-									class="dropdown-item" href="tracking.html">tracking</a> <a
-									class="dropdown-item" href="checkout.html">product checkout</a>
-								<a class="dropdown-item" href="cart.html">shopping cart</a> <a
-									class="dropdown-item" href="confirmation.html">confirmation</a>
-								<a class="dropdown-item" href="elements.html">elements</a>
-							</div></li>
+						<c:if test="${user.position==0 }">
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/grade">관리자 페이지</a>
 						</c:if>
 					</ul>
 				</div>
