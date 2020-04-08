@@ -19,6 +19,14 @@ public class Amessage  implements Serializable{
 	private Date sendtime;
 	private Date readtime;
 	private int readcount;
+	private int unreadcount;
+	public int getUnreadcount() {
+		return unreadcount;
+	}
+	public void setUnreadcount(int unreadcount) {
+		this.unreadcount = unreadcount;
+	}
+
 	public String getSender() {
 		return sender;
 	}

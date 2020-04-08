@@ -1,6 +1,8 @@
 package service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +33,15 @@ public class MybatisMessageDao {
 	        }
 	}
 
-	public void readcountupdate(String id) {
+	public void readcountupdate(int chatnum, String id) {
 		        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		        Map map = new HashMap();
+				map.put("num", chatnum);
+				map.put("receiver", id);
 		        try
 		        {
 
-		            sqlSession.update(namespace + ".readcountupdate",id);
+		            sqlSession.update(namespace + ".readcountupdate",map);
 		            sqlSession.commit();
 		        }
 		        finally

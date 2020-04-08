@@ -242,7 +242,7 @@ img{ max-width:100%;}
    $(document).ready(function() {
 	   $('#chatMessageArea').scrollTop($('#chatMessageArea').prop('scrollHeight'));
 
- alert('${num}');
+
 
 
 	   
@@ -345,7 +345,8 @@ function change(){
                   <h5>${messages.sender}</h5>  
                   </c:if>
                   <span class="chat_date">${messages.sendtime}</span></h5>
-                  <p>${messages.content}</p>
+                  <p>${messages.content}</p>  
+                   <p>${messages.unreadcount}</p>
                 </div>
                 </a>
               </div>

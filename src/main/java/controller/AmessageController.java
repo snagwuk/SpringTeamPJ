@@ -31,13 +31,14 @@ public class AmessageController {
 	    {
 		 User user = (User) session.getAttribute("user");
 		 
-		 mePro.readcountupdate(user.getId());
+		 /*mePro.readcountupdate(user.getId());*/
 		 Amessage me = new Amessage();
 		 me.setReceiver(user.getId());
 		 List<Amessage> messagelist = mePro.recentmessage(me);
 		 List<Amessage> allList = mePro.recentsender(me);
 		 int num = mePro.recentnum(me);
-		
+		 mePro.readcountupdate(num,user.getId());
+		 
 		 System.out.println(messagelist);
 		 session.setAttribute("messagelist", messagelist);
 		 session.setAttribute("allList", allList);
@@ -52,8 +53,8 @@ public class AmessageController {
 	    public String getmessagebynum(HttpSession session,int num)
 	    {
 		 User user = (User) session.getAttribute("user");
-		 
-		 mePro.readcountupdate(user.getId());
+		 int chatnum = (int) session.getAttribute("num");
+		 mePro.readcountupdate(chatnum,user.getId());
 		 Amessage me = new Amessage();
 		 Amessage me2 = new Amessage();
 		 me2.setNum(num);

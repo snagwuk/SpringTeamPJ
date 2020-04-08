@@ -8,13 +8,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(readcount) from amessage where readcount=0 and receiver = #{receiver};
 	</select>
 
-<update id="readcountupdate" parameterType="String" >
-update amessage set readcount = 1 where receiver = #{receiver};
+<update id="readcountupdate" parameterType="hashMap" >
+update amessage set readcount = 1 where receiver = #{receiver} and num = #{num};
 </update>
 
 <select id="recentmessage" parameterType="Amessage" resultType="Amessage">
   
+  SELECT *, (select count(readcount) from amessage where receiver = #{receiver} and readcount =0 and num = A.num) as unreadcount
+FROM(
 SELECT *
+FROM amessage
+where sender = #{receiver}  or receiver = #{receiver} 
+ORDER BY sendtime DESC
+) AS A
+GROUP BY num
+ORDER BY sendtime DESC;
+  
+  
+<!-- SELECT *
 FROM(
 SELECT *
 FROM amessage
@@ -22,7 +33,7 @@ where sender = #{receiver} or receiver = #{receiver}
 ORDER BY sendtime DESC
 ) AS A
 GROUP BY num
-ORDER BY sendtime DESC;
+ORDER BY sendtime DESC; -->
 </select>
 
 <select id="recentsender" parameterType="Amessage" resultType="Amessage">
