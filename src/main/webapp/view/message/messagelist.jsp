@@ -149,6 +149,22 @@ img{ max-width:100%;}
 /*   height: 516px; */
   overflow-y: auto;
 }
+
+span.step {
+ margin-left : 25%;
+  background: #cccccc;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 5px;
+  text-align: center;
+  width: 1.6em; 
+}
+
 </style>
 
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
@@ -344,9 +360,12 @@ function change(){
                   <c:if test="${messages.sender!=user.id}">
                   <h5>${messages.sender}</h5>  
                   </c:if>
-                  <span class="chat_date">${messages.sendtime}</span></h5>
+                  <span class="chat_date">${messages.sendtime}</span>
+                  <c:if test="${messages.unreadcount!=0}">
+                  <span class="step">${messages.unreadcount}</span>
+                   </c:if></h5>
                   <p>${messages.content}</p>  
-                   <p>${messages.unreadcount}</p>
+                   
                 </div>
                 </a>
               </div>
@@ -367,8 +386,14 @@ function change(){
             <c:if test="${!allList.isEmpty()}">
           
             <c:forEach var="list" items="${allList}">
+             
+             
+             <c:if test="${num!=null}">
                   <input type="hidden" value="${num}" id= "chatnum">
-                  
+                  </c:if>
+                     <c:if test="${num==null}">
+                  <input type="hidden" value="null" id= "chatnum">
+                  </c:if>
             <c:if test="${list.receiver==user.id}">
               <input type="hidden" value="${list.sender}" id= "receiver">
             <div class="incoming_msg">

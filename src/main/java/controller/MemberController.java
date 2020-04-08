@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import model.Amessage;
 import model.Auction;
 import model.Cash;
 import model.Member;
@@ -61,7 +62,10 @@ public class MemberController {
 	public String loginPro(Member member, HttpSession session){
 		
 		Member check = dbPro.authenticate(member.getId()); 
-			
+	
+		 Amessage me = new Amessage();
+		 me.setReceiver(member.getId());
+		 mePro.deleteintromessage(me);
 		int unreadcount = mePro.getunreaccount(member.getId());
 		if(unreadcount==0){
 			session.setAttribute("unreadcount", null);

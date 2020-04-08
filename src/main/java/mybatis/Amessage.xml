@@ -12,6 +12,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 update amessage set readcount = 1 where receiver = #{receiver} and num = #{num};
 </update>
 
+
+<update id="deleteintromessage" parameterType="Amessage" >
+delete from amessage where receiver = #{receiver} and content='대화를 시작하세요';
+</update>
+
+
 <select id="recentmessage" parameterType="Amessage" resultType="Amessage">
   
   SELECT *, (select count(readcount) from amessage where receiver = #{receiver} and readcount =0 and num = A.num) as unreadcount
@@ -57,8 +63,16 @@ where num = ( select num from amessage
   insert into amessage values(#{num}, #{sender},#{receiver},#{content},now(),now(),0);
   </insert>
   
+  <insert id="insertnewmessage" parameterType="Amessage">
+  insert into amessage values ( (select max(a.num)+1 from amessage a ),#{sender},#{receiver},"대화를 시작하세요",now(),now(),0)
+  </insert>
+  
   <select id="selectchatnum" parameterType="Amessage" resultType="Integer">
 select num from amessage where sender = #{sender} and receiver = #{receiver} or sender = #{receiver} and receiver = #{sender} limit 1;
+</select>
+
+  <select id="checkchatnum" parameterType="Amessage" resultType="Integer">
+select count(num) from amessage where sender = #{sender} and receiver = #{receiver} or sender = #{receiver} and receiver = #{sender} limit 1;
 </select>
 
   <select id="selectReceiver" parameterType="Amessage" resultType="String">

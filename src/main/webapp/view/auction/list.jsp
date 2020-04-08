@@ -46,7 +46,13 @@ function check(){
 	}
 }
 </script>
+<script type="text/javascript">
+function chat() {
+	window.open('message/messagelist?','child','toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
+	}
+	
 
+</script>
 
 </head>
 
@@ -61,7 +67,7 @@ function check(){
 	<h1>${seller}님의 상점입니다.</h1>
 	<c:if test="${seller!=user.id}">
 	<h5><a href="addmyseller?seller=${seller}" onclick="return check(); "  >[관심상점 등록하기]</a>
-	<h5><a href="addmyseller?seller=${seller}"  >[쪽지보내기]</a>
+	<h5><a href="#" onclick= "chat()" >쪽지보내기</a>
 	</h5>
 	</c:if>
 <div class="row">

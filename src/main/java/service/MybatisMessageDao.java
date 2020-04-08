@@ -104,6 +104,20 @@ public class MybatisMessageDao {
         }
 		
 	}
+	public void insertnewmessage(Amessage ms) {
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		try
+		{
+			
+			sqlSession.insert(namespace + ".insertnewmessage",ms);
+			sqlSession.commit();
+		}
+		finally
+		{
+			sqlSession.close();
+		}
+		
+	}
 
 	public int selectchatnum(Amessage m) {
 		 SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
@@ -115,6 +129,18 @@ public class MybatisMessageDao {
 	        {
 	            sqlSession.close();
 	        }
+	}
+	
+	public int checkchatnum(Amessage m) {
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		try
+		{
+			return sqlSession.selectOne(namespace + ".checkchatnum",m);
+		}
+		finally
+		{
+			sqlSession.close();
+		}
 	}
 	public int recentnum(Amessage m) {
 		 SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
@@ -138,6 +164,22 @@ public class MybatisMessageDao {
 	        {
 	            sqlSession.close();
 	        }
+	}
+
+	public void deleteintromessage(Amessage me) {
+		   SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	      
+	        try
+	        {
+
+	            sqlSession.delete(namespace + ".deleteintromessage",me);
+	            sqlSession.commit();
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+		
 	}
 	
 	
