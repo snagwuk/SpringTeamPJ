@@ -105,6 +105,7 @@ img{ max-width:100%;}
   float: left;
   padding: 30px 15px 0 25px;
   width: 60%;
+  overflow:scroll;
 }
 
  .sent_msg p {
@@ -145,10 +146,149 @@ img{ max-width:100%;}
 }
 .messaging { padding: 0 0 50px 0;}
 .msg_history {
-  height: 516px;
+/*   height: 516px; */
   overflow-y: auto;
 }
 </style>
+
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+<script type="text/javascript">
+
+   var wsocket;
+   
+   function connect() {
+      wsocket = new SockJS("http://211.63.89.93:8080/SpringTeamPJ/chat.sockjs");
+      wsocket.onopen = onOpen;
+      wsocket.onmessage = onMessage;
+      wsocket.onclose = onClose;
+      
+   }
+   function disconnect() {
+      wsocket.close();
+   }
+   function onOpen(evt) {
+  
+   }
+   function onMessage(evt) {
+	   
+      var data = evt.data;
+      console.log(data)
+      var obj = JSON.parse(data)
+      console.log(obj)
+      appendMessage(obj)
+
+//       if (data.substring(0, 4) == "content:") {
+//          appendMessage(data.substring(4));
+//       }
+   }
+   function onClose(evt) {
+      appendMessage("연결을 끊었습니다.");
+   }
+   
+   function send() {
+      var nickname = $("#nickname").val();
+      var msg = $("#message").val();
+ 
+      if(msg != ""){
+    	  message = {};
+    	  message.num = $("#chatnum").val()
+      	  message.sender = '${user.id}'
+      	  message.receiver = $("#receiver").val()
+      	  message.content = $("#message").val()
+      
+      }
+   
+      
+//       wsocket.send("msg:"+nickname+":" + msg);
+      wsocket.send(JSON.stringify(message));
+      
+      $("#message").val("");
+   }
+
+   function appendMessage(msg) {
+	   
+	
+	   var nowtime = getTimeStamp();
+	if (msg.num!= message.num)
+		{ $("#chatMessageArea").append("")}else{
+	   if(msg.receiver!=message.sender){
+		    $("#chatMessageArea").append("<div class="+"outgoing_msg"+">"+
+		              "<div class="+"sent_msg"+">"+
+		      "<p>"+msg.content+"</p>"+
+		      "<span class="+"time_date"+">"+nowtime+"</span></div></div>");
+	   } 
+	   if(msg.receiver==message.sender){
+		   
+		   $("#chatMessageArea").append(
+				   "<div class="+"incoming_msg"+"><div class="+"incoming_msg_img"+">"+ 
+		             "<img src="+"https://ptetutorials.com/images/user-profile.png"+" alt="+"sunil"+"> </div><div class="+"received_msg"+"><p>"
+		             +msg.sender+"</p><div class="+"received_withd_msg"+">"+
+		                 "<p>"+msg.content+"</p>"+
+		                 "<span class="+"time_date"+">"+nowtime+"</span></div></div></div>");
+		   
+  
+	   }
+	   
+	   $("#chatMessageArea").scrollTop($("#chatMessageArea")[0].scrollHeight);
+	   }
+      
+      
+     /*  var chatAreaHeight = $("#chatArea").height();
+      var maxScroll = $("#chatMessageArea").height() - chatAreaHeight;
+      $("#chatArea").scrollTop(maxScroll); */
+   }
+
+   $(document).ready(function() {
+	   $('#chatMessageArea').scrollTop($('#chatMessageArea').prop('scrollHeight'));
+
+ alert('${num}');
+
+
+	   
+	   connect();
+      $('#message').keypress(function(event){
+         var keycode = (event.keyCode ? event.keyCode : event.which);
+         if(keycode == '13'){
+            send();   
+         }
+         event.stopPropagation();
+      });
+      $('#sendBtn').click(function() { send(); });
+      $('#enterBtn').click(function() { connect(); });
+      $('#exitBtn').click(function() { disconnect(); });
+   });
+   
+   
+   function getTimeStamp() {
+	   var d = new Date();
+	   var s =
+	     leadingZeros(d.getFullYear(), 4) + '-' +
+	     leadingZeros(d.getMonth() + 1, 2) + '-' +
+	     leadingZeros(d.getDate(), 2) + ' ' +
+
+	     leadingZeros(d.getHours(), 2) + ':' +
+	     leadingZeros(d.getMinutes(), 2) + ':' +
+	     leadingZeros(d.getSeconds(), 2);
+
+	   return s;
+	 }
+
+	 function leadingZeros(n, digits) {
+	   var zero = '';
+	   n = n.toString();
+
+	   if (n.length < digits) {
+	     for (i = 0; i < digits - n.length; i++)
+	       zero += '0';
+	   }
+	   return zero + n;
+	 }
+	
+
+
+</script>
+
 <script type="text/javascript">
 window.opener.location.reload();
 
@@ -190,21 +330,24 @@ function change(){
           </div>
           <div class="inbox_chat" id ="inbox_chat" >
           <c:if test="${!messagelist.isEmpty()}">
-          <c:forEach var="messagelist" items="${messagelist}">
-          <div  id = "chat" onclick="change()">
-          <div class="chat_list"  >
+          <c:forEach var="messages" items="${messagelist}">
+          <div  id = "chat" >
+          <div class="chat_list" onclick="change()" >
+      
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                <c:if test="${messagelist.sender==user.id}">
-                  <h5>${messagelist.receiver}
+               <a href="mslist?num=${messages.num}">
+                <div class="chat_ib" >
+                <c:if test="${messages.sender==user.id}">
+                  <h5>${messages.receiver}</h5>    
                   </c:if>
-                  <c:if test="${messagelist.sender!=user.id}">
-                  <h5>${messagelist.sender}
+                  <c:if test="${messages.sender!=user.id}">
+                  <h5>${messages.sender}</h5>  
                   </c:if>
-                  <span class="chat_date">${messagelist.sendtime}</span></h5>
-                  <p>${messagelist.content}</p>
+                  <span class="chat_date">${messages.sendtime}</span></h5>
+                  <p>${messages.content}</p>
                 </div>
+                </a>
               </div>
             </div>
             </div>
@@ -213,74 +356,79 @@ function change(){
  
           </div>
         </div>
-        <div class="mesgs">
-          <div class="msg_history">
-          
+<!--         <div> -->
+<!--         <div class="mesgs" id ="chatArea"> -->
+<!--           <div class="msg_history" id = "chatMessageArea"> -->
+        <div>
+		<div class="mesgs"id = "chatArea" style=" overflow: auto;">
+
+			<div class="msg_history" id="chatMessageArea" style="height: 600px;" >
             <c:if test="${!allList.isEmpty()}">
-            <c:forEach var="allList" items="${allList}">
-            <c:if test="${allList.receiver==user.id}">
-            
+          
+            <c:forEach var="list" items="${allList}">
+                  <input type="hidden" value="${num}" id= "chatnum">
+                  
+            <c:if test="${list.receiver==user.id}">
+              <input type="hidden" value="${list.sender}" id= "receiver">
             <div class="incoming_msg">
               <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
               <div class="received_msg">
+             <p>${list.sender}</p>
                 <div class="received_withd_msg">
-                  <p>${allList.content}</p>
-                  <span class="time_date"> ${allList.sendtime}</span></div>
+                  <p>${list.content}</p>
+                  <span class="time_date"> ${list.sendtime}</span></div>
               </div>
             </div>
             </c:if>
-            <c:if test="${allList.receiver!=user.id}">
+            <c:if test="${list.receiver!=user.id}">
+             <input type="hidden" value="${list.receiver}" id= "receiver">
             <div class="outgoing_msg">
               <div class="sent_msg">
-                <p>${allList.content}</p>
-                <span class="time_date"> ${allList.sendtime}</span> </div>
+                <p>${list.content}</p>
+                <span class="time_date"> ${list.sendtime}</span> </div>
             </div>
             </c:if>
             </c:forEach>
             </c:if>
             
-<!--             <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Test which is a new approach to have all
-                  solutions</p>
-                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-            </div>
+          
+          
+          
+ <%--            
             <div class="incoming_msg">
               <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
               <div class="received_msg">
+       <span id = "nickname" value = "${list.receiver}"></span>
                 <div class="received_withd_msg">
-                  <p>Test, which is a new approach to have</p>
-                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
+                  <p></p>
+                  <span class="time_date"></span></div>
               </div>
             </div>
+ 
+
             <div class="outgoing_msg">
               <div class="sent_msg">
-                <p>Apollo University, Delhi, India Test</p>
-                <span class="time_date"> 11:01 AM    |    Today</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>We work directly with our designers and suppliers,
-                    and sell direct to you, which means quality, exclusive
-                    products, at a price anyone can afford.</p>
-                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-              </div>
-            </div> -->
+                <p></p>
+                <span class="time_date"></span> </div>
+            </div> --%>
+         
+       
+            
+
           </div>
           <div class="type_msg">
             <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" />
-              <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+            <input type="hidden" value="${user.id}" id= "nickname">
+
+              <input type="text" class="write_msg" placeholder="Type a message" id="message">
+              <button class="msg_send_btn" id="sendBtn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
+        </div>
       </div>
       
-      
-      <p class="text-center top_spac"> Design by <a target="_blank" href="#">Sunil Rajput</a></p>
-      
+    
     </div></div>
     </body>
     </html>

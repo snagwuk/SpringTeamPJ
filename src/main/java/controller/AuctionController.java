@@ -28,6 +28,7 @@ import model.User;
 import model.Wishseller;
 import service.BidValidator;
 import service.MybatisAuctionDao;
+import service.MybatisMessageDao;
 
 
 @Controller
@@ -40,6 +41,8 @@ public class AuctionController
  @Autowired
  BidValidator bidvalidator;
  
+ @Autowired
+ MybatisMessageDao mdao;
  
  @InitBinder("bid")
 	protected void initBinder(WebDataBinder binder) {
@@ -141,6 +144,21 @@ public class AuctionController
 
             return "auction/content";
         
+    }
+    
+    @RequestMapping(value = "main", method = RequestMethod.GET)
+    public String main(Model m , HttpSession session)
+    {
+    	if(session.getAttribute("user")!=null){
+    	User user = (User) session.getAttribute("user");
+    	int unreadcount = mdao.getunreaccount(user.getId());
+		if(unreadcount==0){
+			session.setAttribute("unreadcount", null);
+		}else{
+			 session.setAttribute("unreadcount", unreadcount);}
+
+            return "main";
+    	}return "main";
     }
     
     @RequestMapping("modify")
@@ -292,6 +310,8 @@ public class AuctionController
        return "auction/list";
    }
 
+   
+   
    
    
 }

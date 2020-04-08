@@ -32,7 +32,7 @@
 
 <script type="text/javascript">
 function chat() {
-	window.open('message/messagelist','child','toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=800')
+	window.open('message/messagelist','child','toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
 	}
 	
 

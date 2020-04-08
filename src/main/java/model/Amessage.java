@@ -6,6 +6,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
+import com.google.gson.Gson;
+
 
 @Component
 public class Amessage  implements Serializable{
@@ -59,6 +61,13 @@ public class Amessage  implements Serializable{
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	
+	public static Amessage convertMessage(String source) {
+		Amessage message = new Amessage();
+		Gson gson = new Gson();
+		message = gson.fromJson(source,  Amessage.class);
+		return message;
 	}
 	@Override
 	public String toString() {

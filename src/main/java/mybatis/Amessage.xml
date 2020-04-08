@@ -13,32 +13,46 @@ update amessage set readcount = 1 where receiver = #{receiver};
 </update>
 
 <select id="recentmessage" parameterType="Amessage" resultType="Amessage">
-    <!-- SELECT t1.* FROM amessage t1
-  JOIN (SELECT sender , receiver, MAX(sendtime) sendtime FROM amessage GROUP BY receiver) t2
-    ON t1.sendtime = t2.sendtime
-    where t1.sender = #{receiver} or t1.receiver = #{receiver}; -->
-    SELECT *FROM 
-(SELECT * FROM amessage a 
-where a.sender = 'ii'or a.receiver = 'ii' order by a.sendtime desc) b
-GROUP BY b.sender order by sendtime desc;
+  
+SELECT *
+FROM(
+SELECT *
+FROM amessage
+where sender = #{receiver} or receiver = #{receiver} 
+ORDER BY sendtime DESC
+) AS A
+GROUP BY num
+ORDER BY sendtime DESC;
 </select>
 
 <select id="recentsender" parameterType="Amessage" resultType="Amessage">
-select * from amessage where sender = (
-SELECT receiver 
-FROM amessage
-WHERE sendtime = (SELECT MAX(sendtime)
-FROM amessage WHERE receiver = #{receiver} or sender = #{receiver})) or receiver = (SELECT receiver 
-FROM amessage
-WHERE sendtime = (SELECT MAX(sendtime)
-FROM amessage WHERE receiver = #{receiver} or sender = #{receiver}));
+select * from amessage 
+where num = ( select num from amessage 
+ where sender = #{receiver} or receiver = #{receiver} ORDER BY sendtime DESC limit 1) ORDER BY sendtime ;
+</select>
+
+<select id="recentnum" parameterType="Amessage" resultType="Integer">
+select num from amessage 
+where num = ( select num from amessage 
+ where sender = #{receiver} or receiver = #{receiver} ORDER BY sendtime DESC limit 1) ORDER BY sendtime limit 1;
 </select>
 
 <select id="selectAllms" parameterType="Amessage" resultType="Amessage">
-    SELECT * FROM amessage where sender=#{receiver} and  receiver=#{sender}or 
-    sender =#{sender} and receiver=#{receiver} ;
+    SELECT * FROM amessage where num = #{num} ORDER BY sendtime ;
 </select>
 
 
+  <insert id="insertmessage" parameterType="Amessage">
+  insert into amessage values(#{num}, #{sender},#{receiver},#{content},now(),now(),0);
+  </insert>
+  
+  <select id="selectchatnum" parameterType="Amessage" resultType="Integer">
+select num from amessage where sender = #{sender} and receiver = #{receiver} or sender = #{receiver} and receiver = #{sender} limit 1;
+</select>
+
+  <select id="selectReceiver" parameterType="Amessage" resultType="String">
+select receiver from amessage where sender = #{sender} and num = #{num} limit 1;
+</select>
+  
   
 </mapper>

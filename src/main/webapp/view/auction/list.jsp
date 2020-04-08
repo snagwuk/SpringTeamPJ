@@ -59,8 +59,11 @@ function check(){
 		<c:if test="${seller!=null}">
 	
 	<h1>${seller}님의 상점입니다.</h1>
-	<h5><a href="addmyseller?seller=${seller}" onclick="return check(); "  >관심상점 등록하기</a>
+	<c:if test="${seller!=user.id}">
+	<h5><a href="addmyseller?seller=${seller}" onclick="return check(); "  >[관심상점 등록하기]</a>
+	<h5><a href="addmyseller?seller=${seller}"  >[쪽지보내기]</a>
 	</h5>
+	</c:if>
 <div class="row">
 				<div class="col-lg-6">
 </c:if>
