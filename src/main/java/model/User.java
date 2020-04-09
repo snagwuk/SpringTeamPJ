@@ -3,11 +3,10 @@ package model;
 
 public class User {
 	private String id;
-	private String position;
-	private String status;
-	
-	
-	public User(String id, String position, String status) {
+	private int position;
+	private int status;
+	public User(String id, int position, int status) {
+		super();
 		this.id = id;
 		this.position = position;
 		this.status = status;
@@ -18,18 +17,20 @@ public class User {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getPosition() {
+	public int getPosition() {
 		return position;
 	}
-	public void setPosition(String position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+	
 	
 
 }

@@ -30,10 +30,10 @@ public class MybatisMemberDao {
 	            sqlSession.close();
 	        }
 	    }
-	 public Member authenticate(String id){
+	 public String authenticate(String password){
 	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
 	        try {
-	            return sqlSession.selectOne(namespace + ".authenticate",id);
+	            return sqlSession.selectOne(namespace + ".authenticate",password);
 	        }
 	        finally {
 	            sqlSession.close();
@@ -89,6 +89,15 @@ public class MybatisMemberDao {
 			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
 			try {
 				sqlSession.update(namespace + ".downposition",id);
+				sqlSession.commit();
+			} finally {
+				sqlSession.close();
+			}
+		}
+	 public void modifymember(Member member) {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				sqlSession.update(namespace + ".modifymember",member);
 				sqlSession.commit();
 			} finally {
 				sqlSession.close();

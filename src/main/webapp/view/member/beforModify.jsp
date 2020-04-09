@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -13,9 +13,6 @@
                background:#f9f9ff; padding:0 20px; }
 .single-input { width:70%; line-height:40px; border:none; outline:none;
                background:#f9f9ff; padding:0 20px; }
-.small {  width:20%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }     
-.jb-bold {  font-weight: bold;     }                        
 li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
 </style>
 <meta charset="UTF-8">
@@ -45,38 +42,26 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
 <div class="section-top-border">
    <div class="row">
       <div class="col-lg-8 col-md-8">
-         <h3 class="mb-30">판매자 등록</h3>
-         <form action="${pageContext.request.contextPath}/tobeseller" method="POST">
-       		<a class="nav-link" href="beformodify"> 내 정보 수정</a>
+         <h3 class="mb-30">현재 비밀번호 확인</h3>
+         <form action="${pageContext.request.contextPath}/beformodify" method="POST">
+       
    			<br>
-            <div class="mt-10 jb-bold"> 아이디:&nbsp&nbsp${member.id }</div> 
-            <br>
-            <br>
-            <div class="mt-10 jb-bold"> 이름:&nbsp&nbsp${member.name }</div> 
-            <br>
-            <br>
-            <div class="mt-10 jb-bold"> 핸드폰번호:&nbsp&nbsp${member.phone }</div> 
-            <br>
-              <div class="mt-10">
-               은행&nbsp&nbsp<br>
-               <li>
-               <input type="radio" name="bank" required value="국민"> 국민
-               <input type="radio" name="bank" required value="우리"> 우리
-               <input type="radio" name="bank" required value="신한"> 신한
-               <input type="radio" name="bank" required value="농협"> 농협
-               </li>
-
-            </div> 
-            <br><br>
             <div class="mt-10">
-               계좌번호&nbsp&nbsp
-               <input type="text" name="account" required class="single-input-parea">
+               아이디&nbsp&nbsp&nbsp ${user.id }
             </div>
             
-         	<input type="hidden" name="position" value="3">
-         	<input type="hidden" name="id" value=${member.id }>
+            <br>   
+            <div class="mt-10">
+               현재 비밀번호&nbsp&nbsp
+               <input type="password" name="password" required class="single-input-parea">
+            </div>
+            <br>   
+         
+         
+           
+         <input type="hidden" name="id" value="${user.id }">
             <br><br><br><br>
-            <input type="submit" name="confirm" value="판매자 신청">
+            <input type="submit" name="confirm" value="확인">
             <input type="submit" value="취소">
             
          </form>

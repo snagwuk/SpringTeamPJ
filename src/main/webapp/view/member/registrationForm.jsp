@@ -167,8 +167,8 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
                
             </div>
          
-            <input type="hidden" name="position" value="구매자">
-            <input type="hidden" name="status" value="가능">
+            <input type="hidden" name="position" value="2">
+            <input type="hidden" name="status" value="0">
          
             <br><br><br><br>
             <input type="submit" name="confirm" value="가입하기">

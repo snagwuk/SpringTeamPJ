@@ -1,8 +1,11 @@
 package controller;
 
 
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import model.Auction;
 import model.Cash;
 import model.Member;
 import model.User;
@@ -54,12 +56,18 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	@RequestMapping(value = "login",method=RequestMethod.POST)
-	public String loginPro(Member member, HttpSession session){
-		
-		Member check = dbPro.authenticate(member.getId()); 
-	
-		if(check==null){
-			return "member/loginForm";
+	public String loginPro(Member member, HttpSession session){	 
+		Member check = dbPro.selectmember(member.getId()); 	
+		if(check!=null){
+			String encryption = dbPro.authenticate(member.getPassword());
+				if(encryption.equals(check.getPassword())){ 
+					User user = new User(check.getId(), check.getPosition(), check.getStatus());
+					session.setAttribute("user", user);
+					return "redirect:/main";
+				}else{
+					return "member/loginForm";
+				}
+			
 		}else {
 			if(member.getPassword().equals(check.getPassword())){ 
 				User user = new User(check.getId(), check.getPosition(), check.getStatus());
@@ -83,31 +91,59 @@ public class MemberController {
 		return "member/tobeSellerForm";
 	}
 	@RequestMapping(value = "tobeseller", method = RequestMethod.POST)
-	public String sellerPro(Member member,HttpSession session)throws Exception{
-		System.out.println(member.getId()+"=======");
-		System.out.println(member);
+	public String sellerPro(Member member,HttpSession session,HttpServletRequest req)throws Exception{		
 		dbPro.updatemember(member);
-		System.out.println(member);
-		/*User user = new User(member.getId(), member.getPosition(), member.getStatus());
-		session.setAttribute("user", user);*/
-		
-		return "member/sucess";
+		Member change = dbPro.selectmember(member.getId());
+		User user = new User(change.getId(), change.getPosition(), change.getStatus());
+		session.setAttribute("user", user);
+		req.setAttribute("message", "판매자 신청이 완료되었습니다");
+		req.setAttribute("url", "main");
+		return "alert/alert";
 	}
-	@RequestMapping(value = "grade", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/grade", method = RequestMethod.GET)
 	public String upGrade(Model m){
 		List<Member> memberList = dbPro.selectposition();
 		m.addAttribute("memberList", memberList);
-		return "member/upGrade";
+		return "admin/upGrade";
 	}
 	@RequestMapping(value = "upgrade")
 	public String upGradePro(Member member){
 		dbPro.upposition(member.getId());
-		return "redirect:/grade";
+		return "redirect:/admin/grade";
 	}
 	@RequestMapping(value = "downgrade")
 	public String downGradePro(Member member){
 		dbPro.downposition(member.getId());
-		return "redirect:/grade";
+		return "redirect:/admin/grade";
+	}
+	@RequestMapping(value = "beformodify", method = RequestMethod.GET)
+	public String beformodify(Model m, HttpSession session){
+		User user = (User) session.getAttribute("user");
+		m.addAttribute("user", user);	
+		return "member/beforModify";
+	}
+	@RequestMapping(value = "beformodify", method = RequestMethod.POST)
+	public String beformodifyPro(Member member){
+		Member check = dbPro.selectmember(member.getId()); 
+		String encryption = dbPro.authenticate(member.getPassword());
+			if(encryption.equals(check.getPassword())){
+				System.out.println("여기");
+				return "redirect:/modifyForm";
+			}else{
+				return "redirect:/main";
+			}
+	}
+	@RequestMapping(value = "modifyForm", method = RequestMethod.GET)
+	public String modifyForm(Model m,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		Member member = dbPro.selectmember(user.getId());
+		m.addAttribute("member", member);
+		return "member/modifyForm";
+	}
+	@RequestMapping(value = "modifyForm", method = RequestMethod.POST)
+	public String modifyPro(Member member){
+		dbPro.modifymember(member); 		
+		return "redirect:/main";
 	}
 	
 }

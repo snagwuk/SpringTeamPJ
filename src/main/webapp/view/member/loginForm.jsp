@@ -58,8 +58,7 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
             <br>   
          
          
-            <input type="hidden" name="position" value="구매자"/>
-            <input type="hidden" name="status" value="가능"/>
+           
          
             <br><br><br><br>
             <input type="submit" name="confirm" value="로그인">
