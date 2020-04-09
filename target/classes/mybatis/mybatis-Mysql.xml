@@ -3,9 +3,8 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="model.Auction" alias="Auction" />
-
-			<typeAlias type="model.Bid" alias="Bid" />
-				<typeAlias type="model.Wishseller" alias="Wishseller" />
+		<typeAlias type="model.Bid" alias="Bid" />
+		<typeAlias type="model.Wishseller" alias="Wishseller" />
 		<typeAlias type="model.Member" alias="Member" />
 		<typeAlias type="model.Cash" alias="Cash" />
 		<typeAlias type="model.Review" alias="Review" />
@@ -15,7 +14,8 @@
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://localhost:3306/jspdb" />
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/jspdb?serverTimezone=UTC" />
 				<property name="username" value="scott" />
 				<property name="password" value="1111" />
 			</dataSource>

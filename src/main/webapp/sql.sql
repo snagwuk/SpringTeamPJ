@@ -60,5 +60,15 @@ deliveryStar int ,
 serviceStar int 
 );
 
+SHOW VARiables LIKE 'event%';
+SET GLOBAL event_scheduler = ON;
+
+CREATE EVENT IF NOT EXISTS AAUCTION_CHECK
+    ON SCHEDULE
+        EVERY 10 SECOND  
+        STARTS CURRENT_TIMESTAMP 
+    DO
+        UPDATE  AAUCTION SET pstatus = "END" WHERE enddate <= NOW();
+        
 
 

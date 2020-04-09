@@ -15,13 +15,17 @@
 	<br> 연락처: ${member.phone }
 	<br>
 	<br>
-	<br>	
+	<br>
+	
+	<c:if test="${auction.pstatus eq '입금완료'}">	
 	<form action="${pageContext.request.contextPath}/shippingComplete"
 		method="POST">
-		<input type="hidden" name="seller" value="${User.id}"> <input
-			type="hidden" name="num" value="${myAuction.num}"> <input
-			type="submit" value="발송완료">
+	<input type="hidden" name="num" value="${auction.num}"> 
+	<input type="submit" value="발송완료">
 	</form>
+	</c:if>
+
+
 
 </body>
 </html>
