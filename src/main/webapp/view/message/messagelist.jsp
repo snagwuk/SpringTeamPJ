@@ -174,7 +174,7 @@ span.step {
    var wsocket;
    
    function connect() {
-      wsocket = new SockJS("http://211.63.89.93:8080/SpringTeamPJ/chat.sockjs");
+      wsocket = new SockJS("http://211.63.89.92:8088/SpringTeamPJ/chat.sockjs");
       wsocket.onopen = onOpen;
       wsocket.onmessage = onMessage;
       wsocket.onclose = onClose;

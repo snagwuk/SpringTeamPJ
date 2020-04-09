@@ -32,16 +32,11 @@ public class PayController {
 	MybatisMemberDao memPro;
 
 	@RequestMapping(value = "pay", method = RequestMethod.GET)
-	public String payGET( HttpSession session,  Model m) {
+	public String payGET( HttpSession session, int num, Model m) {
 
 		User user = (User) session.getAttribute("user");
 
-		Auction auction = new Auction();
-		auction.setWinid(user.getId());
-
-		auction.setNum(1); //나중에 연결(이 전 페이지 없어서 임의 지정)
-
-		Auction myBidCompleteAuction = dbPro.getAuction(1);
+		Auction myBidCompleteAuction = dbPro.getAuction(num);
 		m.addAttribute("myBidCompleteAuction", myBidCompleteAuction);
 
 		int cash = cashPro.myCash(user.getId());

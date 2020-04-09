@@ -291,6 +291,8 @@ public class MybatisAuctionDao {
 			sqlSession.close();
 		}
 	}
+	
+	
 
 
     public int gethightprice(int num)

@@ -36,10 +36,12 @@ bank varchar(10));
 insert into amember values("admin",hex(aes_encrypt('1111','password')),"관리자",now(),010,1234,"집주소","자세히","참고",0,0,123,"국민");
 
 create table aCash(
+cnum int,
 id varchar(100) ,
 cash int,
 reason Varchar(20),
-cashdate datetime
+cashdate DATETIME,
+cstatus int
 );
 
 create table abid
@@ -50,15 +52,7 @@ biddate dateTime,
 bidprice int
 );
 
-create table aReview
-(
-num int,
-seller varchar(100),
-id varchar(100),
-productStar int ,
-deliveryStar int ,
-serviceStar int
-);
+
 
 SHOW VARiables LIKE 'event%';
 SET GLOBAL event_scheduler = ON;
@@ -78,7 +72,7 @@ CREATE EVENT IF NOT EXISTS AAUCTION_CHECK
         registtime DATETIME
         );
 
-        create table amessage (num int primary key,sender varchar(50),
+        create table amessage (num int,sender varchar(50),
         receiver varchar(50),content varchar(500),
         sendtime DATETIME,readtime DATETIME,
         readcount int);
