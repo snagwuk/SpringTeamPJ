@@ -37,6 +37,9 @@
 
 <body>
 
+
+
+
 	<!--================Category Product Area =================-->
 	<section class="cat_product_area section_padding">
 		<div class="container">
@@ -44,37 +47,33 @@
 
 				<div class="col-lg-9">
 
+					
+					<a href="${pageContext.request.contextPath}/myBidding"><input type="button" value="입찰"></a>
+					<a href="${pageContext.request.contextPath}/myBiddingDealing"><input type="button" value="낙찰(거래중)"></a>
+					<a href="${pageContext.request.contextPath}/myBiddingComplete"><input type="button" value="낙찰(거래완료)"></a> <br>
+					<a href="${pageContext.request.contextPath}/myBiddingComplete"><input type="button" value="유찰/신고/취소"></a> <br>
+
 
 					<div class="row align-items-center latest_product_inner">
 						<c:if test="${count==0}">
 							<h4>등록된 물품이 없음</h4>
 						</c:if>
 						<c:if test="${count!=0}">
-							<c:forEach var="MyBidList" items="${MyBidList}">
+							<c:forEach var="myBidList" items="${myBidList}">
 								<div>
-									<img
-										src="<%=request.getContextPath()%>/uploadFile/${MyBidList.filename}"
-										width="200" height="200">
-									<div>
-										상품명: <a
-											href="${pageContext.request.contextPath}/myContent?num=${MyBidList.num}">${MyBidList.pname}</a><br />
-										낙찰가 : ${MyBidList.beginsprice}<br /> 상태 :
-										${MyBidList.pstatus}<br />
-										<c:if test="${MyBidList.pstatus eq '입금완료'}">
-											<form
-												action="${pageContext.request.contextPath}/shippingInfo"
-												method="POST">
-												<input type="hidden" name="winid" value="${MyBidList.winid}">
-												<input type="hidden" name="num" value="${MyBidList.num}">
-												<input type="submit" value="배송정보보기">
-											</form>
-
+									<a href="${pageContext.request.contextPath}/content?num=${myBidList.num}"><img
+										src="<%=request.getContextPath()%>/uploadFile/${myBidList.filename}"
+										width="200" height="200"></a>
+										<div>
+										상품명: ${myBidList.pname}<br />	
+										<c:if test="${myBidList.pstatus eq '입찰중'}">
+										입찰마감시간: ${myBidList.enddate}
 										</c:if>
-										낙찰일시 : <br />
-									</div>
+																				
+									</div>								
 								</div>
 							</c:forEach>
-						</c:if>	
+						</c:if>
 
 
 						<div class="col-lg-12">
@@ -127,8 +126,9 @@
 			</div>
 		</div>
 	</section>
-	
-	
+
+
+
 	<!-- jquery plugins here-->
 	<script src="js/jquery-1.12.1.min.js"></script>
 	<!-- popper js -->

@@ -8,19 +8,24 @@
 </head>
 <body>
 
-	이름: ${member.id }
-	<br> 주소: 나중에멤버에서불러오기
+	이름: ${member.name }
+	<br> 주소: ${member.address} <br> 
+		${member.detailAddress } <br>
+		${member.extraAddress }<br>
 	<br> 연락처: ${member.phone }
-	<br> 상품번호: ${myAuction.num}
 	<br>
 	<br>
-	<br>	
+	<br>
+	
+	<c:if test="${auction.pstatus eq '입금완료'}">	
 	<form action="${pageContext.request.contextPath}/shippingComplete"
 		method="POST">
-		<input type="hidden" name="seller" value="${User.id}"> <input
-			type="hidden" name="num" value="${myAuction.num}"> <input
-			type="submit" value="배송완료">
+	<input type="hidden" name="num" value="${auction.num}"> 
+	<input type="submit" value="발송완료">
 	</form>
+	</c:if>
+
+
 
 </body>
 </html>

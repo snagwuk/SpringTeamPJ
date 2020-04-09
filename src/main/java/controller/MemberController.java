@@ -1,6 +1,8 @@
 package controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import model.Auction;
 import model.Cash;
 import model.Member;
 import model.User;
@@ -91,8 +94,20 @@ public class MemberController {
 		return "member/sucess";
 	}
 	@RequestMapping(value = "grade", method = RequestMethod.GET)
-	public String upGrade(){
+	public String upGrade(Model m){
+		List<Member> memberList = dbPro.selectposition();
+		m.addAttribute("memberList", memberList);
 		return "member/upGrade";
+	}
+	@RequestMapping(value = "upgrade")
+	public String upGradePro(Member member){
+		dbPro.upposition(member.getId());
+		return "redirect:/grade";
+	}
+	@RequestMapping(value = "downgrade")
+	public String downGradePro(Member member){
+		dbPro.downposition(member.getId());
+		return "redirect:/grade";
 	}
 	
 }

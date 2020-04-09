@@ -40,7 +40,8 @@
 	<!--================Category Product Area =================-->
 	<section class="cat_product_area section_padding">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/myAuctionList">내경매목록</a> <br>
+			나의 판매 목록(<a href="${pageContext.request.contextPath}/myOnSale">${myAuctionCount}</a>건 )<br>
+			나의 구매 목록(<a href="${pageContext.request.contextPath}/myBidding">${myBidCount}</a>건 )<br>
 			<a href="${pageContext.request.contextPath}/charge">캐시충전</a> <br>
 			<a href="${pageContext.request.contextPath}/withdraw"> 출금신청</a> <br>
 			<a href="${pageContext.request.contextPath}/cashlist"> 나의 캐쉬 이력</a> <br>
