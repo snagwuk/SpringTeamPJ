@@ -80,7 +80,7 @@ public class CashController
     public String cash_cashchecklist(HttpSession session, Model m)
     {
         User user = (User) session.getAttribute("user");
-        if(!user.getPosition().equals("관리자"))
+        if(user.getPosition()!=0)
             return "redirect:/main";
         List<Cash> cashchecklist = dbPro.getCashCheckList();
         m.addAttribute("cashchecklist", cashchecklist);
@@ -91,7 +91,7 @@ public class CashController
     public String cash_cashcheck(int cnum, int cstatus, HttpSession session, Model m) throws Exception
     {
         User user = (User) session.getAttribute("user");
-        if(!user.getPosition().equals("관리자"))
+        if(user.getPosition()!=0)
             return "redirect:/main";
         Cash cash = dbPro.getCashCnum(cnum);
         cash.setCstatus(cstatus);

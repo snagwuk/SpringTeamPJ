@@ -16,7 +16,7 @@
 
 
 	<mvc:annotation-driven />
-	<context:component-scan base-package="controller,service,model,webservice" />
+	<context:component-scan base-package="controller,service" />
 
 	<mvc:default-servlet-handler />
 	<mvc:view-controller path="/main" view-name="main" />

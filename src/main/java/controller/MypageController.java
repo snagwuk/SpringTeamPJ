@@ -399,7 +399,7 @@ public class MypageController {
 	        int count = dbPro.getMyBidCount(user.getId());
 
 
-	        List<Auction> MyBidList = dbPro.getMyBidList(startRow, endRow, user.getId());
+	        List<Auction> MyBidList = dbPro.getMyBiddingCompleteList(startRow, endRow, user.getId());
 
 
 

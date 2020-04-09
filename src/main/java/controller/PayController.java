@@ -41,7 +41,7 @@ public class PayController {
 
 		auction.setNum(1); //나중에 연결(이 전 페이지 없어서 임의 지정)
 
-		Auction myBidCompleteAuction = dbPro.getAuction(num);
+		Auction myBidCompleteAuction = dbPro.getAuction(1);
 		m.addAttribute("myBidCompleteAuction", myBidCompleteAuction);
 
 		int cash = cashPro.myCash(user.getId());

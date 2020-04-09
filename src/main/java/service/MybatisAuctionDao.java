@@ -292,67 +292,7 @@ public class MybatisAuctionDao {
 		}
 	}
 
-	/* ������Ʈ */
-	public int gethightprice(int num) {
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		try {
-			return sqlSession.selectOne(namespace + ".gethightprice", num);
-		} finally {
-			sqlSession.close();
-		}
-	}
 
-	public void insertbid(Bid abid) {
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		try {
-
-			sqlSession.insert(namespace + ".insertbid", abid);
-			sqlSession.commit();
-		} finally {
-			sqlSession.close();
-		}
-	}
-
-	public List<Bid> getbidlist(int num) {
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		try {
-			return sqlSession.selectList(namespace + ".getbidlist", num);
-		} finally {
-			sqlSession.close();
-		}
-	}
-
-	public int getbidunit(int num) {
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		try {
-			return sqlSession.selectOne(namespace + ".getbidunit", num);
-		} finally {
-			sqlSession.close();
-		}
-	}
-
-	public List<Auction> getmyseller(int startRow, int endRow, String id) {
-		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
-		startRow = startRow - 1;
-		endRow = endRow - startRow;
-		Map map = new HashMap();
-		map.put("startRow", startRow);
-		map.put("endRow", endRow);
-		map.put("id", id);
-		List<Auction> result = new ArrayList<>();
-		try {
-			return sqlSession.selectList(namespace + ".getmyseller", map);
-		} finally {
-			sqlSession.close();
-		}
-	}
-
-
-
-
-
-
-    /*������Ʈ*/
     public int gethightprice(int num)
     {
         SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
