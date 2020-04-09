@@ -1,7 +1,7 @@
 package controller;
 
-
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,9 +50,11 @@ public class MemberController {
 		dbPro.insertmember(member);
 
 		Cash cash = new Cash();
-		cash.setCash(0);
+		cash.setCashdate(LocalDateTime.now());
+		cash.setCash(1000);
 		cash.setId(member.getId());
 		cash.setReason("회원가입");
+		cash.setCstatus(1);
 		cashPro.insertCash(cash);
 
 		return "redirect:/main";

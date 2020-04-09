@@ -71,7 +71,7 @@ CREATE EVENT IF NOT EXISTS AAUCTION_CHECK
         UPDATE  AAUCTION SET pstatus = "END" WHERE enddate <= NOW();
 
 
-        
+
         create table wishseller(
         seller varchar(50),
         id varchar(50),
@@ -82,3 +82,13 @@ CREATE EVENT IF NOT EXISTS AAUCTION_CHECK
         receiver varchar(50),content varchar(500),
         sendtime DATETIME,readtime DATETIME,
         readcount int);
+
+        create table aReview
+        (
+        num int,
+        seller varchar(100),
+        id varchar(100),
+        productStar int ,
+        deliveryStar int ,
+        serviceStar int
+        );

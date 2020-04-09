@@ -34,7 +34,7 @@
 function chat() {
 	window.open('message/messagelist','child','toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
 	}
-	
+
 
 </script>
 <style type="text/css">
@@ -57,7 +57,7 @@ function chat() {
 <c:if test="${unreadcount!=null}">
 <c:set var="unreadcount" value="${unreadcount}"/>
 <style type="text/css">
-.main_menu .comment i:after { 
+.main_menu .comment i:after {
 
 
  content : '${unreadcount}'
@@ -90,12 +90,12 @@ function chat() {
 					<ul class="navbar-nav">
 
 						<li class="nav-item"><a class="nav-link" href="list">경매</a></li>
-						
+
 <c:if test="${user==null }">
 						<li class="nav-item"><a class="nav-link" href="regist">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link" href="login">로그인</a></li>
 						</c:if>
-						
+
 						<c:if test="${user!=null }">
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="mypage"
@@ -112,7 +112,7 @@ function chat() {
 									class="dropdown-item" href="confirmation.html">confirmation</a>
 								<a class="dropdown-item" href="elements.html">elements</a>
 							</div></li>
-						
+
 
 
 
@@ -136,7 +136,7 @@ function chat() {
 						</a>
 					</div>
 					</c:if>
-					
+
 					<a href=""><i class="ti-heart"></i></a>
 					<div class="dropdown cart">
 						<a class="dropdown-toggle" href="#" id="navbarDropdown3"
@@ -145,7 +145,7 @@ function chat() {
 						</a>
 						<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <div class="single_product">
-    
+
                                     </div>
                                 </div> -->
 
@@ -187,7 +187,7 @@ function chat() {
 	<script src="js/slick.min.js"></script>
 	<script src="js/jquery.counterup.min.js"></script>
 	<script src="js/waypoints.min.js"></script>
-	
+
 	<script src="js/jquery.ajaxchimp.min.js"></script>
 	<script src="js/jquery.form.js"></script>
 	<script src="js/jquery.validate.min.js"></script>

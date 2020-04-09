@@ -1,22 +1,15 @@
 
 package controller;
 
-import java.io.FileOutputStream;
 import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.security.auth.login.AccountException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import model.Auction;
 import model.Cash;
@@ -39,12 +32,14 @@ public class PayController {
 	MybatisMemberDao memPro;
 
 	@RequestMapping(value = "pay", method = RequestMethod.GET)
-	public String payGET(HttpServletRequest req, int num, Model m) {
+	public String payGET( HttpSession session,  Model m) {
 
-		User user = (User) req.getSession().getAttribute("user");
+		User user = (User) session.getAttribute("user");
 
 		Auction auction = new Auction();
-		auction.setNum(num);
+		auction.setWinid(user.getId());
+
+		auction.setNum(1); //나중에 연결(이 전 페이지 없어서 임의 지정)
 
 		Auction myBidCompleteAuction = dbPro.getAuction(num);
 		m.addAttribute("myBidCompleteAuction", myBidCompleteAuction);
@@ -52,21 +47,15 @@ public class PayController {
 		int cash = cashPro.myCash(user.getId());
 		m.addAttribute("cash", cash);
 
-		if (myBidCompleteAuction.getPstatus().equals("입찰중")) {
 			int myBalance = cash - myBidCompleteAuction.getImmediateprice();
-			m.addAttribute("myBalance", myBalance);
-		} else {
-			int myBalance = cash - myBidCompleteAuction.getBeginsprice();
-			m.addAttribute("myBalance", myBalance);
-		}		
-		 
+			m.addAttribute("myBalance", myBalance);	 
 		return "pay/pay";
 	}
 
 	@RequestMapping(value = "pay", method = RequestMethod.POST)
-	public String payPOST(HttpServletRequest req, int num) throws Exception {
+	public String payPOST(HttpSession session, int num) throws Exception {
 
-		User user = (User) req.getSession().getAttribute("user");
+	        User user = (User) session.getAttribute("user");
 
 		Auction auction = new Auction();
 		auction.setNum(num);
@@ -83,6 +72,7 @@ public class PayController {
 
 		cash.setCashdate(LocalDateTime.now());
 		cash.setReason(myAuction.getNum() + "번 경매물품 대금 결제");
+		cash.setCstatus(1);
 		cashPro.insertCash(cash);
 
 		myAuction.setPstatus("입금완료");
