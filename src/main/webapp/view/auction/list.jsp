@@ -31,7 +31,28 @@
 <link rel="stylesheet" href="css/price_rangs.css">
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
+<script type="text/javascript">
 
+function check(){
+	var already = ${already}
+	if (already==1){
+		alert('이미 등록된 상점입니다.')
+		return false;
+	}if(confirm("관심상점으로 추가하시겠습니까?")==true){
+		alert('관심상점으로 등록되었습니다.')
+		return true;
+	}else{
+	return false;
+	}
+}
+</script>
+<script type="text/javascript">
+function chat() {
+	window.open('message/messagelist?','child','toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
+	}
+	
+
+</script>
 
 </head>
 
@@ -40,7 +61,22 @@
 	<!--================Category Product Area =================-->
 	<section class="cat_product_area section_padding">
 		<div class="container">
-			<div class="row">
+		
+		<c:if test="${seller!=null}">
+	
+	<h1>${seller}님의 상점입니다.</h1>
+	<c:if test="${seller!=user.id}">
+	<h5><a href="addmyseller?seller=${seller}" onclick="return check(); "  >[관심상점 등록하기]</a>
+	<h5><a href="#" onclick= "chat()" >쪽지보내기</a>
+	</h5>
+	</c:if>
+<div class="row">
+				<div class="col-lg-6">
+</c:if>
+		
+			
+				<c:if test="${seller==null}">
+					<div class="row">
 				<div class="col-lg-3">
 					<div class="left_sidebar_area">
 						<aside class="left_widgets p_filter_widgets">
@@ -84,6 +120,8 @@
 							</div>
 						</aside>
 					</div>
+					
+					</c:if>
 				</div>
 				<div class="col-lg-9">
 					<div class="row">
@@ -104,6 +142,7 @@
 							</div>
 						</div>
 					</div>
+
 
 					<div class="row align-items-center latest_product_inner">
 						
@@ -136,7 +175,7 @@
 
 										<c:if test="${startPage > bottomLine}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${startPage - bottomLine}"
+												href="${pagename}?pageNum=${startPage - bottomLine}"
 												aria-label="Previous"> <i class="ti-angle-double-left"></i>
 											</a></li>
 										</c:if>
@@ -158,13 +197,13 @@
 
 										<c:forEach var="i" begin="${startPage}" end="${endPage}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${i}">${i}</a></li>
+												href="${pagename}?pageNum=${i}">${i}</a></li>
 
 										</c:forEach>
 
 										<c:if test="${endPage < pageCount}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${startPage + bottomLine}"
+												href="${pagename}?pageNum=${startPage + bottomLine}"
 												aria-label="Next"> <i class="ti-angle-double-right"></i>
 											</a></li>
 										</c:if>

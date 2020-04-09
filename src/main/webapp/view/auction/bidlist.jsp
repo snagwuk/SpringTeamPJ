@@ -110,7 +110,7 @@
 <form:form commandName="bid">
 
 <input type="hidden" name="num" value="${num}">
-<input type="hidden" name="id" value="aaaa"/>
+<input type="hidden" name="id" value="${user.id}"/>
 
 <form:input path="bidprice" /><input type="submit" value = "입찰하기"/>
 <br/>

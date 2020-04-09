@@ -1,5 +1,5 @@
-create table AAUCTION (   
-num int not null primary key,   
+create table AAUCTION (
+num int not null primary key,
 CATEGORY VARCHAR(100) NOT NULL,
 SELLER VARCHAR(100) NOT NULL,
 pname VARCHAR(100) NOT NULL,
@@ -7,11 +7,11 @@ PDETAIL VARCHAR(3000),
 IMMEDIATEPRICE INT NOT NULL,
 BIDUNIT INT,
 BEGINSPRICE INT,
-STARTDATE DATETIME NOT NULL,   
+STARTDATE DATETIME NOT NULL,
 ENDDATE DATETIME NOT NULL,
-DELIVERYPAY int,   
+DELIVERYPAY int,
 WINID VARCHAR(100),
-PSTATUS VARCHAR(100), 
+PSTATUS VARCHAR(100),
 FILENAME VARCHAR(100),
 filesize int
 );
@@ -47,7 +47,7 @@ create table abid
 num int,
 id varchar(100),
 biddate dateTime,
-bidprice int 
+bidprice int
 );
 
 create table aReview
@@ -57,7 +57,7 @@ seller varchar(100),
 id varchar(100),
 productStar int ,
 deliveryStar int ,
-serviceStar int 
+serviceStar int
 );
 
 SHOW VARiables LIKE 'event%';
@@ -65,10 +65,20 @@ SET GLOBAL event_scheduler = ON;
 
 CREATE EVENT IF NOT EXISTS AAUCTION_CHECK
     ON SCHEDULE
-        EVERY 10 SECOND  
-        STARTS CURRENT_TIMESTAMP 
+        EVERY 10 SECOND
+        STARTS CURRENT_TIMESTAMP
     DO
         UPDATE  AAUCTION SET pstatus = "END" WHERE enddate <= NOW();
+
+
         
+        create table wishseller(
+        seller varchar(50),
+        id varchar(50),
+        registtime DATETIME
+        );
 
-
+        create table amessage (num int primary key,sender varchar(50),
+        receiver varchar(50),content varchar(500),
+        sendtime DATETIME,readtime DATETIME,
+        readcount int);

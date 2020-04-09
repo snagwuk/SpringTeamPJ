@@ -51,7 +51,7 @@
 		document.getElementById("demo").innerHTML = days + "일 " + hours + ": "
 				+ minutes + ": " + seconds + " ";
 
-		// If the count down is over, write some text 
+		// If the count down is over, write some text
 		if (distance < 0) {
 			clearInterval(x);
 			document.getElementById("demo").innerHTML = "EXPIRED";
@@ -75,6 +75,7 @@
 </head>
 
 <body>
+
 
 	<!--================Single Product Area =================-->
 	<div class="product_image_area section_padding">
@@ -120,7 +121,7 @@
 						<div style="margin-top: -2%;">
 							<ul>
 								<li><span>경매 번호 </span>: ${auction.num}</li>
-								<li><span>판매자</span>: ${auction.seller}</li>
+								<li><span>판매자</span>: ${auction.seller} <a href="sellerstore?seller=${auction.seller}"> [판매자 상점가기]</a></li>
 								<li><span>배송방법</span>: 택배</li>
 
 

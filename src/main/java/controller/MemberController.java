@@ -14,41 +14,47 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import model.Amessage;
+import model.Auction;
 import model.Cash;
 import model.Member;
 import model.User;
 import service.MybatisCashDao;
 import service.MybatisMemberDao;
+import service.MybatisMessageDao;
 
 
 
 @Controller
 public class MemberController {
 
-	
+
 	@Autowired
 	MybatisMemberDao dbPro;
-	
+
 	@Autowired
 	MybatisCashDao cashPro;
-	
+
+	@Autowired
+	MybatisMessageDao mePro;
+
 	@RequestMapping(value = "regist",method = RequestMethod.GET)
 	public String member_registForm(Member member){
-		
+
 		return "member/registrationForm";
 	}
-	
+
 	@RequestMapping(value = "regist",method = RequestMethod.POST)
-	public String member_registPro(Member member) throws Exception{		
-		
+	public String member_registPro(Member member) throws Exception{
+
 		dbPro.insertmember(member);
-		
+
 		Cash cash = new Cash();
 		cash.setCash(0);
 		cash.setId(member.getId());
 		cash.setReason("회원가입");
 		cashPro.insertCash(cash);
-		
+
 		return "redirect:/main";
 	}
 	@RequestMapping(value = "login", method = RequestMethod.GET)
@@ -56,28 +62,38 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	@RequestMapping(value = "login",method=RequestMethod.POST)
-	public String loginPro(Member member, HttpSession session){	 
-		Member check = dbPro.selectmember(member.getId()); 	
-		if(check!=null){
-			String encryption = dbPro.authenticate(member.getPassword());
-				if(encryption.equals(check.getPassword())){ 
-					User user = new User(check.getId(), check.getPosition(), check.getStatus());
-					session.setAttribute("user", user);
-					return "redirect:/main";
-				}else{
-					return "member/loginForm";
-				}
-			
-		}else {
-			if(member.getPassword().equals(check.getPassword())){ 
-				User user = new User(check.getId(), check.getPosition(), check.getStatus());
-				session.setAttribute("user", user);
-				return "redirect:/main";
-			}else{
-				return "member/loginForm";
+	public String loginPro(Member member, HttpSession session)
+		{
+			Member check = dbPro.selectmember(member.getId());
+			if(check!=null)
+			{
+				String encryption = dbPro.authenticate(member.getPassword());
+					if(encryption.equals(check.getPassword()))
+					{
+						User user = new User(check.getId(), check.getPosition(), check.getStatus());
+						session.setAttribute("user", user);
+
+						// message
+						Amessage me = new Amessage();
+						me.setReceiver(member.getId());
+						mePro.deleteintromessage(me);
+					 int unreadcount = mePro.getunreaccount(member.getId());
+					 if(unreadcount==0)
+						 session.setAttribute("unreadcount", null);
+					 else
+							session.setAttribute("unreadcount", unreadcount);
+
+
+						return "redirect:/main";
+					}
+					else
+						return "member/loginForm";
 			}
+				else
+					return "member/loginForm";
 		}
-	}
+
+
 	@RequestMapping(value = "logout")
 	public String logoutPro(HttpSession session){
 		session.invalidate();
@@ -87,11 +103,11 @@ public class MemberController {
 	public String seller(Model m, HttpSession session){
 		User user = (User) session.getAttribute("user");
 		Member member = dbPro.selectmember(user.getId());
-		m.addAttribute("member", member);	
+		m.addAttribute("member", member);
 		return "member/tobeSellerForm";
 	}
 	@RequestMapping(value = "tobeseller", method = RequestMethod.POST)
-	public String sellerPro(Member member,HttpSession session,HttpServletRequest req)throws Exception{		
+	public String sellerPro(Member member,HttpSession session,HttpServletRequest req)throws Exception{
 		dbPro.updatemember(member);
 		Member change = dbPro.selectmember(member.getId());
 		User user = new User(change.getId(), change.getPosition(), change.getStatus());
@@ -119,12 +135,12 @@ public class MemberController {
 	@RequestMapping(value = "beformodify", method = RequestMethod.GET)
 	public String beformodify(Model m, HttpSession session){
 		User user = (User) session.getAttribute("user");
-		m.addAttribute("user", user);	
+		m.addAttribute("user", user);
 		return "member/beforModify";
 	}
 	@RequestMapping(value = "beformodify", method = RequestMethod.POST)
 	public String beformodifyPro(Member member){
-		Member check = dbPro.selectmember(member.getId()); 
+		Member check = dbPro.selectmember(member.getId());
 		String encryption = dbPro.authenticate(member.getPassword());
 			if(encryption.equals(check.getPassword())){
 				System.out.println("여기");
@@ -142,8 +158,8 @@ public class MemberController {
 	}
 	@RequestMapping(value = "modifyForm", method = RequestMethod.POST)
 	public String modifyPro(Member member){
-		dbPro.modifymember(member); 		
+		dbPro.modifymember(member);
 		return "redirect:/main";
 	}
-	
+
 }

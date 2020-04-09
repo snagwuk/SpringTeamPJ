@@ -1,5 +1,5 @@
-/controller/
-/mybatis/
-/service/
 /model/
-
+/service/
+/webservice/
+/mybatis/
+/controller/
