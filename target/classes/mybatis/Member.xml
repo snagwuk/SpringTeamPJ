@@ -37,6 +37,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="downposition" parameterType="String">
 		update amember set position=2 where id=#{id}
 	</update>
+	<update id="modifymember" parameterType="Member">
+		update amember set password=hex(aes_encrypt(#{password},'password')),
+		name=#{name}, phone=#{phone}, address=#{address},detailAddress=#{detailAddress},
+		extraAddress=#{extraAddress} where id=#{id}
+	</update>
 
 
 

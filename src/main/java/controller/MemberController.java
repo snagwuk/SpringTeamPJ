@@ -123,7 +123,7 @@ public class MemberController {
 		return "member/beforModify";
 	}
 	@RequestMapping(value = "beformodify", method = RequestMethod.POST)
-	public String modifyPro(Member member){
+	public String beformodifyPro(Member member){
 		Member check = dbPro.selectmember(member.getId()); 
 		String encryption = dbPro.authenticate(member.getPassword());
 			if(encryption.equals(check.getPassword())){
@@ -139,6 +139,11 @@ public class MemberController {
 		Member member = dbPro.selectmember(user.getId());
 		m.addAttribute("member", member);
 		return "member/modifyForm";
+	}
+	@RequestMapping(value = "modifyForm", method = RequestMethod.POST)
+	public String modifyPro(Member member){
+		dbPro.modifymember(member); 		
+		return "redirect:/main";
 	}
 	
 }

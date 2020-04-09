@@ -94,5 +94,14 @@ public class MybatisMemberDao {
 				sqlSession.close();
 			}
 		}
+	 public void modifymember(Member member) {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				sqlSession.update(namespace + ".modifymember",member);
+				sqlSession.commit();
+			} finally {
+				sqlSession.close();
+			}
+		}
 
 }
