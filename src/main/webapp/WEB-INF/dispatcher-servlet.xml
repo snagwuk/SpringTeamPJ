@@ -46,15 +46,12 @@
 	</bean>
 
 
-
-   
-   <bean id="echoHandler" class="webservice.EchoHandler" />
    <bean id="chatHandler" class="webservice.ChatWebSocketHandler" />
 <!--    <bean id="messageHandler" class="webservice.MessageHandler" /> -->
    <mvc:default-servlet-handler/>
    
    <websocket:handlers>
-      <websocket:mapping handler="echoHandler" path="/echo.sockjs" />
+ 
       <websocket:mapping handler="chatHandler" path="/chat.sockjs" />
    <!--      <websocket:mapping handler="messageHandler" path="/message.sockjs" /> -->
       <websocket:sockjs />

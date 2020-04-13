@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Amessage;
 import model.Auction;
+import model.Member;
 import model.User;
 import model.Wishseller;
 import service.MybatisAuctionDao;
 import service.MybatisCashDao;
+import service.MybatisMemberDao;
 
 @Controller
 public class MypageController {
@@ -29,16 +31,24 @@ public class MypageController {
 
 	@Autowired
 	MybatisCashDao cashDbPro;
+	
+	@Autowired
+	MybatisMemberDao memPro;
 
 	@RequestMapping(value = "mypage")
 	public String mypage(HttpServletRequest req, Model m) {
 		User user = (User) req.getSession().getAttribute("user");
+		
 		int mycash = cashDbPro.myCash(user.getId());
+		Member member = memPro.getMemberinfo(user.getId());
 		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
 		int myBidCount = dbPro.getMyBidCount(user.getId());
+		
 		m.addAttribute("mycash", mycash);
 		m.addAttribute("myAuctionCount", myAuctionCount);
 		m.addAttribute("myBidCount", myBidCount);
+		m.addAttribute("member", member);
+		
 		return "mypage/mypage";
 	}
 

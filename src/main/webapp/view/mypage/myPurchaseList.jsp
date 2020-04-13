@@ -52,8 +52,9 @@
 					<div class="left_sidebar_area">
 						<aside class="left_widgets p_filter_widgets">
 							<div class="l_w_title">
-								<h3>마이페이지</h3>
+								<h2>Mypage</h2>
 							</div>
+							<br>
 							<div class="widgets_inner">
 								<ul class="list">
 									<li><a href="#">회원정보수정</a></li>
@@ -80,26 +81,16 @@
 								class="product_top_bar d-flex justify-content-between align-items-center">
 
 								<div class="single_product_menu d-flex">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="search"
-											aria-describedby="inputGroupPrepend">
-										<div class="input-group-prepend">
-											<span class="input-group-text" id="inputGroupPrepend"><i
-												class="ti-search"></i></span>
-										</div>
 
-										<a href="${pageContext.request.contextPath}/myBidding"><input
-											type="button" value="입찰"></a> <a
-											href="${pageContext.request.contextPath}/myBiddingDealing"><input
-											type="button" value="낙찰(거래중)"></a> <a
-											href="${pageContext.request.contextPath}/myBiddingComplete"><input
-											type="button" value="낙찰(거래완료)"></a> <br> <a
-											href="${pageContext.request.contextPath}/myFailureBidding"><input
-											type="button" value="거래취소"></a> <br>
+									<a href="${pageContext.request.contextPath}/myBidding"
+										class="genric-btn primary">입찰</a>&nbsp;&nbsp; <a
+										href="${pageContext.request.contextPath}/myBiddingDealing"
+										class="genric-btn primary">낙찰(거래중)</a>&nbsp;&nbsp; <a
+										href="${pageContext.request.contextPath}/myBiddingComplete"
+										class="genric-btn primary">낙찰(거래완료)</a>&nbsp;&nbsp; <a
+										href="${pageContext.request.contextPath}/myFailureBidding"
+										class="genric-btn primary">거래취소</a>
 
-
-
-									</div>
 								</div>
 							</div>
 						</div>
@@ -108,33 +99,88 @@
 
 					<div class="row align-items-center latest_product_inner">
 
-
-
-
-
-
-
-
 						<c:if test="${count==0}">
-							<h4>등록된 물품이 없음</h4>
+								<section class="cart_area padding_top">
+								<div class="container">
+									<div class="cart_inner">
+										<div class="table-responsive">
+											<table class="table">
+												<tbody>
+													<tr>
+														<td>
+															<div class="media">
+																<div class="d-flex">
+																	<img
+																		src="<%=request.getContextPath()%>/uploadFile/none.jpg"
+																		width="200" height="200">
+																</div>
+																<div class="media-body">
+																	<p>아직 등록된 상품이 없습니다.</p>
+																</div>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+							</section>
 						</c:if>
 						<c:if test="${count!=0}">
-							<c:forEach var="myBidList" items="${myBidList}">
-								<div>
-									<a
-										href="${pageContext.request.contextPath}/content?num=${myBidList.num}"><img
-										src="<%=request.getContextPath()%>/uploadFile/${myBidList.filename}"
-										width="200" height="200"></a>
-									<div>
-										상품명: ${myBidList.pname}<br />
-										<c:if test="${myBidList.pstatus eq '입찰중'}">
-										입찰마감시간: ${myBidList.enddate}
-										</c:if>
 
+
+							<section class="cart_area padding_top">
+								<div class="container">
+									<div class="cart_inner">
+										<div class="table-responsive">
+
+
+											<table class="table">
+												<c:forEach var="myBidList" items="${myBidList}">
+
+													<tbody>
+														<tr>
+															<td>
+																<div class="media">
+																	<div class="d-flex">
+																		<a
+																			href="${pageContext.request.contextPath}/content?num=${myBidList.num}">
+																			<img
+																			src="<%=request.getContextPath()%>/uploadFile/${myBidList.filename}"
+																			width="200" height="200">
+																		</a>
+																	</div>
+																	<div class="media-body">
+																		<p>${myBidList.pname}</p>
+																	</div>
+																</div>
+															</td>
+
+															<td><c:choose>
+																	<c:when test="${myBidList.pstatus eq '입찰중'}">
+																		<h5>[입찰마감시간]</h5>
+																		<h5>${myBidList.enddate}</h5>
+																	</c:when>
+
+																	<c:otherwise>
+																		<h5>[낙찰시간]</h5>
+																		<h5>${myBidList.enddate}</h5>
+
+																	</c:otherwise>
+																</c:choose></td>
+														</tr>
+
+													</tbody>
+												</c:forEach>
+											</table>
+
+										</div>
 									</div>
-								</div>
-							</c:forEach>
+							</section>
+
 						</c:if>
+
+
 
 						<div class="col-lg-12">
 							<div class="pageination">
@@ -170,37 +216,7 @@
 			</div>
 		</div>
 	</section>
-	<!--================End Category Product Area =================-->
 
-
-	<!-- product_list part end-->
-
-	<!--::footer_part start::-->
-	<footer class="footer_part">
-
-		<div class="copyright_part">
-			<div class="container">
-				<div class="row">
-
-					<div class="col-lg-4">
-						<div class="footer_icon social_icon">
-							<ul class="list-unstyled">
-								<li><a href="#" class="single_social_icon"><i
-										class="fab fa-facebook-f"></i></a></li>
-								<li><a href="#" class="single_social_icon"><i
-										class="fab fa-twitter"></i></a></li>
-								<li><a href="#" class="single_social_icon"><i
-										class="fas fa-globe"></i></a></li>
-								<li><a href="#" class="single_social_icon"><i
-										class="fab fa-behance"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!--::footer_part end::-->
 
 	<!-- jquery plugins here-->
 	<script src="js/jquery-1.12.1.min.js"></script>
