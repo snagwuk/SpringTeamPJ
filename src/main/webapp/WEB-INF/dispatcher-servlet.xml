@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	 xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -26,10 +25,12 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 
+	
+
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/view/" /><!-- 여기 슬레시가 
-			있으니까 java에 안써도 됨 -->
+		<property name="prefix" value="/view/" /><!-- 여기 슬레시가 있으니까 java에 
+			안써도 됨 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
 
@@ -37,7 +38,11 @@
 		<constructor-arg value="Mysql" />
 	</bean>
 
-<bean id="messageSource"
+
+	
+
+
+	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<value>message.error</value>
@@ -46,15 +51,20 @@
 	</bean>
 
 
-   <bean id="chatHandler" class="webservice.ChatWebSocketHandler" />
-<!--    <bean id="messageHandler" class="webservice.MessageHandler" /> -->
-   <mvc:default-servlet-handler/>
-   
-   <websocket:handlers>
- 
-      <websocket:mapping handler="chatHandler" path="/chat.sockjs" />
-   <!--      <websocket:mapping handler="messageHandler" path="/message.sockjs" /> -->
-      <websocket:sockjs />
-   </websocket:handlers>
+	<bean id="chatHandler" class="webservice.ChatWebSocketHandler" />
+	<!-- <bean id="messageHandler" class="webservice.MessageHandler" /> -->
+	<mvc:default-servlet-handler />
+
+	<websocket:handlers>
+
+		<websocket:mapping handler="chatHandler" path="/chat.sockjs" />
+		<!-- <websocket:mapping handler="messageHandler" path="/message.sockjs" 
+			/> -->
+		<websocket:sockjs />
+	</websocket:handlers>
+
+
+
+
 
 </beans>

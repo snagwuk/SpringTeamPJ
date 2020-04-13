@@ -32,12 +32,12 @@ public class PayController {
 
 	@Autowired
 	MybatisMemberDao memPro;
-	
+
 	@Autowired
 	MybatisPenaltyDao penPro;
 
 	@RequestMapping(value = "pay", method = RequestMethod.GET)
-	public String payGET( HttpSession session, int num, Model m) {
+	public String payGET(HttpSession session, int num, Model m) {
 
 		User user = (User) session.getAttribute("user");
 
@@ -47,15 +47,15 @@ public class PayController {
 		int cash = cashPro.myCash(user.getId());
 		m.addAttribute("cash", cash);
 
-			int myBalance = cash - myBidCompleteAuction.getImmediateprice();
-			m.addAttribute("myBalance", myBalance);	 
+		int myBalance = cash - myBidCompleteAuction.getImmediateprice();
+		m.addAttribute("myBalance", myBalance);
 		return "pay/pay";
 	}
 
 	@RequestMapping(value = "pay", method = RequestMethod.POST)
 	public String payPOST(HttpSession session, int num) throws Exception {
 
-	        User user = (User) session.getAttribute("user");
+		User user = (User) session.getAttribute("user");
 
 		Auction auction = new Auction();
 		auction.setNum(num);
@@ -116,37 +116,124 @@ public class PayController {
 		myAuction.setPstatus("거래종료");
 		dbPro.updateAuctionStatus(myAuction);
 
+		int payCash = (cashPro.getPayCash(myAuction.getWinid(), num)) * -1;
+		Cash cash = new Cash();
+		cash.setId(myAuction.getSeller());
+		cash.setCash(payCash);
+		
+		cash.setCashdate(LocalDateTime.now());
+		cash.setReason(num + "번 경매물품 대금 지급");
+		cash.setCstatus(1);
+		cashPro.insertCash(cash);
+		
+		
+		
 		return "mypage/myPurchaseList";
 
 	}
-	
+
 	@RequestMapping(value = "giveUpBidding", method = RequestMethod.GET)
-	public String cancleDeal(HttpSession session, int num) throws Exception { 
-		//낙찰자가 입금전일때 낙찰포기 -> 패널티부여
-		 User user = (User) session.getAttribute("user");
+	public String cancleDeal(HttpSession session, int num) throws Exception {
+		// 낙찰자가 입금전일때 낙찰포기 -> 패널티부여
+		User user = (User) session.getAttribute("user");
 		Auction myAuction = dbPro.getAuction(num);
 		myAuction.setPstatus("유찰");
 		dbPro.updateAuctionStatus(myAuction);
-		
-		LocalDateTime today =  LocalDateTime.now(); 
+
+		LocalDateTime today = LocalDateTime.now();
 		Penalty insertPenalty = new Penalty();
 		insertPenalty.setId(user.getId());
 		insertPenalty.setPenaltyDate(today);
 		insertPenalty.setPenaltyReason("거래취소");
-		
-		
-		if(penPro.penaltyCount(user.getId()) %3 == 2) {
+
+		if (penPro.penaltyCount(user.getId()) % 3 == 2) {
 			insertPenalty.setPenaltyEndDate(today.plusDays(7));
 			penPro.insertPenalty(insertPenalty);
-			
+
 			memPro.memberStop(user.getId());
-			
+
 		} else {
 			insertPenalty.setPenaltyEndDate(null);
 			penPro.insertPenalty(insertPenalty);
 		}
 
-		return "redirect:/content?num="+num;
+		return "redirect:/content?num=" + num;
+
+	}
+
+	@RequestMapping(value = "refundbuyer", method = RequestMethod.GET)																		
+	public String refundbuyer(int num) throws Exception {
+
+		Auction myAuction = dbPro.getAuction(num);
+		myAuction.setPstatus("거래취소");
+		dbPro.updateAuctionStatus(myAuction);
+
+		LocalDateTime today = LocalDateTime.now();
+		Penalty insertPenalty = new Penalty();
+		insertPenalty.setId(myAuction.getWinid());
+		insertPenalty.setPenaltyDate(today);
+		insertPenalty.setPenaltyReason("거래취소");
+
+		if (penPro.penaltyCount(myAuction.getWinid()) % 3 == 2) {
+			insertPenalty.setPenaltyEndDate(today.plusDays(7));
+			penPro.insertPenalty(insertPenalty);
+
+			memPro.memberStop(myAuction.getWinid());
+
+		} else {
+			insertPenalty.setPenaltyEndDate(null);
+			penPro.insertPenalty(insertPenalty);
+		}
+
+		int refund = (cashPro.getPayCash(myAuction.getWinid(), num)) * -1;
+
+		Cash cash = new Cash();
+		cash.setId(myAuction.getWinid());
+		cash.setCash(refund);
+		cash.setCashdate(LocalDateTime.now());
+		cash.setReason(num + "번 경매물품 대금 환불");
+		cash.setCstatus(1);
+		cashPro.insertCash(cash);
+
+		return "redirect:/mypage";
+
+	}
+	
+	@RequestMapping(value = "refundseller", method = RequestMethod.GET)																		
+	public String refundseller(int num) throws Exception {
+
+		Auction myAuction = dbPro.getAuction(num);
+		myAuction.setPstatus("거래취소");
+		dbPro.updateAuctionStatus(myAuction);
+
+		LocalDateTime today = LocalDateTime.now();
+		Penalty insertPenalty = new Penalty();
+		insertPenalty.setId(myAuction.getSeller());
+		insertPenalty.setPenaltyDate(today);
+		insertPenalty.setPenaltyReason("거래취소");
+
+		if (penPro.penaltyCount(myAuction.getSeller()) % 3 == 2) {
+			insertPenalty.setPenaltyEndDate(today.plusDays(7));
+			penPro.insertPenalty(insertPenalty);
+
+			memPro.memberStop(myAuction.getSeller());
+
+		} else {
+			insertPenalty.setPenaltyEndDate(null);
+			penPro.insertPenalty(insertPenalty);
+		}
+
+		int refund = (cashPro.getPayCash(myAuction.getWinid(), num)) * -1;
+
+		Cash cash = new Cash();
+		cash.setId(myAuction.getWinid());
+		cash.setCash(refund);
+		cash.setCashdate(LocalDateTime.now());
+		cash.setReason(num + "번 경매물품 대금 환불");
+		cash.setCstatus(1);
+		cashPro.insertCash(cash);
+
+		return "redirect:/mypage";
 
 	}
 

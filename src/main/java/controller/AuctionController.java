@@ -90,7 +90,6 @@ public class AuctionController
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("startRow", startRow);
         request.setAttribute("endRow", endRow);
-        request.setAttribute("count", count);
         request.setAttribute("pageSize", pageSize);
         request.setAttribute("number", number);
         request.setAttribute("bottomLine", bottomLine);

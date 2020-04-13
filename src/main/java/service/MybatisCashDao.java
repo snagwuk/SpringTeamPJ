@@ -1,11 +1,15 @@
 package service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import model.Auction;
 import model.Cash;
 import mybatis.AbstractRepository;
 
@@ -112,5 +116,23 @@ public class MybatisCashDao
             sqlSession.close();
         }
     }
+    
+    public int getPayCash(String id, int num)
+    {
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+        Map map = new HashMap();
+		map.put("id", id);
+		map.put("num", num);
+        try
+        {
+            return sqlSession.selectOne(namespace + ".getPayCash",map);
+        }
+        finally
+        {
+            sqlSession.close();
+        }
+    }
+    
+   
     
 }
