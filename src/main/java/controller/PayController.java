@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import model.Auction;
 import model.Cash;
 import model.Member;
+import model.Penalty;
 import model.User;
 import service.MybatisAuctionDao;
 import service.MybatisCashDao;
 import service.MybatisMemberDao;
+import service.MybatisPenaltyDao;
 
 @Controller
 public class PayController {
@@ -30,6 +32,9 @@ public class PayController {
 
 	@Autowired
 	MybatisMemberDao memPro;
+	
+	@Autowired
+	MybatisPenaltyDao penPro;
 
 	@RequestMapping(value = "pay", method = RequestMethod.GET)
 	public String payGET( HttpSession session, int num, Model m) {
@@ -73,7 +78,7 @@ public class PayController {
 		myAuction.setPstatus("입금완료");
 		dbPro.updateContent(myAuction); // 상품 상태 "입금완료" 로 변경
 
-		return "mypage/myPurchaseList";
+		return "redirect:/myBiddingDealing";
 	}
 
 	@RequestMapping(value = "shippingInfo", method = RequestMethod.GET)
@@ -84,9 +89,6 @@ public class PayController {
 
 		User user = (User) req.getSession().getAttribute("user");
 
-		Auction auction = new Auction();
-		// auction.setSeller(user.getId());
-		auction.setNum(num);
 		Auction myAuction = dbPro.getAuction(num);
 		m.addAttribute("auction", myAuction);
 
@@ -115,6 +117,36 @@ public class PayController {
 		dbPro.updateAuctionStatus(myAuction);
 
 		return "mypage/myPurchaseList";
+
+	}
+	
+	@RequestMapping(value = "giveUpBidding", method = RequestMethod.GET)
+	public String cancleDeal(HttpSession session, int num) throws Exception { 
+		//낙찰자가 입금전일때 낙찰포기 -> 패널티부여
+		 User user = (User) session.getAttribute("user");
+		Auction myAuction = dbPro.getAuction(num);
+		myAuction.setPstatus("유찰");
+		dbPro.updateAuctionStatus(myAuction);
+		
+		LocalDateTime today =  LocalDateTime.now(); 
+		Penalty insertPenalty = new Penalty();
+		insertPenalty.setId(user.getId());
+		insertPenalty.setPenaltyDate(today);
+		insertPenalty.setPenaltyReason("거래취소");
+		
+		
+		if(penPro.penaltyCount(user.getId()) %3 == 2) {
+			insertPenalty.setPenaltyEndDate(today.plusDays(7));
+			penPro.insertPenalty(insertPenalty);
+			
+			memPro.memberStop(user.getId());
+			
+		} else {
+			insertPenalty.setPenaltyEndDate(null);
+			penPro.insertPenalty(insertPenalty);
+		}
+
+		return "redirect:/content?num="+num;
 
 	}
 

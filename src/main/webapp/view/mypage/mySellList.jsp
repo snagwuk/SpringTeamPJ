@@ -32,44 +32,98 @@
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
 
+<script type="text/javascript">
+	function chat() {
+		window
+				.open(
+						'message/messagelist?',
+						'child',
+						'toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
+	}
+</script>
 
 </head>
 
 <body>
-
-
-
-
-	<!--================Category Product Area =================-->
 	<section class="cat_product_area section_padding">
 		<div class="container">
 			<div class="row">
+				<div class="col-lg-3">
+					<div class="left_sidebar_area">
+						<aside class="left_widgets p_filter_widgets">
+							<div class="l_w_title">
+								<h3>마이페이지</h3>
+							</div>
+							<div class="widgets_inner">
+								<ul class="list">
+									<li><a href="#">회원정보수정</a></li>
+									<li><a href="${pageContext.request.contextPath}/myOnSale">나의판매목록</a>
+										<span>(${myAuctionCount})</span></li>
+									<li><a href="${pageContext.request.contextPath}/myBidding">나의구매목록</a>
+										<span>(${myBidCount})</span></li>
+									<li><a
+										href="${pageContext.request.contextPath}/mywishseller">관심판매자상품목록</a></li>
+									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
+									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
+									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
+								</ul>
+							</div>
+						</aside>
+					</div>
+
+				</div>
 
 				<div class="col-lg-9">
+					<div class="row">
+						<div class="col-lg-12">
+							<div
+								class="product_top_bar d-flex justify-content-between align-items-center">
 
-					
-					<a href="${pageContext.request.contextPath}/myOnSale"><input type="button" value="판매중"></a>
-					<a href="${pageContext.request.contextPath}/myDealing"><input type="button" value="거래중"></a>
-					<a href="${pageContext.request.contextPath}/myEndSale"><input type="button" value="판매완료"></a> <br>
-					<a href="${pageContext.request.contextPath}/myEndSale"><input type="button" value="유찰/신고/취소"></a> <br>
+								<div class="single_product_menu d-flex">
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="search"
+											aria-describedby="inputGroupPrepend">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupPrepend"><i
+												class="ti-search"></i></span>
+										</div>
+
+										<a href="${pageContext.request.contextPath}/myOnSale"><input
+											type="button" value="판매중"></a> <a
+											href="${pageContext.request.contextPath}/myDealing"><input
+											type="button" value="거래중"></a> <a
+											href="${pageContext.request.contextPath}/myEndSale"><input
+											type="button" value="판매완료"></a> <br> <a
+											href="${pageContext.request.contextPath}/myFailureSale"><input
+											type="button" value="유찰/취소"></a> <br>
+
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
 
 					<div class="row align-items-center latest_product_inner">
+
 						<c:if test="${count==0}">
 							<h4>등록된 물품이 없음</h4>
 						</c:if>
 						<c:if test="${count!=0}">
 							<c:forEach var="myAuctionList" items="${myAuctionList}">
 								<div>
-									<a href="${pageContext.request.contextPath}/content?num=${myAuctionList.num}"><img
+									<a
+										href="${pageContext.request.contextPath}/content?num=${myAuctionList.num}"><img
 										src="<%=request.getContextPath()%>/uploadFile/${myAuctionList.filename}"
 										width="200" height="200"></a>
 									<div>
-										상품명: ${myAuctionList.pname}<br />	
+										상품명: ${myAuctionList.pname}<br />
 										<c:if test="${myAuctionList.pstatus eq '입찰중'}">
 										입찰마감시간: ${myAuctionList.enddate}
 										</c:if>
-																				
+
 									</div>
 								</div>
 							</c:forEach>
@@ -83,35 +137,19 @@
 
 										<c:if test="${startPage > bottomLine}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${startPage - bottomLine}"
+												href="${pagename}?pageNum=${startPage - bottomLine}"
 												aria-label="Previous"> <i class="ti-angle-double-left"></i>
 											</a></li>
 										</c:if>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 										<c:forEach var="i" begin="${startPage}" end="${endPage}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${i}">${i}</a></li>
+												href="${pagename}?pageNum=${i}">${i}</a></li>
 
 										</c:forEach>
 
 										<c:if test="${endPage < pageCount}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${startPage + bottomLine}"
+												href="${pagename}?pageNum=${startPage + bottomLine}"
 												aria-label="Next"> <i class="ti-angle-double-right"></i>
 											</a></li>
 										</c:if>
@@ -126,8 +164,37 @@
 			</div>
 		</div>
 	</section>
+	<!--================End Category Product Area =================-->
 
 
+	<!-- product_list part end-->
+
+	<!--::footer_part start::-->
+	<footer class="footer_part">
+
+		<div class="copyright_part">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-lg-4">
+						<div class="footer_icon social_icon">
+							<ul class="list-unstyled">
+								<li><a href="#" class="single_social_icon"><i
+										class="fab fa-facebook-f"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i
+										class="fab fa-twitter"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i
+										class="fas fa-globe"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i
+										class="fab fa-behance"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--::footer_part end::-->
 
 	<!-- jquery plugins here-->
 	<script src="js/jquery-1.12.1.min.js"></script>

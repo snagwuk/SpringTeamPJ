@@ -148,7 +148,14 @@
 										<c:if test="${auction.pstatus eq '입금전'}">
 										<li style="margin-bottom: 5%;"><a
 											href="pay?&num=${auction.num}" class="btn_3">결제하기</a></li>
-											</c:if>
+										<li style="margin-bottom: 5%;"><a
+											href="giveUpBidding?&num=${auction.num}" class="btn_3">낙찰포기</a></li>
+										</c:if>
+										<c:if test="${auction.pstatus eq '입금완료'}">
+										<li style="margin-bottom: 5%;"><a
+											href="refund?&num=${auction.num}" class="btn_3">거래취소(환불)</a></li>								
+										</c:if>
+											
 									</c:otherwise>
 								</c:choose>
 

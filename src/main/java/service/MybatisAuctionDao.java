@@ -128,6 +128,16 @@ public class MybatisAuctionDao {
 			sqlSession.close();
 		}
 	}
+	
+	public int getMyFailureSaleCount(String id) {
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectOne(namespace + ".getMyFailureSaleCount", id);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
 
 	public List<Auction> getMyOnSaleList(int startRow, int endRow, String seller) { // 내
 																					// 판매중
@@ -182,6 +192,23 @@ public class MybatisAuctionDao {
 			sqlSession.close();
 		}
 	}
+	
+	
+	public List<Auction> getMyFailureSaleList(int startRow, int endRow, String seller) { // 내 거래종료 리스트 (판매)
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		startRow = startRow - 1;
+		endRow = endRow - startRow;
+		Map map = new HashMap();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("seller", seller);
+
+		try {
+			return sqlSession.selectList(namespace + ".getMyFailureSaleList_limit", map);
+		} finally {
+			sqlSession.close();
+		}
+	}
 
 	/////////////////////////////////// 위는 판매 아래는 구매/////////////////////////////
 
@@ -216,6 +243,15 @@ public class MybatisAuctionDao {
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectOne(namespace + ".getMyBiddingCompleteCount", id);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public int getMyFailureBiddingCount(String id) {
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectOne(namespace + ".getMyFailureBiddingCount", id);
 		} finally {
 			sqlSession.close();
 		}
@@ -268,7 +304,23 @@ public class MybatisAuctionDao {
 			sqlSession.close();
 		}
 	}
+	
+	public List<Auction> getMyFailureBiddingList(int startRow, int endRow, String winid) { // 내 거래종료 리스트 (구매)
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		startRow = startRow - 1;
+		endRow = endRow - startRow;
+		Map map = new HashMap();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("winid", winid);
 
+		try {
+			return sqlSession.selectList(namespace + ".getMyFailureBiddingList_limit", map);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
 	public Auction getMyBidCompleteAuction(Auction auction) { // 나의 낙찰상품 가져오기
 
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
@@ -278,6 +330,8 @@ public class MybatisAuctionDao {
 			sqlSession.close();
 		}
 	}
+	
+	
 
 	public void updateAuctionStatus(Auction Auction) throws Exception { // 나의 상품
 																		// 상태

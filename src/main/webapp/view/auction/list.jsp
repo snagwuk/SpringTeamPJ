@@ -32,26 +32,31 @@
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
 <script type="text/javascript">
-
-function check(){
-	var already = ${already}
-	if (already==1){
-		alert('이미 등록된 상점입니다.')
-		return false;
-	}if(confirm("관심상점으로 추가하시겠습니까?")==true){
-		alert('관심상점으로 등록되었습니다.')
-		return true;
-	}else{
-	return false;
+	function check() {
+		var already = $
+		{
+			already
+		}
+		if (already == 1) {
+			alert('이미 등록된 상점입니다.')
+			return false;
+		}
+		if (confirm("관심상점으로 추가하시겠습니까?") == true) {
+			alert('관심상점으로 등록되었습니다.')
+			return true;
+		} else {
+			return false;
+		}
 	}
-}
 </script>
 <script type="text/javascript">
-function chat() {
-	window.open('message/messagelist?','child','toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
+	function chat() {
+		window
+				.open(
+						'message/messagelist?',
+						'child',
+						'toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
 	}
-	
-
 </script>
 
 </head>
@@ -61,161 +66,122 @@ function chat() {
 	<!--================Category Product Area =================-->
 	<section class="cat_product_area section_padding">
 		<div class="container">
-		
-		<c:if test="${seller!=null}">
-	
-	<h1>${seller}님의 상점입니다.</h1>
-	<c:if test="${seller!=user.id}">
-	<h5><a href="addmyseller?seller=${seller}" onclick="return check(); "  >[관심상점 등록하기]</a>
-	<h5><a href="#" onclick= "chat()" >쪽지보내기</a>
-	</h5>
-	</c:if>
-<div class="row">
-				<div class="col-lg-6">
-</c:if>
-		
-			
-				<c:if test="${seller==null}">
-					<div class="row">
-				<div class="col-lg-3">
-					<div class="left_sidebar_area">
-						<aside class="left_widgets p_filter_widgets">
-							<div class="l_w_title">
-								<h3>카테고리</h3>
-							</div>
-							<div class="widgets_inner">
-								<ul class="list">
-									<li><a href="#">의류</a> <span>(0)</span></li>
-									<li><a href="#">전자제품</a> <span>(0)</span></li>
-									<li><a href="#">잡화</a> <span>(0)</span></li>
-									<li><a href="#">category4</a> <span>(0)</span></li>
-									<li><a href="#">category5</a> <span>(0)</span></li>
-								</ul>
-							</div>
-						</aside>
+
+			<c:if test="${seller!=null}">
+
+				<h1>${seller}님의상점입니다.</h1>
+				<c:if test="${seller!=user.id}">
+					<h5>
+						<a href="addmyseller?seller=${seller}" onclick="return check(); ">[관심상점
+							등록하기]</a>
+						<h5>
+							<a href="#" onclick="chat()">쪽지보내기</a>
+						</h5>
+				</c:if>
+				<div class="row">
+					<div class="col-lg-6">
+			</c:if>
 
 
-
-
-
-						<aside class="left_widgets p_filter_widgets price_rangs_aside">
-							<div class="l_w_title">
-								<h3>가격</h3>
-							</div>
-							<div class="widgets_inner">
-								<div class="range_item">
-									<!-- <div id="slider-range"></div> -->
-									<input type="text" class="js-range-slider" value="" />
-									<div class="d-flex">
-										<div class="price_text">
-											<p>가격 :</p>
-										</div>
-										<div class="price_value d-flex justify-content-center">
-											<input type="text" class="js-input-from" id="amount" readonly />
-											<span>to</span> <input type="text" class="js-input-to"
-												id="amount" readonly />
-										</div>
-									</div>
+			<c:if test="${seller==null}">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="left_sidebar_area">
+							<aside class="left_widgets p_filter_widgets">
+								<div class="l_w_title">
+									<h3>카테고리</h3>
 								</div>
-							</div>
-						</aside>
-					</div>
-					
-					</c:if>
-				</div>
-				<div class="col-lg-9">
-					<div class="row">
-						<div class="col-lg-12">
-							<div
-								class="product_top_bar d-flex justify-content-between align-items-center">
-
-								<div class="single_product_menu d-flex">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="search"
-											aria-describedby="inputGroupPrepend">
-										<div class="input-group-prepend">
-											<span class="input-group-text" id="inputGroupPrepend"><i
-												class="ti-search"></i></span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="row align-items-center latest_product_inner">
-						
-						<c:if test="${count==0}">
-							<h4>등록된 물품이 없음</h4>
-						</c:if>
-						<c:if test="${count!=0}">
-							<c:forEach var="auction" items="${auctionList}">
-								<div class="col-lg-4 col-sm-6">
-									<div class="single_product_item">
-										<img
-											src="<%=request.getContextPath()%>/uploadFile/${auction.filename}"
-											width="200" height="200">
-										<div class="single_product_text">
-											${auction.pname}<br /> 즉시 입찰가 : ${auction.immediateprice} <a
-												href="${pageContext.request.contextPath}/content?num=${auction.num}"
-												class="add_cart">+ 상품 자세히 보기<i class="ti-heart"></i></a>
-
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-						</c:if>
-
-
-						<div class="col-lg-12">
-							<div class="pageination">
-								<nav aria-label="Page navigation example">
-									<ul class="pagination justify-content-center">
-
-										<c:if test="${startPage > bottomLine}">
-											<li class="page-item"><a class="page-link"
-												href="${pagename}?pageNum=${startPage - bottomLine}"
-												aria-label="Previous"> <i class="ti-angle-double-left"></i>
-											</a></li>
-										</c:if>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-										<c:forEach var="i" begin="${startPage}" end="${endPage}">
-											<li class="page-item"><a class="page-link"
-												href="${pagename}?pageNum=${i}">${i}</a></li>
-
-										</c:forEach>
-
-										<c:if test="${endPage < pageCount}">
-											<li class="page-item"><a class="page-link"
-												href="${pagename}?pageNum=${startPage + bottomLine}"
-												aria-label="Next"> <i class="ti-angle-double-right"></i>
-											</a></li>
-										</c:if>
+								<div class="widgets_inner">
+									<ul class="list">
+										<li><a href="#">의류</a> <span>(0)</span></li>
+										<li><a href="#">전자제품</a> <span>(0)</span></li>
+										<li><a href="#">잡화</a> <span>(0)</span></li>
+										<li><a href="#">category4</a> <span>(0)</span></li>
+										<li><a href="#">category5</a> <span>(0)</span></li>
 									</ul>
-								</nav>
+								</div>
+							</aside>
+						</div>
+			</c:if>
+		</div>
+
+		<div class="col-lg-9">
+			<div class="row">
+				<div class="col-lg-12">
+					<div
+						class="product_top_bar d-flex justify-content-between align-items-center">
+
+						<div class="single_product_menu d-flex">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="search"
+									aria-describedby="inputGroupPrepend">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroupPrepend"><i
+										class="ti-search"></i></span>
+								</div>
 							</div>
 						</div>
-
-
 					</div>
 				</div>
 			</div>
+
+
+			<div class="row align-items-center latest_product_inner">
+
+				<c:if test="${count==0}">
+					<h4>등록된 물품이 없음</h4>
+				</c:if>
+				<c:if test="${count!=0}">
+					<c:forEach var="auction" items="${auctionList}">
+						<div class="col-lg-4 col-sm-6">
+							<div class="single_product_item">
+								<img
+									src="<%=request.getContextPath()%>/uploadFile/${auction.filename}"
+									width="200" height="200">
+								<div class="single_product_text">
+									${auction.pname}<br /> 즉시 입찰가 : ${auction.immediateprice} <a
+										href="${pageContext.request.contextPath}/content?num=${auction.num}"
+										class="add_cart">+ 상품 자세히 보기<i class="ti-heart"></i></a>
+
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:if>
+
+
+				<div class="col-lg-12">
+					<div class="pageination">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-center">
+
+								<c:if test="${startPage > bottomLine}">
+									<li class="page-item"><a class="page-link"
+										href="${pagename}?pageNum=${startPage - bottomLine}"
+										aria-label="Previous"> <i class="ti-angle-double-left"></i>
+									</a></li>
+								</c:if>
+								<c:forEach var="i" begin="${startPage}" end="${endPage}">
+									<li class="page-item"><a class="page-link"
+										href="${pagename}?pageNum=${i}">${i}</a></li>
+
+								</c:forEach>
+
+								<c:if test="${endPage < pageCount}">
+									<li class="page-item"><a class="page-link"
+										href="${pagename}?pageNum=${startPage + bottomLine}"
+										aria-label="Next"> <i class="ti-angle-double-right"></i>
+									</a></li>
+								</c:if>
+							</ul>
+						</nav>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		</div>
 		</div>
 	</section>
 	<!--================End Category Product Area =================-->
