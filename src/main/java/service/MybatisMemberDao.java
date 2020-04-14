@@ -30,6 +30,16 @@ public class MybatisMemberDao {
 	            sqlSession.close();
 	        }
 	    }
+	 public int idcheck(String id){
+		 System.out.println(id);
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try {
+	            return sqlSession.selectOne(namespace + ".idcheck",id);
+	        }
+	        finally {
+	            sqlSession.close();
+	        }
+	    }
 	 public String authenticate(String password){
 	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
 	        try {

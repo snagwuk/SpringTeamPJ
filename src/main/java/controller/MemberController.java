@@ -1,11 +1,9 @@
 package controller;
 
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import model.Amessage;
-import model.Auction;
 import model.Cash;
 import model.Member;
 import model.User;
@@ -58,6 +58,20 @@ public class MemberController {
 		cashPro.insertCash(cash);
 
 		return "redirect:/main";
+	}
+	@ResponseBody
+	@RequestMapping(value="idcheck", method=RequestMethod.GET)
+	public int idcheckPro(@RequestParam("id") String id){
+		return dbPro.idcheck(id);
+	}
+	@ResponseBody
+	@RequestMapping(value="pwcheck", method=RequestMethod.GET)
+	public int pwcheckPro(@RequestParam("pw1") String pw1, @RequestParam("pw2") String pw2 ){
+		int result=0;
+		if(!pw1.equals(pw2)){
+			result=1;
+		}
+		return result;
 	}
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String loginForm(){
@@ -118,7 +132,7 @@ public class MemberController {
 		req.setAttribute("url", "main");
 		return "alert/alert";
 	}
-	@RequestMapping(value = "admin/grade", method = RequestMethod.GET)
+	@RequestMapping(value = "admin", method = RequestMethod.GET)
 	public String upGrade(Model m){
 		List<Member> memberList = dbPro.selectposition();
 		m.addAttribute("memberList", memberList);
@@ -145,7 +159,6 @@ public class MemberController {
 		Member check = dbPro.selectmember(member.getId());
 		String encryption = dbPro.authenticate(member.getPassword());
 			if(encryption.equals(check.getPassword())){
-				System.out.println("여기");
 				return "redirect:/modifyForm";
 			}else{
 				return "redirect:/main";
@@ -164,4 +177,5 @@ public class MemberController {
 		return "redirect:/main";
 	}
 
+	
 }

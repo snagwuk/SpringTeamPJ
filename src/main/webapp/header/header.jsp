@@ -124,7 +124,7 @@ function chat() {
 						</li>
 						</c:if>
 						<c:if test="${user.position==0 }">
-						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/grade">관리자 페이지</a>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin">관리자 페이지</a>
 						</c:if>
 					</ul>
 				</div>

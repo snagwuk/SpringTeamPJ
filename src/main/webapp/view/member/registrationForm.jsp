@@ -82,25 +82,80 @@
         }
         obj.value = phone;
     }
+$(document).ready(function(){
+    $("#id").blur(function() {
+		// id = "id_reg" / name = "userId"
+		var user_id = $('#id').val();
+		$.ajax({								//controller value="/idcheck"
+			url : '${pageContext.request.contextPath}/idcheck?id='+ user_id,
+			type : 'GET',
+			success : function(data) {
+				console.log("1 = 중복o / 0 = 중복x : "+ data);							
+				
+				if (data == 1) {
+						// 1 : 아이디가 중복되는 문구
+						$("#id_check").text("사용중인 아이디입니다 :p");
+						$("#id_check").css("color", "red");
+						$("#reg_submit").attr("disabled", true);
+					} else {	
+						$('#id_check').text("사용 가능한 이메일 입니다. :)");
+						$('#id_check').css('color', 'blue');
+						$("#reg_submit").attr("disabled", true);
+					}
+				}, error : function() {
+						console.log("실패");
+				}
+			});
+		});
+	$("#pw2").blur(function() {
+		var pw1 = $('#pw1').val();
+		var pw2 = $('#pw2').val();
+		$.ajax({								//controller value="/idcheck"
+			url : '${pageContext.request.contextPath}/pwcheck?pw1='+ pw1+'&&pw2='+pw2,
+			type : 'GET',
+			success : function(data) {
+				console.log("1 = 중복o / 0 = 중복x : "+ data);							
+				
+				if (data == 1) {
+						$("#pw_check").text("비밀번호가 같지 않습니다. :p");
+						$("#pw_check").css("color", "red");
+						$("#reg_submit").attr("disabled", true);
+					} else {	
+						$('#pw_check').text("비밀번호가 같습니다. :)");
+						$('#pw_check').css('color', 'blue');
+						$("#reg_submit").attr("disabled", true);
+					}
+				}, error : function() {
+						console.log("실패");
+				}
+			});
+		
+		});
+});
 </script>
 <style>
 .col-lg-8 {flex:0 0 66.6666667%; margin:0 auto; max-width:80%;}
 .col-md-8 {margin-top:60px;}
-.wform {margin:0 auto;}
-.single-input-parea {  width:60%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }
-.single-input-a1 {  width:40%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }
-.single-input { width:70%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }
-.small {  width:20%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }                             
+.small {  width:20%; line-height:40px; border:none; outline:none; padding:0 20px; }                             
 li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
+#test_btn1{ border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; margin-right:-4px; }
+#btn_group button{ border: 1px solid skyblue; background-color: rgba(0,0,0,0); color: skyblue; padding: 5px; } 
+#btn_group button:hover{ color:white; background-color: skyblue; }
+.email_div { display: inline-block; padding: 5px; border: solid 1px #ccc; background-color: #f4f4f4; font-size: 9pt; }
+.email { background-color: transparent; width: 100px; padding: 3px; border: 0;  font-size: 9pt; }
+.btn { background-color: #99ccff; width: 50px; padding: 3px; border: solid 1px #6699ff;  font-size: 9pt; }
 </style>
 <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css2/style.css">
 <!-- Required meta tags -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>회원가입</title>
   <link rel="icon" href="img/favicon.png">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -124,57 +179,66 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
 <div class="section-top-border">
    <div class="row">
       <div class="col-lg-8 col-md-8">
-         <h3 class="mb-30">회원 가입</h3>
-         <form action="${pageContext.request.contextPath}/regist" method="POST">
-       
-   			<br>
-            <div class="mt-10">
-               아이디&nbsp&nbsp&nbsp <input type="text" name="id" required class="single-input-parea">
+         <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">회원가입</h2>
+                        <form action="${pageContext.request.contextPath}/regist" method="POST" class="register-form" id="register-form">
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" required name="name" id="name" placeholder="실명입력"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="id"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" required name="id" id="id" placeholder="example@example.com 이메일"/>                               
+                            </div>
+                            <div class="check_font" id="id_check"></div>
+                            <div class="form-group">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" required name="password" id="pw1" placeholder="비밀번호"/>
+                            </div>
+                             <div class="form-group">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" required id="pw2" placeholder="비밀번호 확인"/>
+                            </div>
+                            <div class="check_font" id="pw_check"></div>
+                            <div class="form-group">
+                                <label for="re-pass"><img src="img/icon/phoneicon.png" width="9" height="9"> </label>
+                                <input type="text" onKeyup="inputPhoneNumber(this);" name="phone" placeholder="핸드폰번호"/>
+                            </div>
+                             <div id = "btn_group">
+                                <button type="button" id="test_btn1" style="height:30px; width:150px;" onclick="execDaumPostcode()">우편번호 찾기</button>             
+                            </div>
+                            <div class="form-group">
+                            	<label for="re-pass"><img src="img/icon/postcodicon.png" width="15" height="15"></label>
+                                <input type="text" required name="postcode" id="postcode" placeholder="우편번호" class="small"/>              
+                            </div>
+                            <div class="form-group">
+                            	<label for="re-pass"><img src="img/icon/houseicon.png" width="15" height="15"></label>
+                                <input type="text" required name="address" id="address" placeholder="주소" class="single-input-a1"/>              
+                            </div>
+                            <div class="form-group">
+                                <input type="text" required name="detailAddress" id="detailAddress" placeholder="상세주소" class="single-input-a1"/>              
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="회원가입"/>
+                            </div>
+                            <input type="hidden" name="extraAddress" id="extraAddress" class="single-input-a1">
+                            <input type="hidden" name="position" value="2">
+            				<input type="hidden" name="status" value="0">
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="img/signup-image.jpg" alt="sing up image"></figure>
+                    </div>
+                </div>
             </div>
-            
-            <br>   
-            <div class="mt-10">
-               비밀번호&nbsp&nbsp
-               <input type="password" name="password" required class="single-input-parea">
-            </div>
-            <br>   
-            <!-- <div class="mt-10">
-               비밀번호 확인&nbsp&nbsp
-               <input type="password" name="password" required class="single-input-parea">
-            </div> -->
-            
-            <br>   
-            <div class="mt-10">
-               이름&nbsp&nbsp
-               <input type="text" name="name" required class="single-input-parea">
-            </div>
-            
-            
-            <br>
-            <div class="mt-10">
-               핸드폰번호&nbsp&nbsp&nbsp <input type="text" onKeyup="inputPhoneNumber(this);" name="phone" required class="single-input-parea">
-            </div>
-            예:01012345678
-            <div class="mt-10">
-            주소&nbsp&nbsp&nbsp <input type="text" id="postcode" name="postcode" placeholder="우편번호" class="small">
-					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-					<br>
-					<input type="text" id="address" name="address" placeholder="주소" class="single-input-a1"><br>
-					<br>
-					<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소" class="single-input-a1">
-					<input type="text" id="extraAddress" name="extraAddress" placeholder="참고항목" class="single-input-a1">
-               
-               
-            </div>
-         
-            <input type="hidden" name="position" value="2">
-            <input type="hidden" name="status" value="0">
-         
-            <br><br><br><br>
-            <input type="submit" name="confirm" value="가입하기">
-            <input type="submit" value="Cancel">
-            
-         </form>
+        </section>
       </div>
    </div>
 </div>

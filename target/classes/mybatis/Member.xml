@@ -11,6 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{address},#{detailAddress},#{extraAddress},#{position},
 		#{status},#{account},#{bank})
 	</insert>
+	
+	<select id="idcheck" parameterType="String" resultType="int">
+		select count(id) from amember where id=#{id} 
+	</select>
 
 	 <select id="authenticate" parameterType="String" resultType="String">
 		select hex(aes_encrypt(#{password},'password')) from dual
