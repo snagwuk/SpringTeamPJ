@@ -162,7 +162,7 @@ span.step {
   line-height: 1.6em;
   margin-right: 5px;
   text-align: center;
-  width: 1.6em; 
+  width: 1.6em;
 }
 
 </style>
@@ -172,22 +172,22 @@ span.step {
 <script type="text/javascript">
 
    var wsocket;
-   
+
    function connect() {
       wsocket = new SockJS("http://211.63.89.94:8081/SpringTeamPJ/chat.sockjs");
       wsocket.onopen = onOpen;
       wsocket.onmessage = onMessage;
       wsocket.onclose = onClose;
-      
+
    }
    function disconnect() {
       wsocket.close();
    }
    function onOpen(evt) {
-  
+
    }
    function onMessage(evt) {
-	   
+
       var data = evt.data;
       console.log(data)
       var obj = JSON.parse(data)
@@ -201,55 +201,56 @@ span.step {
    function onClose(evt) {
       appendMessage("연결을 끊었습니다.");
    }
-   
+
    function send() {
       var nickname = $("#nickname").val();
       var msg = $("#message").val();
- 
+
       if(msg != ""){
     	  message = {};
-    	  message.num = $("#chatnum").val()
+    	  message.num = '${num}'
       	  message.sender = '${user.id}'
       	  message.receiver = $("#receiver").val()
       	  message.content = $("#message").val()
-      
+
       }
-   
-      
+
+
 //       wsocket.send("msg:"+nickname+":" + msg);
       wsocket.send(JSON.stringify(message));
-      
+
       $("#message").val("");
    }
 
    function appendMessage(msg) {
-	   
-	
+
+	var num = ${num};
+	var sender = '${user.id}';
 	   var nowtime = getTimeStamp();
-	if (msg.num!= message.num)
+	if (msg.num!=num)
 		{ $("#chatMessageArea").append("")}else{
-	   if(msg.receiver!=message.sender){
+	   if(msg.receiver!=sender){
 		    $("#chatMessageArea").append("<div class="+"outgoing_msg"+">"+
 		              "<div class="+"sent_msg"+">"+
 		      "<p>"+msg.content+"</p>"+
 		      "<span class="+"time_date"+">"+nowtime+"</span></div></div>");
-	   } 
-	   if(msg.receiver==message.sender){
-		   
+	   }
+	   if(msg.receiver==sender){
+
 		   $("#chatMessageArea").append(
-				   "<div class="+"incoming_msg"+"><div class="+"incoming_msg_img"+">"+ 
+				   "<div class="+"incoming_msg"+"><div class="+"incoming_msg_img"+">"+
 		             "<img src="+"https://ptetutorials.com/images/user-profile.png"+" alt="+"sunil"+"> </div><div class="+"received_msg"+"><p>"
 		             +msg.sender+"</p><div class="+"received_withd_msg"+">"+
 		                 "<p>"+msg.content+"</p>"+
 		                 "<span class="+"time_date"+">"+nowtime+"</span></div></div></div>");
-		   
-  
+
+
 	   }
-	   
+
 	   $("#chatMessageArea").scrollTop($("#chatMessageArea")[0].scrollHeight);
-	   }
-      
-      
+	 }
+
+
      /*  var chatAreaHeight = $("#chatArea").height();
       var maxScroll = $("#chatMessageArea").height() - chatAreaHeight;
       $("#chatArea").scrollTop(maxScroll); */
@@ -261,21 +262,20 @@ span.step {
 
 
 
-	   
+
 	   connect();
       $('#message').keypress(function(event){
          var keycode = (event.keyCode ? event.keyCode : event.which);
          if(keycode == '13'){
-            send();   
+            send();
          }
          event.stopPropagation();
       });
       $('#sendBtn').click(function() { send(); });
-      $('#enterBtn').click(function() { connect(); });
-      $('#exitBtn').click(function() { disconnect(); });
+
    });
-   
-   
+
+
    function getTimeStamp() {
 	   var d = new Date();
 	   var s =
@@ -300,7 +300,7 @@ span.step {
 	   }
 	   return zero + n;
 	 }
-	
+
 
 
 </script>
@@ -312,7 +312,7 @@ window.opener.location.reload();
 function change(){
 	var btnContainer = document.getElementById("chat");
 
-	
+
 	var btns = btnContainer.getElementsByClassName("chat_list");
 
 	// Loop through the buttons and add the active class to the current/clicked button
@@ -349,23 +349,23 @@ function change(){
           <c:forEach var="messages" items="${messagelist}">
           <div  id = "chat" >
           <div class="chat_list" onclick="change()" >
-      
+
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                <a href="mslist?num=${messages.num}">
                 <div class="chat_ib" >
                 <c:if test="${messages.sender==user.id}">
-                  <h5>${messages.receiver}</h5>    
+                  <h5>${messages.receiver}</h5>
                   </c:if>
                   <c:if test="${messages.sender!=user.id}">
-                  <h5>${messages.sender}</h5>  
+                  <h5>${messages.sender}</h5>
                   </c:if>
                   <span class="chat_date">${messages.sendtime}</span>
                   <c:if test="${messages.unreadcount!=0}">
                   <span class="step">${messages.unreadcount}</span>
                    </c:if></h5>
-                  <p>${messages.content}</p>  
-                   
+                  <p>${messages.content}</p>
+
                 </div>
                 </a>
               </div>
@@ -373,7 +373,7 @@ function change(){
             </div>
           </c:forEach>
           </c:if>
- 
+
           </div>
         </div>
 <!--         <div> -->
@@ -384,10 +384,10 @@ function change(){
 
 			<div class="msg_history" id="chatMessageArea" style="height: 600px;" >
             <c:if test="${!allList.isEmpty()}">
-          
+
             <c:forEach var="list" items="${allList}">
-             
-             
+
+
              <c:if test="${num!=null}">
                   <input type="hidden" value="${num}" id= "chatnum">
                   </c:if>
@@ -416,11 +416,11 @@ function change(){
             </c:if>
             </c:forEach>
             </c:if>
-            
-          
-          
-          
- <%--            
+
+
+
+
+ <%--
             <div class="incoming_msg">
               <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
               <div class="received_msg">
@@ -430,16 +430,16 @@ function change(){
                   <span class="time_date"></span></div>
               </div>
             </div>
- 
+
 
             <div class="outgoing_msg">
               <div class="sent_msg">
                 <p></p>
                 <span class="time_date"></span> </div>
             </div> --%>
-         
-       
-            
+
+
+
 
           </div>
           <div class="type_msg">
@@ -453,8 +453,8 @@ function change(){
         </div>
         </div>
       </div>
-      
-    
+
+
     </div></div>
     </body>
     </html>

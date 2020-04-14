@@ -32,28 +32,28 @@ import service.MybatisMessageDao;
 @Controller
 public class AuctionController
 {
-    
+
     @Autowired
     MybatisAuctionDao dbPro;
-    
+
     @Autowired
     BidValidator bidvalidator;
-    
+
     @Autowired
     MybatisMessageDao mdao;
-    
+
     @InitBinder("bid")
     protected void initBinder(WebDataBinder binder)
     {
         binder.addValidators(bidvalidator);
     }
-    
+
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String auction_listGET(HttpServletRequest request, HttpSession session)
     {
-        
+
         int currentPage = 1;
-        
+
         try
         {
             currentPage = Integer.parseInt(request.getParameter("pageNum"));
@@ -61,27 +61,27 @@ public class AuctionController
         }
         catch (Exception e)
         {
-            
+
             if (session.getAttribute("pageNum") == null) session.setAttribute("pageNum", 1);
         }
         currentPage = (int) session.getAttribute("pageNum");
-        
+
         int pageSize = 9;
         int startRow = (currentPage - 1) * pageSize + 1;
         int endRow = currentPage * pageSize;
-        
+
         int count = dbPro.getAuctionCount();
-        
+
         List<Auction> auctionList = dbPro.getAuctions(startRow, endRow);
-        
+
         int number = count - (currentPage - 1) * pageSize;
         int bottomLine = 3;
         int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
         int startPage = 1 + (currentPage - 1) / bottomLine * bottomLine;
         int endPage = startPage + bottomLine - 1;
-        
+
         if (endPage > pageCount) endPage = pageCount;
-        
+
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("startRow", startRow);
         request.setAttribute("endRow", endRow);
@@ -92,34 +92,34 @@ public class AuctionController
         request.setAttribute("startPage", startPage);
         request.setAttribute("endPage", endPage);
         request.setAttribute("pageCount", pageCount);
-        
+
         request.setAttribute("auctionList", auctionList);
         session.setAttribute("seller", null);
         session.setAttribute("pagename", "list");
-        
+
         return "auction/list";
     }
-    
+
     @RequestMapping(value = "write", method = RequestMethod.GET)
     public String auction_writeForm(Auction auction)
     {
         return "auction/writeForm";
     }
-    
+
     @RequestMapping(value = "write", method = RequestMethod.POST)
     public String auction_writePro(MultipartHttpServletRequest multipart, Auction auction) throws Exception
     {
-        
+
         MultipartFile multi = multipart.getFile("uploadfile");
-        
+
         String filename = multi.getOriginalFilename();
         if (filename != null && !filename.equals(""))
         {
             String uploadPath = multipart.getRealPath("/") + "/uploadFile";
             System.out.println(uploadPath);
-            
+
             FileCopyUtils.copy(multi.getInputStream(), new FileOutputStream(uploadPath + "/" + multi.getOriginalFilename()));
-            
+
             auction.setFilename(filename);
             auction.setFilesize((int) multi.getSize());
         }
@@ -128,69 +128,57 @@ public class AuctionController
             auction.setFilename("");
             auction.setFilesize(0);
         }
-        
+
         dbPro.insertauction(auction);
         return "redirect:/list";
     }
-    
+
     @RequestMapping(value = "content", method = RequestMethod.GET)
     public String auction_content(int num, Model m)
     {
         Auction auction = dbPro.getAuction(num);
         m.addAttribute("auction", auction);
-        
+
         return "auction/content";
-        
+
     }
-    
+
     @RequestMapping(value = "main", method = RequestMethod.GET)
     public String main(Model m, HttpSession session)
     {
-        if (session.getAttribute("user") != null)
-        {
-            User user = (User) session.getAttribute("user");
-            int unreadcount = mdao.getunreaccount(user.getId());
-            if (unreadcount == 0)
-            {
-                session.setAttribute("unreadcount", null);
-            }
-            else
-            {
-                session.setAttribute("unreadcount", unreadcount);
-            }
-            
-            return "main";
-        }
-        return "main";
+    	if(session.getAttribute("user")!=null){
+    	User user = (User) session.getAttribute("user");
+
+    	}return "main";
     }
-    
+
     @RequestMapping("modify")
     public String auction_modifyForm(int num, Model m)
     {
-        
+
         Auction auction = dbPro.getAuction(num);
         m.addAttribute("auction", auction);
-        
+
         return "auction/modify";
     }
-    
+
     @RequestMapping(value = "modify", method = RequestMethod.POST)
     public String auction_modifyPro(Auction auction) throws Exception
     {
-        
+
         dbPro.updateContent(auction);
         System.out.println(auction);
-        
+
         return "redirect:/content?num=" + auction.getNum();
     }
-    
+
     @RequestMapping(value = "delete")
     public String auction_delete(int num)
     {
         dbPro.deleteAuction(num);
         return "redirect:/list";
     }
-    
+
     // 지은
     @RequestMapping(value = "bidding", method = RequestMethod.GET)
     public String auction_bidding(int num, Model m, HttpSession session)
@@ -200,7 +188,7 @@ public class AuctionController
         Auction auction = dbPro.getAuction(num);
         List<Bid> bidlist = dbPro.getbidlist(num);
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
+
         m.addAttribute("sf", sf);
         m.addAttribute("hprice", hprice);
         m.addAttribute("unit", auction.getBidunit());
@@ -209,9 +197,9 @@ public class AuctionController
         m.addAttribute("bid", new Bid());
         m.addAttribute("user", user);
         return "auction/bidlist";
-        
+
     }
-    
+
     @RequestMapping(value = "bidding", method = RequestMethod.POST)
     public String auction_bidding(@ModelAttribute("bid") Bid bid, BindingResult bindingResult, Model m, String next)
     {
@@ -227,7 +215,7 @@ public class AuctionController
             m.addAttribute("hprice", hprice);
             m.addAttribute("bidlist", bidlist);
             m.addAttribute("num", bid.getNum());
-            
+
             System.out.println("error");
             return "auction/bidlist";
         }
@@ -236,32 +224,32 @@ public class AuctionController
             return "redirect:/liveview";
         return "redirect:/bidding?num=" + bid.getNum();
     }
-    
+
     /*
      * @RequestMapping(value = "bidding", method = RequestMethod.POST ) public
      * String auction_bidding(
-     * 
+     *
      * @ModelAttribute("bid") Bid bid) {
-     * 
+     *
      * dbPro.insertbid(bid); return "redirect:/bidding?num=" + bid.getNum(); }
      */
-    
+
     @RequestMapping(value = "sellerstore", method = RequestMethod.GET)
     public String sellerstore(HttpServletRequest request, HttpSession session)
     {
-        
+
         User user = (User) request.getSession().getAttribute("user");
-        
+
         int currentPage = 1;
         String id = request.getParameter("seller");
         Wishseller ws = new Wishseller();
         ws.setId(user.getId());
         ws.setSeller(id);
-        
+
         System.out.println(ws);
         int check = dbPro.selectseller(ws);
         System.out.println(check);
-        
+
         try
         {
             currentPage = Integer.parseInt(request.getParameter("pageNum"));
@@ -269,27 +257,27 @@ public class AuctionController
         }
         catch (Exception e)
         {
-            
+
             if (session.getAttribute("pageNum") == null) session.setAttribute("pageNum", 1);
         }
         currentPage = (int) session.getAttribute("pageNum");
-        
+
         int pageSize = 9;
         int startRow = (currentPage - 1) * pageSize + 1;
         int endRow = currentPage * pageSize;
-        
+
         int count = dbPro.getAuctionCount();
-        
+
         List<Auction> auctionList = dbPro.getsellerstore(startRow, endRow, id);
-        
+
         int number = count - (currentPage - 1) * pageSize;
         int bottomLine = 3;
         int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
         int startPage = 1 + (currentPage - 1) / bottomLine * bottomLine;
         int endPage = startPage + bottomLine - 1;
-        
+
         if (endPage > pageCount) endPage = pageCount;
-        
+
         session.setAttribute("currentPage", currentPage);
         session.setAttribute("startRow", startRow);
         session.setAttribute("endRow", endRow);
@@ -300,14 +288,14 @@ public class AuctionController
         session.setAttribute("startPage", startPage);
         session.setAttribute("endPage", endPage);
         session.setAttribute("pageCount", pageCount);
-        
+
         session.setAttribute("auctionList", auctionList);
         session.setAttribute("seller", id);
-        
+
         session.setAttribute("already", check);
-        
+
         System.out.println(auctionList);
         return "auction/list";
     }
-    
+
 }

@@ -13,7 +13,9 @@
 		</jsp-property-group>
 	</jsp-config>
 
-
+<listener>
+  <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+</listener>
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>
