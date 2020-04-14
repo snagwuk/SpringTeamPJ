@@ -34,7 +34,7 @@ public class BidValidator implements Validator {
 		if (regReq.getBidprice()==0){
 			errors.rejectValue( "bidprice", "inputprice");
 		}
-			if(hprice>=regReq.getBidprice()){
+	 if(hprice>=regReq.getBidprice()){
 				errors.rejectValue("bidprice", "smallprice");
 			}
 		

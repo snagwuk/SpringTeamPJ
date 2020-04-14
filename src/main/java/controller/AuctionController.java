@@ -151,13 +151,7 @@ public class AuctionController
     {
     	if(session.getAttribute("user")!=null){
     	User user = (User) session.getAttribute("user");
-    	int unreadcount = mdao.getunreaccount(user.getId());
-		if(unreadcount==0){
-			session.setAttribute("unreadcount", null);
-		}else{
-			 session.setAttribute("unreadcount", unreadcount);}
-
-            return "main";
+    	
     	}return "main";
     }
     

@@ -79,11 +79,7 @@ public class MemberController {
 						Amessage me = new Amessage();
 						me.setReceiver(member.getId());
 						mePro.deleteintromessage(me);
-					 int unreadcount = mePro.getunreaccount(member.getId());
-					 if(unreadcount==0)
-						 session.setAttribute("unreadcount", null);
-					 else
-							session.setAttribute("unreadcount", unreadcount);
+					
 
 
 						return "redirect:/main";

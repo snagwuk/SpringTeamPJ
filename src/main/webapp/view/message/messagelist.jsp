@@ -174,7 +174,7 @@ span.step {
    var wsocket;
    
    function connect() {
-      wsocket = new SockJS("http://211.63.89.92:8088/SpringTeamPJ/chat.sockjs");
+      wsocket = new SockJS("http://211.63.89.93:8080/SpringTeamPJ/chat.sockjs");
       wsocket.onopen = onOpen;
       wsocket.onmessage = onMessage;
       wsocket.onclose = onClose;
@@ -184,7 +184,7 @@ span.step {
       wsocket.close();
    }
    function onOpen(evt) {
-  
+	    
    }
    function onMessage(evt) {
 	   
@@ -208,7 +208,7 @@ span.step {
  
       if(msg != ""){
     	  message = {};
-    	  message.num = $("#chatnum").val()
+    	  message.num = '${num}'
       	  message.sender = '${user.id}'
       	  message.receiver = $("#receiver").val()
       	  message.content = $("#message").val()
@@ -224,17 +224,18 @@ span.step {
 
    function appendMessage(msg) {
 	   
-	
+	var num = ${num};
+	var sender = '${user.id}';
 	   var nowtime = getTimeStamp();
-	if (msg.num!= message.num)
-		{ $("#chatMessageArea").append("")}else{
-	   if(msg.receiver!=message.sender){
+	if (msg.num!=num)
+		{ $("#chatMessageArea").append("")}else{  
+	   if(msg.receiver!=sender){
 		    $("#chatMessageArea").append("<div class="+"outgoing_msg"+">"+
 		              "<div class="+"sent_msg"+">"+
 		      "<p>"+msg.content+"</p>"+
 		      "<span class="+"time_date"+">"+nowtime+"</span></div></div>");
 	   } 
-	   if(msg.receiver==message.sender){
+	   if(msg.receiver==sender){
 		   
 		   $("#chatMessageArea").append(
 				   "<div class="+"incoming_msg"+"><div class="+"incoming_msg_img"+">"+ 
@@ -247,7 +248,7 @@ span.step {
 	   }
 	   
 	   $("#chatMessageArea").scrollTop($("#chatMessageArea")[0].scrollHeight);
-	   }
+	 } 
       
       
      /*  var chatAreaHeight = $("#chatArea").height();
@@ -271,8 +272,7 @@ span.step {
          event.stopPropagation();
       });
       $('#sendBtn').click(function() { send(); });
-      $('#enterBtn').click(function() { connect(); });
-      $('#exitBtn').click(function() { disconnect(); });
+   
    });
    
    

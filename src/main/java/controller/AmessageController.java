@@ -33,7 +33,7 @@ public class AmessageController {
 		 Amessage m = new Amessage();
 		 Amessage me = new Amessage();
 		 me.setReceiver(user.getId());
-	
+		 mePro.deleteintromessage(me);
 		 try{
 			 String seller =  (String) session.getAttribute("seller");
 			
@@ -56,9 +56,9 @@ public class AmessageController {
 		 /*mePro.readcountupdate(user.getId());*/
 		
 		 
-		 int num;
+		 int num = 0;
 			try{num = mePro.recentnum(me);
-			 session.setAttribute("num", num);
+			 mePro.readcountupdate(num,user.getId());
 			 System.out.println(num);
 			 mePro.readcountupdate(num,user.getId());
 					}catch (Exception e) {
@@ -76,7 +76,7 @@ public class AmessageController {
 		 session.setAttribute("messagelist", messagelist);
 		 session.setAttribute("allList", allList);
 		 session.setAttribute("user", user);
-
+		 session.setAttribute("num", num);
 		 session.setAttribute("unreadcount", null);
 	
 		   return "message/messagelist";

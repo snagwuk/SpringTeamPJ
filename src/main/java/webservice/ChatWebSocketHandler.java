@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -19,6 +21,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.google.gson.Gson;
 
 import model.Amessage;
+import model.User;
 import service.MybatisMessageDao;
 
 
@@ -50,6 +53,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler{
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
+	
 		 Map<String, Object> map = null;
 		System.out.println("@@@@@@111@@@@@@@@@@@@");
 		System.out.println(message.getPayload());
@@ -67,11 +71,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler{
 //		log(session.getId()+"로부터 메시지수신"+message.getPayload());
 		
 
+		
+		
 	
-
-		
-		
-		
 	for(WebSocketSession s : users.values()){
 		Gson gson = new Gson();
         String msgJson = gson.toJson(amssage);
