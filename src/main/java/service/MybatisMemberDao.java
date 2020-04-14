@@ -113,5 +113,22 @@ public class MybatisMemberDao {
 				sqlSession.close();
 			}
 		}
-
+	 public void memberStop(String id) {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				sqlSession.update(namespace + ".memberStop",id);
+				sqlSession.commit();
+			} finally {
+				sqlSession.close();
+			}
+		}
+	 public void memberStart(String id) {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				sqlSession.update(namespace + ".memberStart",id);
+				sqlSession.commit();
+			} finally {
+				sqlSession.close();
+			}
+		}
 }

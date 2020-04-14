@@ -59,6 +59,63 @@
 	}, 1000);
 </script>
 
+<script>
+	function refundsellerCheck() {
+		
+		if (confirm("정말 거래 취소하시겠습니까? (패널티 1회가 부여됩니다. -패널티 3회시 7일 간 모든 활동 중지-)") == true) { //확인
+			var form = document.createElement('form');
+			form.setAttribute('method', 'post');
+			form.setAttribute('action', 'refundseller?num=${auction.num}');
+			document.charset = "utf-8";
+			document.body.appendChild(form);
+			form.submit();
+		} else { //취소
+			return false;
+		}
+	}
+	
+function refundbuyerCheck() {
+		
+		if (confirm("정말 거래 취소하시겠습니까? (패널티 1회가 부여됩니다. -패널티 3회시 7일 간 모든 활동 중지-)") == true) { //확인
+			var form = document.createElement('form');
+			form.setAttribute('method', 'post');
+			form.setAttribute('action', 'refundbuyer?num=${auction.num}');
+			document.charset = "utf-8";
+			document.body.appendChild(form);
+			form.submit();
+		} else { //취소
+			return false;
+		}
+	}
+function biddingCheck() {
+	
+	if (confirm("낙찰을 포기하시겠습니까? (패널티 1회가 부여됩니다. -패널티 3회시 7일 간 모든 활동 중지-)") == true) { //확인
+		var form = document.createElement('form');
+		form.setAttribute('method', 'post');
+		form.setAttribute('action', 'giveUpBidding?num=${auction.num}');
+		document.charset = "utf-8";
+		document.body.appendChild(form);
+		form.submit();
+	} else { //취소
+		return false;
+	}
+}
+function shippingCompleteCheck() {
+	
+	if (confirm("정말 물품을 받으셨습니까?") == true) { //확인
+		var form = document.createElement('form');
+		form.setAttribute('method', 'post');
+		form.setAttribute('action', 'confirmShipping?num=${auction.num}');
+		document.charset = "utf-8";
+		document.body.appendChild(form);
+		form.submit();
+	} else { //취소
+		return false;
+	}
+}
+
+	
+</script>
 
 
 <style>
@@ -103,14 +160,19 @@
 								<a class="active" href="#"> <span>남은시간 </span><span
 									id="demo"></span></a>
 								<br>
-
 							</c:when>
+
+							<c:when test="${auction.pstatus eq '유찰'}">
+								<h2>입찰최고가: ${auction.beginsprice}</h2>
+								<h4>판매자 ID: ${auction.seller}</h4>
+								<h4>경매종료일시 ${auction.enddate}</h4>
+							</c:when>
+
 							<c:otherwise>
 								<h2>낙찰가: ${auction.beginsprice}</h2>
 								<h4>낙찰자 ID: ${auction.winid}</h4>
 								<h4>판매자 ID: ${auction.seller}</h4>
 								<h4>낙찰일시 ${auction.enddate}</h4>
-
 							</c:otherwise>
 						</c:choose>
 
@@ -120,35 +182,92 @@
 
 						<div style="margin-top: -2%;">
 							<ul>
-								<li><span>경매 번호 </span>: ${auction.num}</li>
-								<li><span>판매자</span>: ${auction.seller} <a href="sellerstore?seller=${auction.seller}"> [판매자 상점가기]</a></li>
+								<c:choose>
+
+									<c:when test="${auction.seller eq user.id}">
+										<li><span>판매자</span>:
+											${auction.seller}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a
+											href="sellerstore?seller=${auction.seller}"
+											class="genric-btn success medium">내 상점가기</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><span>판매자</span>:
+											${auction.seller}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a
+											href="sellerstore?seller=${auction.seller}"
+											class="genric-btn success medium">판매자 상점가기</a></li>
+									</c:otherwise>
+								</c:choose>
+
+
+
 								<li><span>배송방법</span>: 택배</li>
+								<li><span>상품상태</span>: ${auction.pstatus}</li>
 
 
 
 								<li><p></p></li>
-								<li><span>상태</span>: ${auction.pstatus}</li>
+
 
 
 
 								<c:choose>
 									<c:when test="${user.id eq auction.seller}">
 										<c:if test="${auction.pstatus ne '입찰중'}">
-											<li style="margin-bottom: 5%;"><a
-												href="shippingInfo?winid=${auction.winid}&num=${auction.num}"
-												class="btn_3">낙찰자정보보기</a></li>
+											<c:choose>
+												<c:when test="${auction.pstatus eq '입금전'}">
+													<li style="margin-bottom: 5%;"><a
+														href="#" class="btn_3" onclick="refundsellerCheck()">거래취소</a></li>
+													<li style="margin-bottom: 5%;"><a
+														href="shippingInfo?winid=${auction.winid}&num=${auction.num}"
+														class="btn_3">낙찰자정보보기</a></li>
+												</c:when>
+												<c:when test="${auction.pstatus eq '입금완료'}">
+													<li style="margin-bottom: 5%;"><a
+														href="shippingInfo?winid=${auction.winid}&num=${auction.num}"
+														class="btn_3">배송하기</a></li>
+													<li style="margin-bottom: 5%;"><a
+														href="#" class="btn_3" onclick="refundsellerCheck()">거래취소</a></li>
+													
+												</c:when>
+												<c:otherwise>
+												
+													<c:if test="${auction.pstatus =='배송중' || auction.pstatus =='거래종료'}">
+														<li style="margin-bottom: 5%;"><a
+															href="shippingInfo?winid=${auction.winid}&num=${auction.num}"
+															class="btn_3">낙찰자정보보기</a></li>
+													</c:if>
+													
+												</c:otherwise>
+											</c:choose>
 										</c:if>
 									</c:when>
 
 									<c:when test="${auction.pstatus eq '입찰중'}">
-										<li style="margin-bottom: 5%;"><a
-											href="pay?&num=${auction.num}" class="btn_3">즉시구매하기</a></li>
+
+										<a href="pay?&num=${auction.num}" class="btn_3"
+											onMouseOver="this.innerHTML='즉시구매하기'"
+											onMouseOut="this.innerHTML='입찰중'">입찰중</a>
+										<a href="bidding?&num=${auction.num}" class="btn_3">입찰하기</a>
+
+
 									</c:when>
 									<c:otherwise>
 										<c:if test="${auction.pstatus eq '입금전'}">
-										<li style="margin-bottom: 5%;"><a
-											href="pay?&num=${auction.num}" class="btn_3">결제하기</a></li>
-											</c:if>
+											<a href="pay?&num=${auction.num}" class="btn_3"
+												onMouseOver="this.innerHTML='결제하기'"
+												onMouseOut="this.innerHTML='입금전'">입금전</a>
+
+
+											<a href="#" class="btn_3" onclick="biddingCheck()">낙찰포기</a>
+
+										</c:if>
+
+										<c:if test="${auction.pstatus eq '입금완료'}">
+										<li style="margin-bottom: 5%;">
+										<a href="#" class="btn_3" onclick="refundbuyerCheck()">거래취소(환불)</a></li>	
+												
+										</c:if>
+
 									</c:otherwise>
 								</c:choose>
 
@@ -162,18 +281,7 @@
 						</div>
 						<c:if
 							test="${user.id eq auction.seller and auction.pstatus eq '입찰중'}">
-							<div
-								class="card_area d-flex justify-content-between align-items-center">
-								<div class="product_count">
-									<span class="inumber-decrement"> <i class="ti-minus"></i></span>
-									<input class="input-number" type="text" value="1" min="0"
-										max="10"> <span class="number-increment"> <i
-										class="ti-plus"></i></span>
-								</div>
-								<a href="#" class="btn_3">장바구니</a> <a href="#" class="like_us">
-									<i class="ti-heart"></i>
-								</a>
-							</div>
+
 							<div style="margin-top: 10%;">
 								<ul>
 									<li><a href="modify?num=${auction.num}" class="btn_3 modi">상품수정</a>
@@ -184,12 +292,8 @@
 						</c:if>
 
 						<c:if
-							test="${user.id eq auction.winid and auction.pstatus eq '배송중'}">
-							<form action="${pageContext.request.contextPath}/confirmShipping"
-								method="POST">
-								<input type="hidden" name="num" value="${auction.num}">
-								<input type="submit" value="수취확인">
-							</form>
+							test="${user.id eq auction.winid and auction.pstatus eq '배송중'}">						
+								<a href="#" class="btn_3" onclick="shippingCompleteCheck()">수취확인</a>							
 						</c:if>
 
 
@@ -207,9 +311,7 @@
 				<li class="nav-item"><a class="nav-link active" id="home-tab"
 					data-toggle="tab" href="#home" role="tab" aria-controls="home"
 					aria-selected="true">상품설명</a></li>
-				<li class="nav-item"><a class="nav-link" id="profile-tab"
-					data-toggle="tab" href="#profile" role="tab"
-					aria-controls="profile" aria-selected="false">상세정보</a></li>
+
 				<li class="nav-item"><a class="nav-link" id="contact-tab"
 					data-toggle="tab" href="#contact" role="tab"
 					aria-controls="contact" aria-selected="false">문의하기</a></li>
@@ -221,79 +323,7 @@
 					<p></p>
 					<p>${auction.pdetail}</p>
 				</div>
-				<div class="tab-pane fade" id="profile" role="tabpanel"
-					aria-labelledby="profile-tab">
-					<div class="table-responsive">
-						<table class="table">
-							<tbody>
-								<tr>
-									<td>
-										<h5>Width</h5>
-									</td>
-									<td>
-										<h5>128mm</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Height</h5>
-									</td>
-									<td>
-										<h5>508mm</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Depth</h5>
-									</td>
-									<td>
-										<h5>85mm</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Weight</h5>
-									</td>
-									<td>
-										<h5>52gm</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Quality checking</h5>
-									</td>
-									<td>
-										<h5>yes</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Freshness Duration</h5>
-									</td>
-									<td>
-										<h5>03days</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>When packeting</h5>
-									</td>
-									<td>
-										<h5>Without touch of hand</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Each Box contains</h5>
-									</td>
-									<td>
-										<h5>60pcs</h5>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
+
 				<div class="tab-pane fade" id="contact" role="tabpanel"
 					aria-labelledby="contact-tab">
 					<div class="row">

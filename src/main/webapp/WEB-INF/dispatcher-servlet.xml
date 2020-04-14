@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	 xmlns:websocket="http://www.springframework.org/schema/websocket"
 	      xmlns:aop="http://www.springframework.org/schema/aop"
-	      
+
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -14,7 +14,7 @@
 		         http://www.springframework.org/schema/aop
 		               http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/mvc
-		http://www.springframework.org/schema/mvc/spring-mvc.xsd  
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		 http://www.springframework.org/schema/websocket
    http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
@@ -30,10 +30,12 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 
+
+
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/view/" /><!-- 여기 슬레시가 
-			있으니까 java에 안써도 됨 -->
+		<property name="prefix" value="/view/" /><!-- 여기 슬레시가 있으니까 java에
+			안써도 됨 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
 
@@ -41,7 +43,11 @@
 		<constructor-arg value="Mysql" />
 	</bean>
 
-<bean id="messageSource"
+
+
+
+
+	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<value>message.error</value>
@@ -51,16 +57,16 @@
 
 
  <aop:aspectj-autoproxy proxy-target-class="true"/>
-    <bean id="profiler" class="service.ProfilingAspect"/> 
+    <bean id="profiler" class="service.ProfilingAspect"/>
 
-   
+
 
    <bean id="chatHandler" class="webservice.ChatWebSocketHandler" />
 <!--    <bean id="messageHandler" class="webservice.MessageHandler" /> -->
    <mvc:default-servlet-handler/>
-   
+
    <websocket:handlers>
-  
+
       <websocket:mapping handler="chatHandler" path="/chat.sockjs" />
    <!--      <websocket:mapping handler="messageHandler" path="/message.sockjs" /> -->
       <websocket:sockjs />

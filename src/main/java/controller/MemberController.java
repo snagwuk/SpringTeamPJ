@@ -1,6 +1,7 @@
 package controller;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import model.User;
 import service.MybatisCashDao;
 import service.MybatisMemberDao;
 import service.MybatisMessageDao;
+import service.MybatisPenaltyDao;
 
 
 
@@ -37,6 +39,9 @@ public class MemberController {
 
 	@Autowired
 	MybatisMessageDao mePro;
+	
+	@Autowired
+	MybatisPenaltyDao penPro;
 
 	@RequestMapping(value = "regist",method = RequestMethod.GET)
 	public String member_registForm(Member member){
@@ -89,6 +94,16 @@ public class MemberController {
 						User user = new User(check.getId(), check.getPosition(), check.getStatus());
 						session.setAttribute("user", user);
 
+						if(user.getStatus()==1){
+							
+							LocalDateTime today = LocalDateTime.now();
+							
+							if(today.isAfter(penPro.getRecentPenalty(user.getId()).getPenaltyEndDate())) {
+								dbPro.memberStart(user.getId());
+								
+							}
+						}
+						
 						// message
 						Amessage me = new Amessage();
 						me.setReceiver(member.getId());

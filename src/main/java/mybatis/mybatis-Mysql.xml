@@ -9,6 +9,7 @@
 		<typeAlias type="model.Cash" alias="Cash" />
 		<typeAlias type="model.Review" alias="Review" />
 		<typeAlias type="model.Amessage" alias="Amessage" />
+		<typeAlias type="model.Penalty" alias="Penalty" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -28,7 +29,8 @@
 		<mapper resource="mybatis/Cash.xml" />
 		<mapper resource="mybatis/Member.xml" />
 		<mapper resource="mybatis/Review.xml" />
-			<mapper resource="mybatis/Amessage.xml" />
+		<mapper resource="mybatis/Amessage.xml" />
+		<mapper resource="mybatis/Penalty.xml" />
 	</mappers>
 
 </configuration>

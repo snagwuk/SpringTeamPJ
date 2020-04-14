@@ -36,10 +36,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="getCashCnum" parameterType="int" resultType="Cash">
-		select * from aCash where cnum = #{cnum}
+		select * from aCash where cnum = #{id}
 	</select>
 	
-	
+	<select id="getPayCash" parameterType="hashmap" resultType="int">
+		select cash from acash where id=#{id} and reason like CONCAT(#{num},'%')
+	</select>
 
 	
 

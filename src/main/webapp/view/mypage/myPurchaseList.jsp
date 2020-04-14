@@ -32,48 +32,168 @@
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
 
+<script type="text/javascript">
+	function chat() {
+		window
+				.open(
+						'message/messagelist?',
+						'child',
+						'toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
+	}
+</script>
 
 </head>
 
 <body>
-
-
-
-
-	<!--================Category Product Area =================-->
 	<section class="cat_product_area section_padding">
 		<div class="container">
 			<div class="row">
+				<div class="col-lg-3">
+					<div class="left_sidebar_area">
+						<aside class="left_widgets p_filter_widgets">
+							<div class="l_w_title">
+								<h2>Mypage</h2>
+							</div>
+							<br>
+							<div class="widgets_inner">
+								<ul class="list">
+									<li><a href="#">회원정보수정</a></li>
+									<li><a href="${pageContext.request.contextPath}/myOnSale">나의판매목록</a>
+										<span>(${myAuctionCount})</span></li>
+									<li><a href="${pageContext.request.contextPath}/myBidding">나의구매목록</a>
+										<span>(${myBidCount})</span></li>
+									<li><a
+										href="${pageContext.request.contextPath}/mywishseller">관심판매자상품목록</a></li>
+									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
+									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
+									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
+								</ul>
+							</div>
+						</aside>
+					</div>
+
+				</div>
 
 				<div class="col-lg-9">
+					<div class="row">
+						<div class="col-lg-12">
+							<div
+								class="product_top_bar d-flex justify-content-between align-items-center">
 
-					
-					<a href="${pageContext.request.contextPath}/myBidding"><input type="button" value="입찰"></a>
-					<a href="${pageContext.request.contextPath}/myBiddingDealing"><input type="button" value="낙찰(거래중)"></a>
-					<a href="${pageContext.request.contextPath}/myBiddingComplete"><input type="button" value="낙찰(거래완료)"></a> <br>
-					<a href="${pageContext.request.contextPath}/myBiddingComplete"><input type="button" value="유찰/신고/취소"></a> <br>
+								<div class="single_product_menu d-flex">
+
+									<a href="${pageContext.request.contextPath}/myBidding"
+										class="genric-btn primary">입찰</a>&nbsp;&nbsp; <a
+										href="${pageContext.request.contextPath}/myBiddingDealing"
+										class="genric-btn primary">낙찰(거래중)</a>&nbsp;&nbsp; <a
+										href="${pageContext.request.contextPath}/myBiddingComplete"
+										class="genric-btn primary">낙찰(거래완료)</a>&nbsp;&nbsp; <a
+										href="${pageContext.request.contextPath}/myFailureBidding"
+										class="genric-btn primary">유찰/거래취소</a>
+
+								</div>
+							</div>
+						</div>
+					</div>
 
 
 					<div class="row align-items-center latest_product_inner">
+
 						<c:if test="${count==0}">
-							<h4>등록된 물품이 없음</h4>
+							<section class="cart_area padding_top">
+								<div class="container">
+									<div class="cart_inner">
+										<div class="table-responsive">
+											<table class="table">
+												<tbody>
+													<tr>
+														<td>
+															<div class="media">
+																<div class="d-flex">
+																	<img
+																		src="<%=request.getContextPath()%>/uploadFile/none.jpg"
+																		width="200" height="200">
+																</div>
+																<div class="media-body">
+																	<p>아직 등록된 상품이 없습니다.</p>
+																</div>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+							</section>
 						</c:if>
 						<c:if test="${count!=0}">
-							<c:forEach var="myBidList" items="${myBidList}">
-								<div>
-									<a href="${pageContext.request.contextPath}/content?num=${myBidList.num}"><img
-										src="<%=request.getContextPath()%>/uploadFile/${myBidList.filename}"
-										width="200" height="200"></a>
-										<div>
-										상품명: ${myBidList.pname}<br />	
-										<c:if test="${myBidList.pstatus eq '입찰중'}">
-										입찰마감시간: ${myBidList.enddate}
-										</c:if>
-																				
-									</div>								
-								</div>
-							</c:forEach>
+
+
+							<section class="cart_area padding_top">
+								<div class="container">
+									<div class="cart_inner">
+										<div class="table-responsive">
+
+
+											<table class="table">
+												<c:forEach var="myBidList" items="${myBidList}">
+
+													<tbody>
+														<tr>
+															<td>
+																<div class="media">
+																	<div class="d-flex">
+																		<a
+																			href="${pageContext.request.contextPath}/content?num=${myBidList.num}">
+																			<img
+																			src="<%=request.getContextPath()%>/uploadFile/${myBidList.filename}"
+																			width="200" height="200">
+																		</a>
+																	</div>
+																	<div class="media-body">
+																		<p>${myBidList.pname}</p>
+																	</div>
+																</div>
+															</td>
+
+															<td><c:choose>
+																	<c:when test="${myBidList.pstatus eq '입찰중'}">
+																		<h5>[입찰마감시간]</h5>
+																		<h5>${myBidList.enddate}</h5>
+																	</c:when>
+
+
+																	<c:otherwise>
+																		<h5>[낙찰시간]</h5>
+																		<h5>${myBidList.enddate}</h5>
+
+																	</c:otherwise>
+																</c:choose></td>
+
+															<td><c:choose>
+																	<c:when test="${myBidList.pstatus eq '입금전'}">
+																		<div class="button-group-area mt-40">
+																			<a
+																				href="${pageContext.request.contextPath}/pay?&num=${myBidList.num}"
+																				class="genric-btn info-border">${myBidList.pstatus}</a>
+																		</div>
+																	</c:when>
+																	<c:otherwise>
+																		<td><h3>(${myBidList.pstatus})</h3></td>
+																	</c:otherwise>
+																</c:choose></td>
+														</tr>
+
+													</tbody>
+												</c:forEach>
+											</table>
+
+										</div>
+									</div>
+							</section>
+
 						</c:if>
+
 
 
 						<div class="col-lg-12">
@@ -83,35 +203,19 @@
 
 										<c:if test="${startPage > bottomLine}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${startPage - bottomLine}"
+												href="${pagename}?pageNum=${startPage - bottomLine}"
 												aria-label="Previous"> <i class="ti-angle-double-left"></i>
 											</a></li>
 										</c:if>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 										<c:forEach var="i" begin="${startPage}" end="${endPage}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${i}">${i}</a></li>
+												href="${pagename}?pageNum=${i}">${i}</a></li>
 
 										</c:forEach>
 
 										<c:if test="${endPage < pageCount}">
 											<li class="page-item"><a class="page-link"
-												href="list?pageNum=${startPage + bottomLine}"
+												href="${pagename}?pageNum=${startPage + bottomLine}"
 												aria-label="Next"> <i class="ti-angle-double-right"></i>
 											</a></li>
 										</c:if>
@@ -126,7 +230,6 @@
 			</div>
 		</div>
 	</section>
-
 
 
 	<!-- jquery plugins here-->

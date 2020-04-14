@@ -86,3 +86,11 @@ CREATE EVENT IF NOT EXISTS AAUCTION_CHECK
         deliveryStar int ,
         serviceStar int
         );
+        
+        
+CREATE TABLE APENALTY(
+        ID VARCHAR(100),
+        PENALTYCOUNT INT,
+        PENALTYDATE DATETIME,
+        PENALTYREASON VARCHAR(100),
+        penaltyEndDate datetime);

@@ -30,11 +30,11 @@ public class Auction implements Serializable
     
     private int beginsprice;
     
+    private int deliverypay;
+    
     private String startdate;
     
-    private String enddate;
-    
-    private int deliverypay;
+    private String enddate;   
     
     private String winid;
     
