@@ -70,7 +70,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
@@ -126,7 +126,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
@@ -182,7 +182,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
@@ -220,8 +220,7 @@ public class MypageController {
 		return "mypage/mySellList";
 	}
 
-	@RequestMapping(value = "myFailureSale", method = RequestMethod.GET) // 유찰
-																			// 취소(판매)
+	@RequestMapping(value = "myFailureSale", method = RequestMethod.GET) // 유찰/거래취소(판매)
 	public String myFailureSale(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
@@ -239,7 +238,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
@@ -298,7 +297,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
@@ -354,7 +353,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
@@ -410,7 +409,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
@@ -467,7 +466,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
@@ -527,7 +526,7 @@ public class MypageController {
 		}
 		currentPage = (int) session.getAttribute("pageNum");
 
-		int pageSize = 9;
+		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 

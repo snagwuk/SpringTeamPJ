@@ -31,6 +31,26 @@
 <link rel="stylesheet" href="css/price_rangs.css">
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
+
+<script>
+	function payCheck() {
+		
+		if (confirm("정말 결제하시겠습니까??") == true) { //확인
+			var form = document.createElement('form');
+			form.setAttribute('method', 'post');
+			form.setAttribute('action', 'pay?&num=${myBidCompleteAuction.num}');
+			document.charset = "utf-8";
+			document.body.appendChild(form);
+			form.submit();
+		} else { //취소
+			return false;
+		}
+	}
+</script>
+
+
+
+
 </head>
 
 <body>
@@ -60,7 +80,7 @@
 								<c:if test="${myBidCompleteAuction.pstatus ne '입찰중'}">
 									<th scope="col">낙찰시간</th>
 								</c:if>
-								
+
 							</tr>
 						</thead>
 						<tbody>
@@ -94,7 +114,7 @@
 								<td>
 									<h5>${myBidCompleteAuction.deliverypay}</h5>
 								</td>
-								
+
 								<td>
 									<h5>${myBalance}원</h5>
 								</td>
@@ -103,13 +123,26 @@
 										<h5>${myBidCompleteAuction.enddate}</h5>
 									</td>
 								</c:if>
-								
+
 							</tr>
 						</tbody>
 					</table>
-
 				</div>
+
+
+				<div style="margin-top: 5%; margin-left: 70%;">
+					<ul>
+						<li><a href="#" class="btn_3 modi" onclick="payCheck()">결제하기</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							
+							<a href="charge" class="btn_3 modi">캐시충전</a></li>
+					</ul>
+				</div>
+
+
+
 			</div>
+		</div>
 	</section>
 
 

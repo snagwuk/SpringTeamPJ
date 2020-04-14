@@ -86,9 +86,7 @@ public class PayController {
 
 		Member member = memPro.getMemberinfo(winid); // 낙찰자 배송정보 가져오기
 		m.addAttribute("member", member);
-
-		User user = (User) req.getSession().getAttribute("user");
-
+		System.out.println(member);
 		Auction myAuction = dbPro.getAuction(num);
 		m.addAttribute("auction", myAuction);
 
@@ -106,7 +104,7 @@ public class PayController {
 		dbPro.updateAuctionStatus(myAuction);
 		m.addAttribute("auction", auction);
 
-		return "mypage/mySellList";
+		return "redirect:/myOnSale";
 	}
 
 	@RequestMapping(value = "confirmShipping", method = RequestMethod.POST)
@@ -120,19 +118,17 @@ public class PayController {
 		Cash cash = new Cash();
 		cash.setId(myAuction.getSeller());
 		cash.setCash(payCash);
-		
+
 		cash.setCashdate(LocalDateTime.now());
 		cash.setReason(num + "번 경매물품 대금 지급");
 		cash.setCstatus(1);
 		cashPro.insertCash(cash);
-		
-		
-		
-		return "mypage/myPurchaseList";
+
+		return "redirect:/myBiddingComplete";
 
 	}
 
-	@RequestMapping(value = "giveUpBidding", method = RequestMethod.GET)
+	@RequestMapping(value = "giveUpBidding", method = RequestMethod.POST)
 	public String cancleDeal(HttpSession session, int num) throws Exception {
 		// 낙찰자가 입금전일때 낙찰포기 -> 패널티부여
 		User user = (User) session.getAttribute("user");
@@ -161,7 +157,7 @@ public class PayController {
 
 	}
 
-	@RequestMapping(value = "refundbuyer", method = RequestMethod.GET)																		
+	@RequestMapping(value = "refundbuyer", method = RequestMethod.POST)
 	public String refundbuyer(int num) throws Exception {
 
 		Auction myAuction = dbPro.getAuction(num);
@@ -186,7 +182,6 @@ public class PayController {
 		}
 
 		int refund = (cashPro.getPayCash(myAuction.getWinid(), num)) * -1;
-
 		Cash cash = new Cash();
 		cash.setId(myAuction.getWinid());
 		cash.setCash(refund);
@@ -195,14 +190,27 @@ public class PayController {
 		cash.setCstatus(1);
 		cashPro.insertCash(cash);
 
-		return "redirect:/mypage";
+		return "redirect:/myBidding";
 
 	}
-	
-	@RequestMapping(value = "refundseller", method = RequestMethod.GET)																		
+
+	@RequestMapping(value = "refundseller", method = RequestMethod.POST)
 	public String refundseller(int num) throws Exception {
 
 		Auction myAuction = dbPro.getAuction(num);
+		
+		if (!myAuction.getPstatus().equals("입금전")) {
+			int refund = (cashPro.getPayCash(myAuction.getWinid(), num)) * -1;
+
+			Cash cash = new Cash();
+			cash.setId(myAuction.getWinid());
+			cash.setCash(refund);
+			cash.setCashdate(LocalDateTime.now());
+			cash.setReason(num + "번 경매물품 대금 환불");
+			cash.setCstatus(1);
+			cashPro.insertCash(cash);
+		}		
+		
 		myAuction.setPstatus("거래취소");
 		dbPro.updateAuctionStatus(myAuction);
 
@@ -222,19 +230,9 @@ public class PayController {
 			insertPenalty.setPenaltyEndDate(null);
 			penPro.insertPenalty(insertPenalty);
 		}
+	
 
-		int refund = (cashPro.getPayCash(myAuction.getWinid(), num)) * -1;
-
-		Cash cash = new Cash();
-		cash.setId(myAuction.getWinid());
-		cash.setCash(refund);
-		cash.setCashdate(LocalDateTime.now());
-		cash.setReason(num + "번 경매물품 대금 환불");
-		cash.setCstatus(1);
-		cashPro.insertCash(cash);
-
-		return "redirect:/mypage";
+		return "redirect:/myOnSale";
 
 	}
-
 }

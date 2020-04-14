@@ -194,7 +194,7 @@ public class MybatisAuctionDao {
 	}
 	
 	
-	public List<Auction> getMyFailureSaleList(int startRow, int endRow, String seller) { // 내 거래종료 리스트 (판매)
+	public List<Auction> getMyFailureSaleList(int startRow, int endRow, String seller) { // 내 유찰/거래취소 리스트 (판매)
 		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
 		startRow = startRow - 1;
 		endRow = endRow - startRow;

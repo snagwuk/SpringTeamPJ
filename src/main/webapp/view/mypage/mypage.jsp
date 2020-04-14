@@ -88,7 +88,7 @@
 									<div class="col-lg-5 col-lx-2">
 										<img
 											src="<%=request.getContextPath()%>/uploadFile/profile.jpg"
-											width="450" height="380">
+											width="480" height="420">
 									</div>
 									<div class="box">
 									<div class="col-lg-20 col-lx-10">
@@ -112,7 +112,7 @@
 														</h3>
 													</h2>
 												</div>
-											</div>
+											</div><br><br>
 											<div class="media contact-info">
 												<span class="contact-info__icon"><i class="ti-tablet"></i></span>
 												<div class="media-body">

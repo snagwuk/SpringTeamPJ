@@ -89,7 +89,7 @@
 										href="${pageContext.request.contextPath}/myBiddingComplete"
 										class="genric-btn primary">낙찰(거래완료)</a>&nbsp;&nbsp; <a
 										href="${pageContext.request.contextPath}/myFailureBidding"
-										class="genric-btn primary">거래취소</a>
+										class="genric-btn primary">유찰/거래취소</a>
 
 								</div>
 							</div>
@@ -100,7 +100,7 @@
 					<div class="row align-items-center latest_product_inner">
 
 						<c:if test="${count==0}">
-								<section class="cart_area padding_top">
+							<section class="cart_area padding_top">
 								<div class="container">
 									<div class="cart_inner">
 										<div class="table-responsive">
@@ -162,10 +162,24 @@
 																		<h5>${myBidList.enddate}</h5>
 																	</c:when>
 
+
 																	<c:otherwise>
 																		<h5>[낙찰시간]</h5>
 																		<h5>${myBidList.enddate}</h5>
 
+																	</c:otherwise>
+																</c:choose></td>
+
+															<td><c:choose>
+																	<c:when test="${myBidList.pstatus eq '입금전'}">
+																		<div class="button-group-area mt-40">
+																			<a
+																				href="${pageContext.request.contextPath}/pay?&num=${myBidList.num}"
+																				class="genric-btn info-border">${myBidList.pstatus}</a>
+																		</div>
+																	</c:when>
+																	<c:otherwise>
+																		<td><h3>(${myBidList.pstatus})</h3></td>
 																	</c:otherwise>
 																</c:choose></td>
 														</tr>

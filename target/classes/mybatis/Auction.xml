@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMyFailureSaleCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where seller = #{seller} and pstatus='유찰'
+		select ifnull(count(*),0) from aAuction where seller = #{seller} and (pstatus='유찰' or pstatus='거래취소')
 	</select>	
 	
 	<select id="getMyOnSaleList_limit" parameterType="hashmap" resultType="Auction">
@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMyFailureSaleList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where seller = #{seller} and pstatus='유찰' order by num desc limit #{startRow} ,#{endRow}
+		select * from aAuction where seller = #{seller} and (pstatus='유찰' or pstatus='거래취소') order by num desc limit #{startRow} ,#{endRow}
 	</select>
 	
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ위는 판매상품 아래는 구매상품ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
@@ -100,7 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMyFailureBiddingCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where winid = #{winid} and pstatus='유찰'
+		select ifnull(count(*),0) from aAuction where winid = #{winid} and (pstatus='유찰' or pstatus='거래취소')
 	</select>
 	
 	<select id="getMyBidList_limit" parameterType="hashmap" resultType="Auction">
@@ -120,7 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMyFailureBiddingList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where winid = #{winid} and pstatus='유찰' order by num desc limit #{startRow} ,#{endRow}
+		select * from aAuction where winid = #{winid} and (pstatus='유찰' or pstatus='거래취소') order by num desc limit #{startRow} ,#{endRow}
 	</select>
 	
 	

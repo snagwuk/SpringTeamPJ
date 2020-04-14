@@ -88,9 +88,9 @@
 										href="${pageContext.request.contextPath}/myDealing"
 										class="genric-btn primary">거래중</a>&nbsp;&nbsp; <a
 										href="${pageContext.request.contextPath}/myEndSale"
-										class="genric-btn primary">거래완료</a>&nbsp;&nbsp; <a
+										class="genric-btn primary">거래종료</a>&nbsp;&nbsp; <a
 										href="${pageContext.request.contextPath}/myFailureSale"
-										class="genric-btn primary">유찰/취소</a>
+										class="genric-btn primary">유찰/거래취소</a>
 
 								</div>
 							</div>
@@ -164,11 +164,28 @@
 																	</c:when>
 
 																	<c:otherwise>
-																	<h5>[낙찰시간]</h5>
+
+
+																		<h5>[낙찰시간]</h5>
 																		<h5>${myAuctionList.enddate}</h5>
-																	
+
+																		<c:choose>
+																			<c:when
+																				test="${myAuctionList.pstatus eq '배송중' and myAuctionList.seller eq user.id}">
+
+																				<td><h3>(발송완료)</h3></td>
+
+																			</c:when>
+																			<c:otherwise>
+
+																				<td><h3>(${myAuctionList.pstatus})</h3></td>
+																			</c:otherwise>
+																		</c:choose>
+
 																	</c:otherwise>
 																</c:choose></td>
+
+
 														</tr>
 
 													</tbody>
