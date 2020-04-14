@@ -102,15 +102,16 @@ function chat() {
 							id="navbarDropdown_3" role="button" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false"> 마이갬성 </a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-								<c:if test="${user.position!=2}"><c:if test="${user.position!=3}">
+								<c:if test="${user.position!=2}">
+								<c:if test="${user.position!=3}">
 								<a class="dropdown-item"
 									href="${pageContext.request.contextPath}/write"> 상품등록</a></c:if> </c:if>
 									<c:if test="${user.position==2 }"><a
 									class="dropdown-item" href="${pageContext.request.contextPath}/tobeseller">판매자등록</a></c:if> <a
-									class="dropdown-item" href="checkout.html">product checkout</a>
-								<a class="dropdown-item" href="cart.html">shopping cart</a> <a
-									class="dropdown-item" href="confirmation.html">confirmation</a>
-								<a class="dropdown-item" href="elements.html">elements</a>
+									class="dropdown-item" href="${pageContext.request.contextPath}/liveview">방송보기</a>
+									<a class="dropdown-item" href="${pageContext.request.contextPath}/startlive">방송시작</a> 
+									<a class="dropdown-item" href="${pageContext.request.contextPath}/endlive">방송종료</a>
+									<a class="dropdown-item" href="elements.html">elements</a>
 							</div></li>
 
 

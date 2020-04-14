@@ -111,7 +111,7 @@
 
 <input type="hidden" name="num" value="${num}">
 <input type="hidden" name="id" value="${user.id}"/>
-
+<input type="hidden" name="next" value="bid" />
 <form:input path="bidprice" /><input type="submit" value = "입찰하기"/>
 <br/>
 <p style="color : gray;">(입찰금액단위 : ${unit})</p>
