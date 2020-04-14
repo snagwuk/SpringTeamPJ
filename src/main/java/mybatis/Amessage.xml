@@ -64,7 +64,7 @@ where num = ( select num from amessage
   </insert>
   
   <insert id="insertnewmessage" parameterType="Amessage">
-  insert into amessage values ( (select max(a.num)+1 from amessage a ),#{sender},#{receiver},"대화를 시작하세요",now(),now(),0)
+  insert into amessage values ( (select ifnull(max(a.num),0)+1 from amessage a ),#{sender},#{receiver},"대화를 시작하세요",now(),now(),0)
   </insert>
   
   <select id="selectchatnum" parameterType="Amessage" resultType="Integer">
