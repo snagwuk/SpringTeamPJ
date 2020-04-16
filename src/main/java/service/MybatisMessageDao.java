@@ -63,6 +63,19 @@ public class MybatisMessageDao {
 	            sqlSession.close();
 	        }
 	    }
+	  
+	  public List<Map> recentmessage2(Amessage message)
+	    {
+	        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+	        try
+	        {
+	           return sqlSession.selectList(namespace + ".recentmessage",message);
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
 	
 	  
 	  public List<Amessage> selectAllms(Amessage message)

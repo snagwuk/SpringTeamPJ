@@ -36,6 +36,26 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
   <link rel="stylesheet" href="css/magnific-popup.css">
   <!-- style CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.0.min.js">
+  $('input[type=radio][name=dealtype]').change(function() {
+
+	    var result = $(this).val()
+	    if(result==1){
+
+	        $("#deliverypay").css("display","block");
+
+	    
+
+	    }else{
+
+	    	 $("#deliverypay").css("display","none");
+
+	    }
+  })
+
+</script>
+
+  
 </head>
 <body>
 
@@ -81,9 +101,9 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
 
             <br>
             <div class="mt-10">
-               경매 시간&nbsp&nbsp<input type="text" name="startdate" required class="single-input-a1 wform">
+               경매 시간&nbsp&nbsp<input type="date" name="startdate" required class="single-input-a1 wform">
                   &nbsp&nbsp&nbsp&nbsp~&nbsp&nbsp&nbsp&nbsp
-                  <input type="text" name="enddate" required class="single-input-a1 wform">
+                  <input type="date" name="enddate" required class="single-input-a1 wform">
             </div>
 
             <br>
@@ -102,16 +122,16 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
             <div class="mt-10">
                배송 방법 선택 <br><br>
                <li>
-               <input type="radio" name="dealtype" value="택배"> 택배
-               <input type="radio" name="dealtype" value="직거래"> 직거래
+               <input type="radio" name="dealtype" value="1" checked="checked" > 택배
+               <input type="radio" name="dealtype" value="2" > 직거래
                </li>
 
             </div>
 
               <br>
-            <div class="mt-10">
-             	  배송비&nbsp&nbsp
-               <input type="text" name="deliverypay" required class="single-input-parea">
+            <div class="mt-10" id = "postcost">
+             	   배송비&nbsp&nbsp
+               <input type="text" name="deliverypay" id = "postcost" class="single-input-parea"> -
             </div>
 
             <br><br><br><br>

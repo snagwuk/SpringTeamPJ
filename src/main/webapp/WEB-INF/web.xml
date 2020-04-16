@@ -8,9 +8,22 @@
 
 	<jsp-config>
 		<jsp-property-group>
-			<url-pattern>/view/*</url-pattern>
+			<url-pattern>/view/auction</url-pattern>
 			<include-prelude>/header/header.jsp</include-prelude>
 		</jsp-property-group>
+		<jsp-property-group>
+			<url-pattern>/view/member</url-pattern>
+			<include-prelude>/header/header.jsp</include-prelude>
+		</jsp-property-group>
+		<jsp-property-group>
+			<url-pattern>/view/mypage</url-pattern>
+			<include-prelude>/header/header.jsp</include-prelude>
+		</jsp-property-group>
+			<jsp-property-group>
+			<url-pattern>/view/pay</url-pattern>
+			<include-prelude>/header/header.jsp</include-prelude>
+		</jsp-property-group>
+		
 	</jsp-config>
 
 <listener>

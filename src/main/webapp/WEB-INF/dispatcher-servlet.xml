@@ -21,6 +21,9 @@
 
 	<mvc:annotation-driven />
 	<context:component-scan base-package="controller,service,webservice,model" />
+<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+
+
 
 	<mvc:default-servlet-handler />
 	<mvc:view-controller path="/main" view-name="main" />
