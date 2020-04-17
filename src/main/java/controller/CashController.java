@@ -75,7 +75,7 @@ public class CashController
         }
         return "pay/cashlist";
     }
-    
+/*    여기가 main*/
     @RequestMapping(value = "cashchecklist", method = RequestMethod.GET)
     public String cash_cashchecklist(HttpSession session, Model m)
     {

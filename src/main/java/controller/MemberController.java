@@ -1,7 +1,6 @@
 package controller;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,14 +82,11 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	@RequestMapping(value = "login",method=RequestMethod.POST)
-	public String loginPro(Member member, HttpSession session)
-		{
+	public String loginPro(Member member, HttpSession session, HttpServletRequest req){
 			Member check = dbPro.selectmember(member.getId());
-			if(check!=null)
-			{
+			if(check!=null){
 				String encryption = dbPro.authenticate(member.getPassword());
-					if(encryption.equals(check.getPassword()))
-					{
+					if(encryption.equals(check.getPassword())){
 						User user = new User(check.getId(), check.getPosition(), check.getStatus());
 						session.setAttribute("user", user);
 
@@ -112,12 +108,19 @@ public class MemberController {
 
 
 						return "redirect:/main";
+					}else{
+						System.out.println("뭐지 왜 안돼");
+						req.setAttribute("message", "아이디 혹은 비밀번호가 맞지 않습니다.");
+						req.setAttribute("url", "login");
+						return "alert/alert";
 					}
-					else
-						return "member/loginForm";
-			}
-				else
-					return "member/loginForm";
+						
+			}else{
+					req.setAttribute("message", "아이디 혹은 비밀번호가 맞지 않습니다.");
+					req.setAttribute("url", "login");
+					return "alert/alert";
+				}
+					
 		}
 
 
@@ -142,22 +145,6 @@ public class MemberController {
 		req.setAttribute("message", "판매자 신청이 완료되었습니다");
 		req.setAttribute("url", "main");
 		return "alert/alert";
-	}
-	@RequestMapping(value = "admin", method = RequestMethod.GET)
-	public String upGrade(Model m){
-		List<Member> memberList = dbPro.selectposition();
-		m.addAttribute("memberList", memberList);
-		return "admin/upGrade";
-	}
-	@RequestMapping(value = "upgrade")
-	public String upGradePro(Member member){
-		dbPro.upposition(member.getId());
-		return "redirect:/admin/grade";
-	}
-	@RequestMapping(value = "downgrade")
-	public String downGradePro(Member member){
-		dbPro.downposition(member.getId());
-		return "redirect:/admin/grade";
 	}
 	@RequestMapping(value = "beformodify", method = RequestMethod.GET)
 	public String beformodify(Model m, HttpSession session){

@@ -23,14 +23,6 @@ tr:nth-child(even) {
 }
 .col-lg-8 {flex:0 0 66.6666667%; margin:0 auto; max-width:80%;}
 .col-md-8 {margin-top:60px;}
-.wform {margin:0 auto;}
-.single-input-parea {  width:60%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }
-.single-input-a1 {  width:40%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }
-.single-input { width:70%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }
-li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
 </style>
 </head>
 <body>
@@ -49,7 +41,7 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
     <th>계좌</th>
     <th>등급</th>
     <th>상태</th>
-    <th>선택</th>
+    <th>승인/거절</th>
   </tr>
 <c:forEach   var="member"  items="${memberList}">
   <tr>
@@ -60,8 +52,29 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
     <td>${member.address}</td>
     <td>${member.bank}</td>
     <td>${member.account}</td>
+<c:if test="${member.position==0 }">
+    <td>관리자</td>
+</c:if>
+<c:if test="${member.position==1 }">
+    <td>판매자</td>
+</c:if>
+<c:if test="${member.position==2 }">
     <td>구매자</td>
+</c:if>
+<c:if test="${member.position==3 }">
+    <td>판매자로신청</td>
+</c:if>
+<c:if test="${member.position==4 }">
+    <td>거절</td>
+</c:if>
+
+
+<c:if test="${member.status==0 }">
     <td>가능</td>
+</c:if>
+<c:if test="${member.status==1 }">
+    <td>불가</td>
+</c:if>
     <td> 
     	<button type="button" onclick="location.href='${pageContext.request.contextPath}/upgrade?id=${member.id }'">승인</button>
         <button type="button" onclick="location.href='${pageContext.request.contextPath}/downgrade?id=${member.id }'">거절</button>
