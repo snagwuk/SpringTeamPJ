@@ -7,10 +7,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Penalty {
 	
 	private String id;
-	@DateTimeFormat(pattern = "yyyy-MM-dd_HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime penaltyDate;
 	private String penaltyReason;
-	@DateTimeFormat(pattern = "yyyy-MM-dd_HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime penaltyEndDate;
 	
 	public String getId() {
@@ -37,6 +37,11 @@ public class Penalty {
 	}
 	public void setPenaltyEndDate(LocalDateTime penaltyEndDate) {
 		this.penaltyEndDate = penaltyEndDate;
+	}
+	@Override
+	public String toString() {
+		return "Penalty [id=" + id + ", penaltyDate=" + penaltyDate + ", penaltyReason=" + penaltyReason
+				+ ", penaltyEndDate=" + penaltyEndDate + "]";
 	}
 	
 	

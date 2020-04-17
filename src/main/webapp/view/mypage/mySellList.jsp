@@ -68,6 +68,7 @@
 									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
 									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
 									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
+									<li><a href="${pageContext.request.contextPath}/myPenalty">나의패널티기록</a></li>
 								</ul>
 							</div>
 						</aside>
@@ -207,19 +208,19 @@
 
 										<c:if test="${startPage > bottomLine}">
 											<li class="page-item"><a class="page-link"
-												href="${pagename}?pageNum=${startPage - bottomLine}"
+												href="${pageContext.request.contextPath}/${pagename}?pageNum=${startPage - bottomLine}"
 												aria-label="Previous"> <i class="ti-angle-double-left"></i>
 											</a></li>
 										</c:if>
 										<c:forEach var="i" begin="${startPage}" end="${endPage}">
 											<li class="page-item"><a class="page-link"
-												href="${pagename}?pageNum=${i}">${i}</a></li>
+												href="${pageContext.request.contextPath}/${pagename}?pageNum=${i}">${i}</a></li>
 
 										</c:forEach>
 
 										<c:if test="${endPage < pageCount}">
 											<li class="page-item"><a class="page-link"
-												href="${pagename}?pageNum=${startPage + bottomLine}"
+												href="${pageContext.request.contextPath}/${pagename}?pageNum=${startPage + bottomLine}"
 												aria-label="Next"> <i class="ti-angle-double-right"></i>
 											</a></li>
 										</c:if>

@@ -9,9 +9,10 @@
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>/view/*</url-pattern>
-			<include-prelude>/header/header.jsp</include-prelude>
-		</jsp-property-group>
+			<include-prelude>/header/header.jsp</include-prelude>			
+		</jsp-property-group>	
 	</jsp-config>
+	
 
 <listener>
   <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>

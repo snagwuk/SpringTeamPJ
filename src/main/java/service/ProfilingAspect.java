@@ -67,7 +67,6 @@ public Object trace(ProceedingJoinPoint joinPoint) throws Throwable{
 		return result;
 		
 		}finally{
-		Object result = joinPoint.proceed();
 		System.out.println(signatureString+"종료");
 		
 	}
