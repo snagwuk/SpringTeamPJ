@@ -14,9 +14,9 @@
 	</jsp-config>
 	
 
-<listener>
-  <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -42,4 +42,18 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.gif</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>org.apache.tomcat.websocket.binaryBufferSize</param-name>
+		<param-value>524288</param-value>
+	</context-param>
+
+
 </web-app>

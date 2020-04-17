@@ -222,8 +222,8 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
                                 <input type="text" required name="detailAddress" id="detailAddress" placeholder="상세주소" class="single-input-a1"/>              
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                                <input type="checkbox" required name="agree-term" id="agree-term" class="agree-term" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>개인정보 처리 방침 안내의 내용에 동의합니다.</label>
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="회원가입"/>

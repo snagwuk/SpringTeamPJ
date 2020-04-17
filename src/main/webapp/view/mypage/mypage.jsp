@@ -40,6 +40,29 @@
 	background-color: #EFFBFB;
 	padding: 30px 40px;
 }
+.notification {
+  background-color: #555;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
 </style>
 
 
@@ -61,7 +84,7 @@
 							<br>
 							<div class="widgets_inner">
 								<ul class="list">
-									<li><a href="#">회원정보수정</a></li>
+									<li><a href="${pageContext.request.contextPath}/beformodify">회원정보수정</a></li>
 									<li><a href="${pageContext.request.contextPath}/myOnSale">나의판매목록</a>
 										<span>(${myAuctionCount})</span></li>
 									<li><a href="${pageContext.request.contextPath}/myBidding">나의구매목록</a>
@@ -72,6 +95,10 @@
 									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
 									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
 									<li><a href="${pageContext.request.contextPath}/myPenalty?pagenum=1">나의패널티기록</a></li>
+									<a href="#" class="notification">
+									  <span>Inbox</span>
+									  <span class="badge">1</span>
+									</a>
 								</ul>
 							</div>
 						</aside>

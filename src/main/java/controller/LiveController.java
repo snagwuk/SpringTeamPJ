@@ -21,20 +21,20 @@ public class LiveController
     
     private String liveId = null;
     
-    private int livenum = 0;
+    private int livenum = 1;
     
     @RequestMapping(value = "startlive", method = RequestMethod.GET)
     public String startlive(HttpSession session, Model m)
     {
         int num = 1;
-        User user = (User) session.getAttribute("user");
+       /* User user = (User) session.getAttribute("user");
         if (liveId == null)
         {
             liveId = user.getId();
             livenum = num;
         }
         else
-            return "main";
+            return "main";*/
         
         Auction auction = dbPro.getAuction(livenum);
         m.addAttribute("auction", auction);
@@ -55,6 +55,8 @@ public class LiveController
     @RequestMapping(value = "liveview", method = RequestMethod.GET)
     public String liveview(Model m) throws Exception
     {
+    	
+    	 livenum = 1;
         Auction auction = dbPro.getAuction(livenum);
         m.addAttribute("auction", auction);
         

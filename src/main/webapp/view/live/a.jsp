@@ -1,105 +1,169 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>webcam streaming</title>
+<style>
+.notbold{
+    font-weight:normal
+}​
 </style>
+<script>
+//Time
+//Set the date we're counting down to
+var countDownDate = new Date("${auction.enddate}").getTime();
+
+//Update the count down every 1 second
+var x = setInterval(function() {
+
+	// Get today's date and time
+	var now = new Date().getTime();
+
+	// Find the distance between now and the count down date
+	var distance = countDownDate - now;
+
+	// Time calculations for days, hours, minutes and seconds
+	var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+	var hours = Math.floor((distance % (1000 * 60 * 60 * 24))
+			/ (1000 * 60 * 60));
+	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+	// Output the result in an element with id="demo"
+	document.getElementById("demo").innerHTML = days + "일 " + hours + ": "
+			+ minutes + ": " + seconds + " ";
+
+	// If the count down is over, write some text
+	if (distance < 0) {
+		clearInterval(x);
+		document.getElementById("demo").innerHTML = "EXPIRED";
+	}
+}, 1000);
+</script>
 </head>
 <body>
+<div class="section-top-border">
+   <div class="row">
+      <div class="col-lg-8 col-md-8"><br/><br/><br/>
 	<div class="wrapper"
 		style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 5px;">
 		<div>
+			<h1>Video from webCam</h1>
+			<video></video>
 		</div>
 		<div>
-			<h1>Video on Canvas</h1>
+			<h1><span class='notbold'>My Camera&nbsp&nbsp&nbsp</span></h1><br/><br/>
 			<canvas style="width: 400px; height: 400px; background-color: #000;"></canvas>
+			<br/><br/><br/><br/>
+			<%-- <a href="${pageContext.request.contextPath}/endlive" class="btn_3 modi"> 방송종료 </a> --%>
+
+
+			<img src="<%=request.getContextPath()%>/uploadFile/${auction.filename}"
+									width="300" height="300">
+
+
+
 		</div>
 
 		<div>
-			<h1>Video from Server</h1>
+			<h1 style="color:#FB0A07">ON AIR&nbsp&nbsp&nbsp</h1><a href="${pageContext.request.contextPath}/endlive" class="btn_3 modi"> 방송종료 </a>
 			<img alt="" id="img"
-				style="width: 400px; height: 400px; background-color: #000;" />
-		</div>
-	</div>
-	<a href="${pageContext.request.contextPath}/endlive" class="btn_3 modi"> 방송종료 </a>
-	<div class="col-lg-4 col-sm-6">
-		<div class="single_product_item">
-			<img src="<%=request.getContextPath()%>/uploadFile/${auction.filename}"	width="200" height="200">
-				<div class="single_product_text">
-					${auction.pname}<br /> 즉시 구매가 : ${auction.immediateprice} 
+				style="width: 700px; height: 400px; background-color: #000;" />
+
+					<div class="s_product_text">
+					<br/><br/><br/>
+					<h3><a class="active" href="#"> <span>남은시간 </span><span
+									id="demo"></span></a></h3>
+<p style="color: gray;">
+						<h3>${auction.pname}(${auction.category})</h3>
+
+						<c:choose>
+							<c:when test="${auction.pstatus eq '입찰중'}">
+								<h2>현재 최고가 : ${hprice} 원</h2>
+
+							</c:when>
+						</c:choose>
+					<p style="color: gray;">
+
 				</div>
+
+
+
+
 		</div>
+
 	</div>
 
-	<h1>현재 최고가 : ${hprice}</h1>
+
+	</div></div></div>
 	<script>
- /**
-  * 
-  */
+
  (function(){
  	var video = document.querySelector('video');
  	var canvas = document.querySelector('canvas');
- 	var img = document.querySelector('img');
+ 	/* var img = document.querySelector('img'); */
+ 	var img = document.getElementById('img');
  	var context=canvas.getContext('2d');
  	/*var url = "ws://localhost:8081/WScams/wsServer";*/
- 	var url = "ws://211.63.89.92:8088/WScams/wsServer";
+   var url = "ws://211.63.89.94:8081/SpringTeamPJ/wsServer";
+
 
  	var socket = new WebSocket(url);
- 	
+
  	socket.onopen=onOpen;
  	function onOpen(event){
- 		alert("ok");
+ 		/* alert("ok"); */
  	}
 
  	var constraints={
  			video:true,
  			audio:false
  	};
- 	
+
  	navigator.mediaDevices.getUserMedia(constraints).then(function(stream){
  		video.srcObject=stream;
  		video.play();
  	}).catch(function(err){
- 		
+
  	});
 
  	 setInterval(main ,300);
- 	
- 	
+
+
      function main(){
      	drawCanvas();
      	readCanvas();
      }
- 	
+
  	function drawCanvas(){
- 		
+
  		context.drawImage(video,0,0,canvas.width, canvas.height);
- 		
+
  	}
- 	
+
  	 console.log(canvas.toDataURL('image/jpeg',1));
- 	
+
  	function readCanvas(){
  		var canvasData = canvas.toDataURL('image/jpeg',1);
  		var decodeAstring = atob(canvasData.split(',')[1]);
- 		
+
  		var charArray =[];
- 		
+
  		for(var i=0; i<decodeAstring.length;i++){
- 			
+
  			charArray.push(decodeAstring.charCodeAt(i));
  		}
- 		
+
         socket.send( new Blob([new Uint8Array(charArray)],{
      	   type:'image/jpeg'
-        }));		
- 	
+        }));
+
          socket.addEventListener('message',function(event){
          	img.src=window.URL.createObjectURL(event.data);
          });
- 		
+
  	}
  })();
  </script>

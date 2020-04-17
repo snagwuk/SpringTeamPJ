@@ -51,6 +51,36 @@ function chat() {
     font-size: 10px;
     color: #fff;
 }
+* {
+  box-sizing: border-box;
+}
+
+/* Style the side navigation */
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #088804;
+  overflow-x: hidden;
+}
+
+
+/* Side navigation links */
+.sidenav a {
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color on hover */
+.sidenav a:hover {
+  background-color: #ddd;
+  color: black;
+}
 </style>
 
 
@@ -77,7 +107,7 @@ function chat() {
 		<div class="row align-items-center">
 			<div class="col-lg-12">
 				<nav class="navbar navbar-expand-lg navbar-light"> <a
-					class="navbar-brand" href="main"> <img src="img/logo.png" alt=""> </a>
+					class="navbar-brand" href="main"> <img src="img/logo.png" width="100" height="50" alt=""> </a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -123,9 +153,6 @@ function chat() {
 							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/mypage">마이페이지</a>
 							<li class="nav-item"><a class="nav-link" href="logout">로그아웃${user.id }</a>
 						</li>
-						</c:if>
-						<c:if test="${user.position==0 }">
-						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin">관리자 페이지</a>
 						</c:if>
 					</ul>
 				</div>
@@ -195,6 +222,15 @@ function chat() {
 	<script src="js/mail-script.js"></script>
 	<!-- custom js -->
 	<script src="js/custom.js"></script>
+<c:if test="${user.position==0 }">
+<div class="sidenav">
+  <a href="#">관리자</a>
+  <a href="memberList">회원정보</a>
+  <a href="memberList">회원통계</a>
+  <a href="grade">등급관리</a>
+  <a href="cashchecklist">캐쉬관리</a>
+</div>
+</c:if>
 </body>
 
 </html>
