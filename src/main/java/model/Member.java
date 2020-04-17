@@ -1,14 +1,17 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Member implements Serializable{
 	
 	private String id;
 	private String password;
 	private String name;
-	private Date registdate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd_HH:mm:ss")
+	private LocalDateTime registdate;
 	private String phone;
 	private String postcode;
 	private String address;
@@ -43,10 +46,10 @@ public class Member implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getRegistdate() {
+	public LocalDateTime getRegistdate() {
 		return registdate;
 	}
-	public void setRegistdate(Date registdate) {
+	public void setRegistdate(LocalDateTime registdate) {
 		this.registdate = registdate;
 	}
 	public String getPhone() {

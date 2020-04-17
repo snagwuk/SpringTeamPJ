@@ -31,7 +31,6 @@ public class MybatisMemberDao {
 	        }
 	    }
 	 public int idcheck(String id){
-		 System.out.println(id);
 	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
 	        try {
 	            return sqlSession.selectOne(namespace + ".idcheck",id);
@@ -50,7 +49,6 @@ public class MybatisMemberDao {
 	        }
 	    }
 	 public Member selectmember(String id){
-		 System.out.println(id);
 	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
 	        try {
 	            return sqlSession.selectOne(namespace + ".selectmember",id);
@@ -131,4 +129,13 @@ public class MybatisMemberDao {
 				sqlSession.close();
 			}
 		}
+	 public List<Member> memberList(){
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try {
+	            return sqlSession.selectList(namespace + ".memberList");
+	        }
+	        finally {
+	            sqlSession.close();
+	        }
+	    }
 }

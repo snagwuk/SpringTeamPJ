@@ -57,17 +57,17 @@ public Object trace(ProceedingJoinPoint joinPoint) throws Throwable{
 		
 		
 	
-		if(unreadcount==0){
+		if(unreadcount==0)
 			session.setAttribute("unreadcount", null);
-		}else{
-			 session.setAttribute("unreadcount", unreadcount);}
+		else
+			session.setAttribute("unreadcount", unreadcount);
+	
 			
-			 System.out.println(unreadcount);
+		System.out.println(unreadcount);
 		Object result = joinPoint.proceed();
 		return result;
 		
 		}finally{
-		Object result = joinPoint.proceed();
 		System.out.println(signatureString+"종료");
 		
 	}

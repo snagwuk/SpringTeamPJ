@@ -9,14 +9,10 @@
 .wform {margin:0 auto;}
 .single-input-parea {  width:60%; line-height:40px; border:none; outline:none;
                background:#f9f9ff; padding:0 20px; }
-.single-input-a1 {  width:40%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }
-.single-input { width:70%; line-height:40px; border:none; outline:none;
-               background:#f9f9ff; padding:0 20px; }
 .small {  width:20%; line-height:40px; border:none; outline:none;
                background:#f9f9ff; padding:0 20px; }     
 .jb-bold {  font-weight: bold;     }                        
-li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
+li {list-style-type:none;}
 </style>
 <meta charset="UTF-8">
 <!-- Required meta tags -->

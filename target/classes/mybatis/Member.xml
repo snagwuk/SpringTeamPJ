@@ -52,6 +52,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="memberStart" parameterType="String">
 		update amember set status=0 where id=#{id}
 	</update>
+	<select id="memberList" resultType="Member">
+		select * from amember
+	</select>
 
 
 </mapper>

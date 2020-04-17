@@ -55,6 +55,8 @@ public class LiveController
     @RequestMapping(value = "liveview", method = RequestMethod.GET)
     public String liveview(Model m) throws Exception
     {
+    	
+    	 livenum = 1;
         Auction auction = dbPro.getAuction(livenum);
         m.addAttribute("auction", auction);
         
