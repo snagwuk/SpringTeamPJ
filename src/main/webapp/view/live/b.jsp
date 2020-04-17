@@ -4,7 +4,8 @@
 <html>
 <script>
 	var img = document.querySelector('img');
-	var url = "ws://211.63.89.94:8081/SpringTeamPJ/wsServer";
+	var url = "ws://211.63.89.86:9080/SpringTeamPJ/wsServer";
+
 
 	var socket = new WebSocket(url);
 	var img = document.querySelector('img');
