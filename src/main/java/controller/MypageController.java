@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import model.Amessage;
 import model.Auction;
 import model.Member;
+import model.Penalty;
 import model.User;
 import model.Wishseller;
 import service.MybatisAuctionDao;
 import service.MybatisCashDao;
 import service.MybatisMemberDao;
+import service.MybatisPenaltyDao;
 
 @Controller
 public class MypageController {
@@ -34,6 +36,9 @@ public class MypageController {
 	
 	@Autowired
 	MybatisMemberDao memPro;
+	
+	@Autowired
+	MybatisPenaltyDao penPro;
 
 	@RequestMapping(value = "mypage")
 	public String mypage(HttpServletRequest req, Model m) {
@@ -57,7 +62,7 @@ public class MypageController {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
-
+		
 		int currentPage = 1;
 
 		try {
@@ -65,7 +70,7 @@ public class MypageController {
 			session.setAttribute("pageNum", currentPage);
 		} catch (Exception e) {
 
-			if (session.getAttribute("pageNum") == null)
+			if (req.getParameter("pageNum") == null)
 				session.setAttribute("pageNum", 1);
 		}
 		currentPage = (int) session.getAttribute("pageNum");
@@ -104,6 +109,7 @@ public class MypageController {
 		req.setAttribute("count", myOnSaleCount);
 
 		req.setAttribute("myAuctionList", myOnSaleList);
+		req.setAttribute("pagename", "myOnSale");
 
 		return "mypage/mySellList";
 	}
@@ -160,6 +166,7 @@ public class MypageController {
 		req.setAttribute("count", myDealingCount);
 
 		req.setAttribute("myAuctionList", myDealingList);
+		req.setAttribute("pagename", "myDealing");
 
 		return "mypage/mySellList";
 	}
@@ -216,6 +223,7 @@ public class MypageController {
 		req.setAttribute("count", myEndSaleCount);
 
 		req.setAttribute("myAuctionList", myEndSaleList);
+		req.setAttribute("pagename", "myEndSale");
 
 		return "mypage/mySellList";
 	}
@@ -272,6 +280,7 @@ public class MypageController {
 		req.setAttribute("count", myFailureSaleCount);
 
 		req.setAttribute("myAuctionList", myFailureSale);
+		req.setAttribute("pagename", "myFailureSale");
 
 		return "mypage/mySellList";
 	}
@@ -331,6 +340,7 @@ public class MypageController {
 		req.setAttribute("count", myBiddingCount);
 
 		req.setAttribute("myBidList", myBiddingList);
+		req.setAttribute("pagename", "myBidding");
 
 		return "mypage/myPurchaseList";
 	}
@@ -387,7 +397,8 @@ public class MypageController {
 		req.setAttribute("count", myBiddingDealingCount);
 
 		req.setAttribute("myBidList", myBiddingDealingList);
-
+		req.setAttribute("pagename", "myBiddingDealing");
+		
 		return "mypage/myPurchaseList";
 	}
 
@@ -443,7 +454,8 @@ public class MypageController {
 		req.setAttribute("count", count);
 
 		req.setAttribute("myBidList", myBidList);
-
+		req.setAttribute("pagename", "myBiddingComplete");
+		
 		return "mypage/myPurchaseList";
 	}
 
@@ -499,10 +511,65 @@ public class MypageController {
 		req.setAttribute("myBidCount", myBidCount);
 		req.setAttribute("count", myFailureBiddingCount);
 		req.setAttribute("myBidList", myFailureBidding);
-
+		req.setAttribute("pagename", "myFailureBidding");
+		
 		return "mypage/myPurchaseList";
 	}
 
+	@RequestMapping(value = "myPenalty", method = RequestMethod.GET)
+	public String myPenalty(HttpSession session, String pageNum, Model m) {
+		
+		User user = (User) session.getAttribute("user");
+		
+		int currentPage = 1;
+
+		try {
+			currentPage = Integer.parseInt(pageNum);
+			session.setAttribute("pageNum", currentPage);
+		} catch (Exception e) {
+
+			if (session.getAttribute("pageNum") == null)
+				session.setAttribute("pageNum", 1);
+		}
+		currentPage = (int) session.getAttribute("pageNum");
+
+		int pageSize = 3;
+		int startRow = (currentPage - 1) * pageSize + 1;
+		int endRow = currentPage * pageSize;
+
+		int myPenaltyCount = penPro.getMyPenaltyCount(user.getId());
+
+		List<Penalty> myPenaltyList = penPro.getMyPenaltyList(startRow, endRow, user.getId());
+		Member member = memPro.getMemberinfo(user.getId());
+		
+		int number = myPenaltyCount - (currentPage - 1) * pageSize;
+		int bottomLine = 3;
+		int pageCount = myPenaltyCount / pageSize + (myPenaltyCount % pageSize == 0 ? 0 : 1);
+		int startPage = 1 + (currentPage - 1) / bottomLine * bottomLine;
+		int endPage = startPage + bottomLine - 1;
+
+		if (endPage > pageCount)
+			endPage = pageCount;	
+		
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);
+		
+		m.addAttribute("myPenaltyCount", myPenaltyCount);
+		m.addAttribute("myPenaltyList", myPenaltyList);		
+		m.addAttribute("member", member);		
+		m.addAttribute("pagename", "myPenalty");
+		
+		return "mypage/myPenalty";
+	}
+
+	
 	@RequestMapping(value = "mywishseller", method = RequestMethod.GET)
 	public String mywishseller(HttpSession session, HttpServletRequest request) {
 		User user = (User) session.getAttribute("user");

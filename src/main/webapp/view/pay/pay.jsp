@@ -109,14 +109,20 @@
 									<h5>${cash}원</h5>
 								</td>
 								<td>
-									<h5>배송방법데려오기</h5>
+									<h5>택배</h5>
 								</td>
 								<td>
-									<h5>${myBidCompleteAuction.deliverypay}</h5>
+									<h5>결제금액에포함</h5>
 								</td>
 
 								<td>
+								<c:if test="${myBalance<0}">
+									<h5>캐시가 부족합니다. 충전해주세요!</h5>
+								</c:if>			
+								<c:if test="${myBalance>0}">
 									<h5>${myBalance}원</h5>
+								</c:if>			
+									
 								</td>
 								<c:if test="${myBidCompleteAuction.pstatus ne '입찰중'}">
 									<td>

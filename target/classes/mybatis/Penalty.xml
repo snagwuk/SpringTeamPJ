@@ -18,6 +18,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from aPenalty where id = #{id} order by penaltyenddate desc limit 1
 	</select>
 	
+	<select id="getMyPenaltyCount" parameterType="String" resultType="int">
+		select ifnull(count(id),0) from aPenalty where id = #{id}
+	</select>
+	
+	<select id="getMyPenaltyList" parameterType="hashmap" resultType="Penalty">
+		select * from aPenalty where id = #{id} order by penaltyDate desc limit #{startRow} ,#{endRow}
+	</select>
+	
 	
 
 	

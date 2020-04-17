@@ -107,7 +107,8 @@ var x = setInterval(function() {
  	var img = document.getElementById('img');
  	var context=canvas.getContext('2d');
  	/*var url = "ws://localhost:8081/WScams/wsServer";*/
- 	var url = "ws://211.63.89.94:8081/SpringTeamPJ/wsServer";
+   var url = "ws://211.63.89.94:8081/SpringTeamPJ/wsServer";
+
 
  	var socket = new WebSocket(url);
 
