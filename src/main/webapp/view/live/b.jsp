@@ -4,7 +4,8 @@
 <html>
 <script>
 	var img = document.querySelector('img');
-	var url = "ws://211.63.89.86:9080/SpringTeamPJ/wsServer";
+	var url = "ws://211.63.89.94:8081/SpringTeamPJ/wsServer";
+
 
 	var socket = new WebSocket(url);
 	var img = document.querySelector('img');
@@ -86,9 +87,9 @@
 								<div class="single_product_text">
 								<br/> <h5>즉시 구매가 : ${auction.immediateprice}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 								<a href="pay?&num=${auction.num}" class="btn_3">즉시구매하기</a></h5>
-								
+
 							</div>
-						
+
 							</c:when>
 						</c:choose>
 					<p style="color: gray;">
@@ -101,8 +102,8 @@
 							name="bidprice" value="${hprice+auction.bidunit}"/> &nbsp&nbsp&nbsp<input type="submit" class="btn_3" value="입찰하기" /> <br />
 						(입찰금액단위 : ${auction.bidunit})</p>
 					</form>
-					
-							
+
+
 					<div class="single_product_text">
 					<a href="${pageContext.request.contextPath}/content?num=${auction.num}"
 										class="add_cart">+ 상품 자세히 보기<i class="ti-heart"></i></a>

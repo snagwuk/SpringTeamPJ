@@ -15,43 +15,53 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/wsServer")
-public class Rtc {
-	private static List<Session> clients = Collections.synchronizedList(new ArrayList<Session>());
-
-	@OnOpen
-	public void OnOpen(Session session) {
-
-		clients.add(session);
-		System.out.println(session.toString());
-	}
-
-	@OnMessage
-	public void onMessage(Session ss, byte[] img) {
-		ByteBuffer buf = ByteBuffer.wrap(img);
-
-		try {
-			for (Session client : clients) {
-
-			//	if (!client.equals(ss)) {
-					client.getBasicRemote().sendBinary(buf);
-
-			//	}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// �ڱ� �ڽ����״� ������ ����
-	}
-
-	@OnClose
-	public void onClose(Session ss) {
-		try {
-			ss.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
+public class Rtc
+{
+    private static List<Session> clients = Collections.synchronizedList(new ArrayList<Session>());
+    
+    @OnOpen
+    public void OnOpen(Session session)
+    {
+        
+        clients.add(session);
+        System.out.println(session.toString());
+    }
+    
+    @OnMessage
+    public void onMessage(Session ss, byte[] img)
+    {
+        ByteBuffer buf = ByteBuffer.wrap(img);
+        
+        try
+        {
+            for (Session client : clients)
+            {
+                if (ss != null) 
+                    client.getBasicRemote().sendBinary(buf);
+            }
+        }
+        catch (IOException e)
+        {
+           
+            e.printStackTrace();
+        }
+        // �ڱ� �ڽ����״� ������ ����
+    }
+    
+    @OnClose
+    public void onClose(Session ss)
+    {
+        try
+        {
+            clients.remove(ss);
+            ss.close();
+            
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
 }
