@@ -30,19 +30,14 @@ private void profileTarget(){
 public Object trace(ProceedingJoinPoint joinPoint) throws Throwable{
 	
 	String signatureString = joinPoint.getSignature().toString();
-	System.out.println(signatureString+"시작");
+
 
 	int unreadcount = 0;
 	try{
 		 HttpServletRequest request =((ServletRequestAttributes)RequestContextHolder
 			      .getRequestAttributes()).getRequest();
 			    HttpSession session = request.getSession(true);
-		/*if(session.getAttribute("member")!=null){
-			Member member= (Member) session.getAttribute("member");
-			 Amessage me = new Amessage();
-			 me.setReceiver(member.getId());
-			 mePro.deleteintromessage(me);
-			 unreadcount = mePro.getunreaccount(member.getId());}*/
+		
 	 if(session.getAttribute("user")!=null){
 		User member= (User) session.getAttribute("user");
 		 Amessage me = new Amessage();
@@ -68,7 +63,7 @@ public Object trace(ProceedingJoinPoint joinPoint) throws Throwable{
 		
 		}finally{
 	
-		System.out.println(signatureString+"종료");
+	
 		
 	}
 

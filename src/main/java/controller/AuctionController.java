@@ -47,6 +47,14 @@ public class AuctionController
     {
         binder.addValidators(bidvalidator);
     }
+    
+    
+
+    @RequestMapping(value = "main", method = RequestMethod.GET)
+    public String main(Auction auction)
+    {
+        return "auction/main";
+    }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String auction_listGET(HttpServletRequest request, HttpSession session)
@@ -143,14 +151,7 @@ public class AuctionController
 
     }
 
-    @RequestMapping(value = "main", method = RequestMethod.GET)
-    public String main(Model m, HttpSession session)
-    {
-    	if(session.getAttribute("user")!=null){
-    	User user = (User) session.getAttribute("user");
 
-    	}return "main";
-    }
 
     @RequestMapping("modify")
     public String auction_modifyForm(int num, Model m)

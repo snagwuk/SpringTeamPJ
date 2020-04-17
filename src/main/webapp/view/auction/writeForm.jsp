@@ -84,19 +84,19 @@ li {list-style-type:none; float:left; outline:1px; margin-left:40px;}
             <br>
             <div class="mt-10">
                경매 시작가&nbsp&nbsp
-               <input type="text" name="beginsprice" required class="single-input-parea">
+               <input type="text" name="beginsprice" required class="single-input-parea" onblur="if(this.value==null||this.value==''){this.value=0}else{this.value=parseInt(this.value.replace(/[^\d]+/g, ''))}" onfocus="if(this.value=='0'){this.value=''}"  onKeyup= "this.value=this.value.replace(/[^0-9]/g,'').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');"/>
             </div>
 
             <br>
             <div class="mt-10">
                입찰 금액 단위&nbsp&nbsp
-               <input type="text" name="bidunit" required class="single-input-parea">
+               <input type="text" name="bidunit" required class="single-input-parea" onblur="if(this.value==null||this.value==''){this.value=0}else{this.value=parseInt(this.value.replace(/[^\d]+/g, ''))}" onfocus="if(this.value=='0'){this.value=''}"  onKeyup= "this.value=this.value.replace(/[^0-9]/g,'').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');" />
             </div>
 
             <br>
             <div class="mt-10">
                즉시 구매가&nbsp&nbsp
-               <input type="text" name="immediateprice" required class="single-input-parea">
+               <input type="text" name="immediateprice" required class="single-input-parea" onblur="if(this.value==null||this.value==''){this.value=0}else{this.value=parseInt(this.value.replace(/[^\d]+/g, ''))}" onfocus="if(this.value=='0'){this.value=''}"  onKeyup= "this.value=this.value.replace(/[^0-9]/g,'').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');">
             </div>
 
             <br>

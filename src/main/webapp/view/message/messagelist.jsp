@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -78,7 +79,7 @@
 	if (msg.num!=num)
 		{ $("#chatMessageArea").append("")}else{
 	   if(msg.receiver!=sender){
-		
+		   msgajax();
 		    $("#chatMessageArea").append("<div class="+"outgoing_msg"+">"+
 		              "<div class="+"sent_msg"+">"+
 		      "<p>"+msg.content+"</p>"+
@@ -117,12 +118,12 @@
          var keycode = (event.keyCode ? event.keyCode : event.which);
          if(keycode == '13'){
             send();
-           
+        
          }
          event.stopPropagation();
-         msgajax();
+        
       });
-      $('#sendBtn').click(function() { send(); msgajax();});
+      $('#sendBtn').click(function() { send(); });
 
    });
 
@@ -154,14 +155,16 @@
 
 	 function msgajax() {
 
+
 	
 		
 
 			$.ajax({
-				url : "${pageContext.request.contextPath}/id_check",
+				url : "${pageContext.request.contextPath}/updatemessage",
 				type : "get",
 				data : {
-					id : '${user.id}'
+					id : '${user.id}',
+					num : '${num}'
 				},
 				dataType : "TEXT",
 				success : function(result) {
@@ -184,7 +187,9 @@
 					alert("실패ㅜㅜ"+e);
 				}
 			});
-		}
+		
+		
+	 }
 
 
 </script>
@@ -287,7 +292,9 @@ function change(){
              <p>${list.sender}</p>
                 <div class="received_withd_msg">
                   <p>${list.content}</p>
-                  <span class="time_date"> ${list.sendtime}</span></div>
+                  <span class="time_date">
+                    <fmt:formatDate value="${list.sendtime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                </span></div>
               </div>
             </div>
             </c:if>
@@ -296,7 +303,7 @@ function change(){
             <div class="outgoing_msg">
               <div class="sent_msg">
                 <p>${list.content}</p>
-                <span class="time_date"> ${list.sendtime}</span> </div>
+                <span class="time_date">  <fmt:formatDate value="${list.sendtime}" pattern="yyyy-MM-dd HH:mm:ss"/></span> </div>
             </div>
             </c:if>
             </c:forEach>
