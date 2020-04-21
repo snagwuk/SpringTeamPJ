@@ -18,7 +18,7 @@
 <!-- owl carousel CSS -->
 <link rel="stylesheet" href="css/owl.carousel.min.css">
 <!-- nice select CSS -->
-<link rel="stylesheet" href="css/nice-select.css">
+
 <!-- font awesome CSS -->
 <link rel="stylesheet" href="css/all.css">
 <!-- flaticon CSS -->

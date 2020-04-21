@@ -23,10 +23,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import model.Auction;
 import model.Bid;
+import model.Category;
 import model.User;
 import model.Wishseller;
 import service.BidValidator;
 import service.MybatisAuctionDao;
+import service.MybatisCategoryDao;
 import service.MybatisMessageDao;
 
 @Controller
@@ -41,6 +43,9 @@ public class AuctionController
 
     @Autowired
     MybatisMessageDao mdao;
+    
+    @Autowired
+    MybatisCategoryDao cdao;
 
     @InitBinder("bid")
     protected void initBinder(WebDataBinder binder)
@@ -108,8 +113,11 @@ public class AuctionController
     }
 
     @RequestMapping(value = "write", method = RequestMethod.GET)
-    public String auction_writeForm(Auction auction)
+    public String auction_writeForm(Auction auction,Model m)
     {
+    	List<Category> c = cdao.selectfirst();
+    	System.out.println(c);
+    	m.addAttribute("category",c);
         return "auction/writeForm";
     }
 

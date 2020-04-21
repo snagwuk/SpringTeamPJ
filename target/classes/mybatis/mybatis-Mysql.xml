@@ -10,6 +10,7 @@
 		<typeAlias type="model.Review" alias="Review" />
 		<typeAlias type="model.Amessage" alias="Amessage" />
 		<typeAlias type="model.Penalty" alias="Penalty" />
+		<typeAlias type="model.Category" alias="Category" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -31,6 +32,8 @@
 		<mapper resource="mybatis/Review.xml" />
 		<mapper resource="mybatis/Amessage.xml" />
 		<mapper resource="mybatis/Penalty.xml" />
+		<mapper resource="mybatis/Category.xml" />
 	</mappers>
 
 </configuration>
+
