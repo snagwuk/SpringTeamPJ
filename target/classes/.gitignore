@@ -1,4 +1,4 @@
-/controller/
-/service/
+/AuthInterceptor/
 /mybatis/
-/model/
+/service/
+/controller/

@@ -131,6 +131,20 @@ public class MybatisMessageDao {
 		}
 		
 	}
+	public void insertadminmessage(Amessage ms) {
+		SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+		try
+		{
+			
+			sqlSession.insert(namespace + ".insertadminmessage",ms);
+			sqlSession.commit();
+		}
+		finally
+		{
+			sqlSession.close();
+		}
+		
+	}
 
 	public int selectchatnum(Amessage m) {
 		 SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
