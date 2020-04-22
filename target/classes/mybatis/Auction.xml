@@ -178,9 +178,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <select id="selectseller" parameterType="Wishseller" resultType="int">
 		select count(*) from wishseller where seller=#{seller} and id = #{id};
-	</select>
+</select>
+
+<select id="getSearchListCount" parameterType="hashmap" resultType="int">
+		SELECT IFNULL(COUNT(*),0) FROM AAUCTION WHERE PNAME LIKE concat('%',#{inputValue},'%') or Pdetail LIKE concat('%',#{inputValue},'%')
+</select>
+
+<select id="getSearchAuctions" parameterType="hashmap" resultType="Auction">
+		SELECT * FROM aauction WHERE PNAME LIKE concat('%',#{inputValue},'%') or Pdetail LIKE concat('%',#{inputValue},'%')
+</select>
+
+
+
 
 
 </mapper>
-
-

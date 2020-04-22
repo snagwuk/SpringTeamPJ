@@ -40,7 +40,54 @@
 						'child',
 						'toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
 	}
+	
+	function movetab(tabname) {
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+			  console.log(this.readyState+":"+this.status)
+		    if (this.readyState == 4 && this.status == 200) {
+		    myFunction(this);
+		    }
+		  };
+		  xhttp.open("GET", tabname, true);
+		  xhttp.send();
+		}
+		function myFunction(data) {
+		  var i;
+		  var text = data.responseText;		  
+		  document.getElementById("mtab").innerHTML = text;
+		}
 </script>
+
+<style>
+.confirmation_part .box {
+	background-color: #EFFBFB;
+	padding: 30px 40px;
+}
+.notification {
+background-color: #555;
+color: white;
+text-decoration: none;
+padding: 15px 26px;
+position: relative;
+display: inline-block;
+border-radius: 2px;
+}
+
+.notification:hover {
+background: red;
+}
+
+.notification .badge {
+position: absolute;
+top: -10px;
+right: -10px;
+padding: 5px 10px;
+border-radius: 50%;
+background: red;
+color: white;
+}
+</style>
 
 </head>
 
@@ -56,18 +103,22 @@
 							</div>
 							<br>
 							<div class="widgets_inner">
-								<ul class="list">
-									<li><a href="#">회원정보수정</a></li>
-									<li><a href="${pageContext.request.contextPath}/myOnSale">나의판매목록</a>
+									<ul class="list">
+									<li><a href="${pageContext.request.contextPath}/beformodify">회원정보수정</a></li>
+									<li><a href="${pageContext.request.contextPath}/mySellList">나의판매목록</a>
 										<span>(${myAuctionCount})</span></li>
-									<li><a href="${pageContext.request.contextPath}/myBidding">나의구매목록</a>
+									<li><a href="${pageContext.request.contextPath}/myPurchaseList">나의구매목록</a>
 										<span>(${myBidCount})</span></li>
 									<li><a
 										href="${pageContext.request.contextPath}/mywishseller">관심판매자상품목록</a></li>
 									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
 									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
 									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
-									<li><a href="${pageContext.request.contextPath}/myPenalty">나의패널티기록</a></li>
+									<li><a href="${pageContext.request.contextPath}/myPenalty?pageNum=1">나의패널티기록</a></li>
+									<a href="#" class="notification">
+									  <span>Inbox</span>
+									  <span class="badge">1</span>
+									</a>
 								</ul>
 							</div>
 						</aside>
@@ -83,14 +134,14 @@
 
 								<div class="single_product_menu d-flex">
 
-									<a href="${pageContext.request.contextPath}/myBidding"
-										class="genric-btn primary">입찰</a>&nbsp;&nbsp; <a
-										href="${pageContext.request.contextPath}/myBiddingDealing"
-										class="genric-btn primary">낙찰(거래중)</a>&nbsp;&nbsp; <a
-										href="${pageContext.request.contextPath}/myBiddingComplete"
-										class="genric-btn primary">낙찰(거래완료)</a>&nbsp;&nbsp; <a
-										href="${pageContext.request.contextPath}/myFailureBidding"
-										class="genric-btn primary">유찰/거래취소</a>
+									<a href="#" onclick="movetab('myBiddingTab1')"
+										class="genric-btn primary">입찰&nbsp;(${myBiddingCount})</a>&nbsp;&nbsp; <a
+										href="#" onclick="movetab('myBiddingDealingTab2')"
+										class="genric-btn primary">낙찰(거래중)&nbsp;(${myBiddingDealingCount})</a>&nbsp;&nbsp; <a
+										href="#" onclick="movetab('myBiddingCompleteTab3')"
+										class="genric-btn primary">낙찰(거래완료)&nbsp;(${myBiddingCompleteCount})</a>&nbsp;&nbsp; <a
+										href="#" onclick="movetab('myFailureBiddingTab4')"
+										class="genric-btn primary">유찰/거래취소&nbsp;(${myFailureBiddingCount})</a>
 
 								</div>
 							</div>
@@ -98,132 +149,9 @@
 					</div>
 
 
-					<div class="row align-items-center latest_product_inner">
+					<div class="row align-items-center latest_product_inner" id="mtab">
 
-						<c:if test="${count==0}">
-							<section class="cart_area padding_top">
-								<div class="container">
-									<div class="cart_inner">
-										<div class="table-responsive">
-											<table class="table">
-												<tbody>
-													<tr>
-														<td>
-															<div class="media">
-																<div class="d-flex">
-																	<img
-																		src="<%=request.getContextPath()%>/uploadFile/none.jpg"
-																		width="200" height="200">
-																</div>
-																<div class="media-body">
-																	<p>아직 등록된 상품이 없습니다.</p>
-																</div>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-							</section>
-						</c:if>
-						<c:if test="${count!=0}">
-
-
-							<section class="cart_area padding_top">
-								<div class="container">
-									<div class="cart_inner">
-										<div class="table-responsive">
-
-
-											<table class="table">
-												<c:forEach var="myBidList" items="${myBidList}">
-
-													<tbody>
-														<tr>
-															<td>
-																<div class="media">
-																	<div class="d-flex">
-																		<a
-																			href="${pageContext.request.contextPath}/content?num=${myBidList.num}">
-																			<img
-																			src="<%=request.getContextPath()%>/uploadFile/${myBidList.filename}"
-																			width="200" height="200">
-																		</a>
-																	</div>
-																	<div class="media-body">
-																		<p>${myBidList.pname}</p>
-																	</div>
-																</div>
-															</td>
-
-															<td><c:choose>
-																	<c:when test="${myBidList.pstatus eq '입찰중'}">
-																		<h5>[입찰마감시간]</h5>
-																		<h5>${myBidList.enddate}</h5>
-																	</c:when>
-
-
-																	<c:otherwise>
-																		<h5>[낙찰시간]</h5>
-																		<h5>${myBidList.enddate}</h5>
-
-																	</c:otherwise>
-																</c:choose></td>
-
-															<td><c:choose>
-																	<c:when test="${myBidList.pstatus eq '입금전'}">
-																		<div class="button-group-area mt-40">
-																			<a
-																				href="${pageContext.request.contextPath}/pay?&num=${myBidList.num}"
-																				class="genric-btn info-border">${myBidList.pstatus}</a>
-																		</div>
-																	</c:when>
-																	<c:otherwise>
-																		<td><h3>(${myBidList.pstatus})</h3></td>
-																	</c:otherwise>
-																</c:choose></td>
-														</tr>
-
-													</tbody>
-												</c:forEach>
-											</table>
-
-										</div>
-									</div>
-							</section>
-
-						</c:if>
-
-
-
-						<div class="col-lg-12">
-							<div class="pageination">
-								<nav aria-label="Page navigation example">
-									<ul class="pagination justify-content-center">
-
-										<c:if test="${startPage > bottomLine}">
-											<li class="page-item"><a class="page-link"
-												href="${pageContext.request.contextPath}/${pagename}?pageNum=${startPage - bottomLine}"
-												aria-label="Previous"> <i class="ti-angle-double-left"></i>
-											</a></li>
-										</c:if>
-										<c:forEach var="i" begin="${startPage}" end="${endPage}">
-											<li class="page-item"><a class="page-link"
-												href="${pageContext.request.contextPath}/${pagename}?pageNum=${i}">${i}</a></li>
-
-										</c:forEach>
-
-										<c:if test="${endPage < pageCount}">
-											<li class="page-item"><a class="page-link"
-												href="${pageContext.request.contextPath}/${pagename}?pageNum=${startPage + bottomLine}"
-												aria-label="Next"> <i class="ti-angle-double-right"></i>
-											</a></li>
-										</c:if>
-									</ul>
-								</nav>
-							</div>
-						</div>
+						
 
 
 					</div>

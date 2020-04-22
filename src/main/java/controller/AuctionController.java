@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class AuctionController
     {
         return "auction/main";
     }
-
+  
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String auction_listGET(HttpServletRequest request, HttpSession session)
     {
@@ -294,8 +295,62 @@ public class AuctionController
 
         session.setAttribute("already", check);
 
-        System.out.println(auctionList);
         return "auction/list";
     }
 
+    
+    @RequestMapping(value = "searchList", method = RequestMethod.GET)
+    public String searchList(HttpServletRequest request, HttpSession session, Model m)
+    {
+    	String inputValue = request.getParameter("inputValue");
+    	int currentPage = 1;
+
+         try
+         {
+             currentPage = Integer.parseInt(request.getParameter("pageNum"));
+             session.setAttribute("pageNum", currentPage);
+         }
+         catch (Exception e)
+         {
+
+             if (session.getAttribute("pageNum") == null) session.setAttribute("pageNum", 1);
+         }
+         currentPage = (int) session.getAttribute("pageNum");
+
+         int pageSize = 9;
+         int startRow = (currentPage - 1) * pageSize + 1;
+         int endRow = currentPage * pageSize;
+
+         
+         int count = dbPro.getSearchListCount(inputValue);
+         List<Auction> SearchSAuctionList = dbPro.getSearchAuctions(startRow, endRow, inputValue);
+         
+         System.out.println(inputValue);
+         System.out.println(count + SearchSAuctionList.toString());
+         
+         int number = count - (currentPage - 1) * pageSize;
+         int bottomLine = 3;
+         int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+         int startPage = 1 + (currentPage - 1) / bottomLine * bottomLine;
+         int endPage = startPage + bottomLine - 1;
+
+         if (endPage > pageCount) endPage = pageCount;
+
+        m.addAttribute("currentPage", currentPage);
+        m.addAttribute("startRow", startRow);
+        m.addAttribute("endRow", endRow);
+        m.addAttribute("pageSize", pageSize);
+        m.addAttribute("number", number);
+        m.addAttribute("bottomLine", bottomLine);
+        m.addAttribute("startPage", startPage);
+        m.addAttribute("endPage", endPage);
+        m.addAttribute("pageCount", pageCount);
+
+        m.addAttribute("auctionList", SearchSAuctionList);
+        m.addAttribute("pagename", "searchList");
+         
+    	return "myList/list2";
+    	
+    }
+    
 }

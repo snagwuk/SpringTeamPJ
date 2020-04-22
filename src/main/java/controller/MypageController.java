@@ -57,8 +57,33 @@ public class MypageController {
 		return "mypage/mypage";
 	}
 
-	@RequestMapping(value = "myOnSale", method = RequestMethod.GET)
-	public String myOnSale(HttpServletRequest req, Model m) {
+	@RequestMapping(value = "mySellList", method = RequestMethod.GET)
+	public String mySellList(HttpServletRequest req, Model m) {
+
+		User user = (User) req.getSession().getAttribute("user");
+		HttpSession session = req.getSession();	
+	
+		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
+		int myBidCount = dbPro.getMyBidCount(user.getId());
+		
+		int myOnSaleCount = dbPro.getMyOnSaleCount(user.getId());
+		int myDealingCount = dbPro.getMyDealingCount(user.getId());
+		int myEndSaleCount = dbPro.getMyEndSaleCount(user.getId());
+		int myFailureSaleCount = dbPro.getMyFailureSaleCount(user.getId());
+
+		m.addAttribute("myAuctionCount",myAuctionCount);
+		m.addAttribute("myBidCount",myBidCount);
+		
+		m.addAttribute("myOnSaleCount",myOnSaleCount);
+		m.addAttribute("myDealingCount",myDealingCount);
+		m.addAttribute("myEndSaleCount",myEndSaleCount);
+		m.addAttribute("myFailureSaleCount",myFailureSaleCount);
+
+		return "mypage/mySellList";
+	}
+	
+	@RequestMapping(value = "myOnSaleTab1", method = RequestMethod.GET)
+	public String myOnSaleTab1(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
@@ -78,11 +103,8 @@ public class MypageController {
 		int pageSize = 3;
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
-
-		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
-		int myBidCount = dbPro.getMyBidCount(user.getId());
+		
 		int myOnSaleCount = dbPro.getMyOnSaleCount(user.getId());
-
 		List<Auction> myOnSaleList = dbPro.getMyOnSaleList(startRow, endRow, user.getId());
 
 		int number = myOnSaleCount - (currentPage - 1) * pageSize;
@@ -94,28 +116,26 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		req.setAttribute("currentPage", currentPage);
-		req.setAttribute("startRow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("pageSize", pageSize);
-		req.setAttribute("number", number);
-		req.setAttribute("bottomLine", bottomLine);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageCount", pageCount);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);		
+		
+		m.addAttribute("count", myOnSaleCount);
+		m.addAttribute("myAuctionList", myOnSaleList);
+		m.addAttribute("pagename", "myOnSaleTab1");
 
-		req.setAttribute("myAuctionCount", myAuctionCount);
-		req.setAttribute("myBidCount", myBidCount);
-		req.setAttribute("count", myOnSaleCount);
-
-		req.setAttribute("myAuctionList", myOnSaleList);
-		req.setAttribute("pagename", "myOnSale");
-
-		return "mypage/mySellList";
+		return "myList/mySellList";
 	}
-
-	@RequestMapping(value = "myDealing", method = RequestMethod.GET)
-	public String myDealing(HttpServletRequest req, Model m) {
+	
+	
+	@RequestMapping(value = "myDealingTab2", method = RequestMethod.GET)
+	public String myDealingTab2(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
@@ -136,10 +156,7 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
-		int myBidCount = dbPro.getMyBidCount(user.getId());
 		int myDealingCount = dbPro.getMyDealingCount(user.getId());
-
 		List<Auction> myDealingList = dbPro.getMyDealingList(startRow, endRow, user.getId());
 
 		int number = myDealingCount - (currentPage - 1) * pageSize;
@@ -151,28 +168,25 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		req.setAttribute("currentPage", currentPage);
-		req.setAttribute("startRow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("pageSize", pageSize);
-		req.setAttribute("number", number);
-		req.setAttribute("bottomLine", bottomLine);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageCount", pageCount);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);	
 
-		req.setAttribute("myAuctionCount", myAuctionCount);
-		req.setAttribute("myBidCount", myBidCount);
-		req.setAttribute("count", myDealingCount);
+		m.addAttribute("count", myDealingCount);
+		m.addAttribute("myAuctionList", myDealingList);
+		m.addAttribute("pagename", "myDealingTab2");
 
-		req.setAttribute("myAuctionList", myDealingList);
-		req.setAttribute("pagename", "myDealing");
-
-		return "mypage/mySellList";
+		return "myList/mySellList";
 	}
 
-	@RequestMapping(value = "myEndSale", method = RequestMethod.GET)
-	public String myEndSale(HttpServletRequest req, Model m) {
+	@RequestMapping(value = "myEndSaleTab3", method = RequestMethod.GET)
+	public String myEndSaleTab3(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
@@ -193,10 +207,7 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
-		int myBidCount = dbPro.getMyBidCount(user.getId());
 		int myEndSaleCount = dbPro.getMyEndSaleCount(user.getId());
-
 		List<Auction> myEndSaleList = dbPro.getMyEndSaleList(startRow, endRow, user.getId());
 
 		int number = myEndSaleCount - (currentPage - 1) * pageSize;
@@ -208,28 +219,25 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		req.setAttribute("currentPage", currentPage);
-		req.setAttribute("startRow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("pageSize", pageSize);
-		req.setAttribute("number", number);
-		req.setAttribute("bottomLine", bottomLine);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageCount", pageCount);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);
 
-		req.setAttribute("myAuctionCount", myAuctionCount);
-		req.setAttribute("myBidCount", myBidCount);
-		req.setAttribute("count", myEndSaleCount);
+		m.addAttribute("count", myEndSaleCount);
+		m.addAttribute("myAuctionList", myEndSaleList);
+		m.addAttribute("pagename", "myEndSaleTab3");
 
-		req.setAttribute("myAuctionList", myEndSaleList);
-		req.setAttribute("pagename", "myEndSale");
-
-		return "mypage/mySellList";
+		return "myList/mySellList";
 	}
 
-	@RequestMapping(value = "myFailureSale", method = RequestMethod.GET) // 유찰/거래취소(판매)
-	public String myFailureSale(HttpServletRequest req, Model m) {
+	@RequestMapping(value = "myFailureSaleTab4", method = RequestMethod.GET) // 유찰/거래취소(판매)
+	public String myFailureSaleTab4(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
@@ -250,10 +258,7 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
-		int myBidCount = dbPro.getMyBidCount(user.getId());
 		int myFailureSaleCount = dbPro.getMyFailureSaleCount(user.getId());
-
 		List<Auction> myFailureSale = dbPro.getMyFailureSaleList(startRow, endRow, user.getId());
 
 		int number = myFailureSaleCount - (currentPage - 1) * pageSize;
@@ -265,31 +270,53 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		req.setAttribute("currentPage", currentPage);
-		req.setAttribute("startRow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("pageSize", pageSize);
-		req.setAttribute("number", number);
-		req.setAttribute("bottomLine", bottomLine);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageCount", pageCount);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);
 
-		req.setAttribute("myAuctionCount", myAuctionCount);
-		req.setAttribute("myBidCount", myBidCount);
 		req.setAttribute("count", myFailureSaleCount);
-
 		req.setAttribute("myAuctionList", myFailureSale);
-		req.setAttribute("pagename", "myFailureSale");
+		req.setAttribute("pagename", "myFailureSaleTab4");
 
-		return "mypage/mySellList";
+		return "myList/mySellList";
 	}
 
 	////////////////////////////////// 위는 판매 아래는 구매
 	////////////////////////////////// /////////////////////////////////
 
-	@RequestMapping(value = "myBidding", method = RequestMethod.GET)
-	public String myBidList(HttpServletRequest req, Model m) {
+	@RequestMapping(value = "myPurchaseList", method = RequestMethod.GET)
+	public String myPurchaseList(HttpServletRequest req, Model m) {
+
+		User user = (User) req.getSession().getAttribute("user");
+		HttpSession session = req.getSession();	
+
+		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
+		int myBidCount = dbPro.getMyBidCount(user.getId());
+		
+		int myBiddingCount = dbPro.getMyBiddingCount(user.getId());
+		int myBiddingDealingCount = dbPro.getMyBiddingDealingCount(user.getId());
+		int myBiddingCompleteCount = dbPro.getMyBiddingCompleteCount(user.getId());
+		int myFailureBiddingCount = dbPro.getMyFailureBiddingCount(user.getId());
+
+		m.addAttribute("myAuctionCount", myAuctionCount);
+		m.addAttribute("myBidCount", myBidCount);
+		
+		m.addAttribute("myBiddingCount", myBiddingCount);
+		m.addAttribute("myBiddingDealingCount", myBiddingDealingCount);
+		m.addAttribute("myBiddingCompleteCount", myBiddingCompleteCount);
+		m.addAttribute("myFailureBiddingCount", myFailureBiddingCount);
+
+		return "mypage/myPurchaseList";
+	}
+
+	@RequestMapping(value = "myBiddingTab1", method = RequestMethod.GET)
+	public String myBiddingTab1(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
@@ -310,10 +337,7 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
-		int myBidCount = dbPro.getMyBidCount(user.getId());
 		int myBiddingCount = dbPro.getMyBiddingCount(user.getId());
-
 		List<Auction> myBiddingList = dbPro.getMyBiddingList(startRow, endRow, user.getId());
 
 		int number = myBiddingCount - (currentPage - 1) * pageSize;
@@ -325,28 +349,25 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		req.setAttribute("currentPage", currentPage);
-		req.setAttribute("startRow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("pageSize", pageSize);
-		req.setAttribute("number", number);
-		req.setAttribute("bottomLine", bottomLine);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageCount", pageCount);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);
 
-		req.setAttribute("myAuctionCount", myAuctionCount);
-		req.setAttribute("myBidCount", myBidCount);
-		req.setAttribute("count", myBiddingCount);
-
-		req.setAttribute("myBidList", myBiddingList);
-		req.setAttribute("pagename", "myBidding");
-
-		return "mypage/myPurchaseList";
+		m.addAttribute("count", myBiddingCount);
+		m.addAttribute("myBidList", myBiddingList);
+		m.addAttribute("pagename", "myBiddingTab1");
+	
+		return "myList/myPurchaseList";
 	}
-
-	@RequestMapping(value = "myBiddingDealing", method = RequestMethod.GET)
-	public String myBiddingDealing(HttpServletRequest req, Model m) {
+	
+	@RequestMapping(value = "myBiddingDealingTab2", method = RequestMethod.GET)
+	public String myBiddingDealingTab2(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
@@ -367,10 +388,7 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
-		int myBidCount = dbPro.getMyBidCount(user.getId());
 		int myBiddingDealingCount = dbPro.getMyBiddingDealingCount(user.getId());
-
 		List<Auction> myBiddingDealingList = dbPro.getMyBiddingDealingList(startRow, endRow, user.getId());
 
 		int number = myBiddingDealingCount - (currentPage - 1) * pageSize;
@@ -382,28 +400,25 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		req.setAttribute("currentPage", currentPage);
-		req.setAttribute("startRow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("pageSize", pageSize);
-		req.setAttribute("number", number);
-		req.setAttribute("bottomLine", bottomLine);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageCount", pageCount);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);
 
-		req.setAttribute("myAuctionCount", myAuctionCount);
-		req.setAttribute("myBidCount", myBidCount);
-		req.setAttribute("count", myBiddingDealingCount);
-
-		req.setAttribute("myBidList", myBiddingDealingList);
-		req.setAttribute("pagename", "myBiddingDealing");
+		m.addAttribute("count", myBiddingDealingCount);
+		m.addAttribute("myBidList", myBiddingDealingList);
+		m.addAttribute("pagename", "myBiddingDealingTab2");
 		
-		return "mypage/myPurchaseList";
+		return "myList/myPurchaseList";
 	}
 
-	@RequestMapping(value = "myBiddingComplete", method = RequestMethod.GET)
-	public String myBiddingComplete(HttpServletRequest req, Model m) {
+	@RequestMapping(value = "myBiddingCompleteTab3", method = RequestMethod.GET)
+	public String myBiddingCompleteTab3(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
@@ -424,10 +439,7 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
-		int myBidCount = dbPro.getMyBidCount(user.getId());
 		int count = dbPro.getMyBiddingCompleteCount(user.getId());
-
 		List<Auction> myBidList = dbPro.getMyBiddingCompleteList(startRow, endRow, user.getId());
 
 		int number = count - (currentPage - 1) * pageSize;
@@ -439,29 +451,25 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		req.setAttribute("currentPage", currentPage);
-		req.setAttribute("startRow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("pageSize", pageSize);
-		req.setAttribute("number", number);
-		req.setAttribute("bottomLine", bottomLine);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageCount", pageCount);
-
-		req.setAttribute("myAuctionCount", myAuctionCount);
-		req.setAttribute("myBidCount", myBidCount);
-		req.setAttribute("count", count);
-
-		req.setAttribute("myBidList", myBidList);
-		req.setAttribute("pagename", "myBiddingComplete");
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);
 		
-		return "mypage/myPurchaseList";
+		m.addAttribute("count", count);
+		m.addAttribute("myBidList", myBidList);
+		m.addAttribute("pagename", "myBiddingCompleteTab3");
+		
+		return "myList/myPurchaseList";
 	}
 
-	@RequestMapping(value = "myFailureBidding", method = RequestMethod.GET) // 유찰
-																			// 취소
-	public String myFailureBidding(HttpServletRequest req, Model m) {
+	@RequestMapping(value = "myFailureBiddingTab4", method = RequestMethod.GET)																			
+	public String myFailureBiddingTab4(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
 		HttpSession session = req.getSession();
@@ -482,10 +490,7 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
-		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
-		int myBidCount = dbPro.getMyBidCount(user.getId());
 		int myFailureBiddingCount = dbPro.getMyFailureBiddingCount(user.getId());
-
 		List<Auction> myFailureBidding = dbPro.getMyFailureBiddingList(startRow, endRow, user.getId());
 
 		int number = myFailureBiddingCount - (currentPage - 1) * pageSize;
@@ -497,23 +502,21 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		req.setAttribute("currentPage", currentPage);
-		req.setAttribute("startRow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("pageSize", pageSize);
-		req.setAttribute("number", number);
-		req.setAttribute("bottomLine", bottomLine);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageCount", pageCount);
-
-		req.setAttribute("myAuctionCount", myAuctionCount);
-		req.setAttribute("myBidCount", myBidCount);
-		req.setAttribute("count", myFailureBiddingCount);
-		req.setAttribute("myBidList", myFailureBidding);
-		req.setAttribute("pagename", "myFailureBidding");
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);
 		
-		return "mypage/myPurchaseList";
+		m.addAttribute("count", myFailureBiddingCount);
+		m.addAttribute("myBidList", myFailureBidding);
+		m.addAttribute("pagename", "myFailureBiddingTab4");
+		
+		return "myList/myPurchaseList";
 	}
 
 	@RequestMapping(value = "myPenalty", method = RequestMethod.GET)
@@ -537,6 +540,8 @@ public class MypageController {
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
 
+		int myAuctionCount = dbPro.getMyAuctionCount(user.getId());
+		int myBidCount = dbPro.getMyBidCount(user.getId());
 		int myPenaltyCount = penPro.getMyPenaltyCount(user.getId());
 
 		List<Penalty> myPenaltyList = penPro.getMyPenaltyList(startRow, endRow, user.getId());
@@ -560,6 +565,9 @@ public class MypageController {
 		m.addAttribute("startPage", startPage);
 		m.addAttribute("endPage", endPage);
 		m.addAttribute("pageCount", pageCount);
+		
+		m.addAttribute("myAuctionCount", myAuctionCount);
+		m.addAttribute("myBidCount", myBidCount);
 		
 		m.addAttribute("myPenaltyCount", myPenaltyCount);
 		m.addAttribute("myPenaltyList", myPenaltyList);		
