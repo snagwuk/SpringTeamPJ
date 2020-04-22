@@ -83,10 +83,15 @@ function chat() {
 
 
 			<c:if test="${seller==null}">
-			<c:if test="${pagename ne 'mywishseller'}">
 				<div class="row">
-					<div class="col-lg-3">
-						<div class="left_sidebar_area">
+				
+					
+					
+			<c:if test="${pagename ne 'mywishseller'}">
+			<div class="left_sidebar_area">
+				<aside class="left_widgets p_filter_widgets">
+							<div class="col-lg-12">
+								<div class="col-lg-3">
 							<aside class="left_widgets p_filter_widgets">
 								<div class="l_w_title">
 									<h3>카테고리</h3>
