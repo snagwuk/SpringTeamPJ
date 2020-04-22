@@ -571,7 +571,7 @@ public class MypageController {
 
 	
 	@RequestMapping(value = "mywishseller", method = RequestMethod.GET)
-	public String mywishseller(HttpSession session, HttpServletRequest request) {
+	public String mywishseller(HttpSession session, HttpServletRequest request,Model m) {
 		User user = (User) session.getAttribute("user");
 		int pageNum;
 
@@ -610,22 +610,22 @@ public class MypageController {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		session.setAttribute("currentPage", currentPage);
-		session.setAttribute("startRow", startRow);
-		session.setAttribute("endRow", endRow);
-		session.setAttribute("count", count);
-		session.setAttribute("pageSize", pageSize);
-		session.setAttribute("number", number);
-		session.setAttribute("bottomLine", bottomLine);
-		session.setAttribute("startPage", startPage);
-		session.setAttribute("endPage", endPage);
-		session.setAttribute("pageCount", pageCount);
+		m.addAttribute("currentPage", currentPage);
+		m.addAttribute("startRow", startRow);
+		m.addAttribute("endRow", endRow);
+		m.addAttribute("count", count);
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("number", number);
+		m.addAttribute("bottomLine", bottomLine);
+		m.addAttribute("startPage", startPage);
+		m.addAttribute("endPage", endPage);
+		m.addAttribute("pageCount", pageCount);
 
-		session.setAttribute("auctionList", auctionList);
-		session.setAttribute("user", user);
-		session.setAttribute("seller", null);
+		m.addAttribute("auctionList", auctionList);
+		m.addAttribute("user", user);
+		m.addAttribute("seller", null);
 
-		session.setAttribute("pagename", "mywishseller");
+		m.addAttribute("pagename", "mywishseller");
 		return "auction/list";
 
 	}

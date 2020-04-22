@@ -9,13 +9,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 <select id="selectsecond" parameterType="Category" resultType="Category">
-		select *  from category where refnum = #{refnum};
+		select a.num as num,a.name as name ,count(b.category) as total from category a left join (select * from Aauction where  pstatus='입찰중') b on a.num = b.category  where NOT a.refnum IS NULL  and a.refnum=#{refnum} group by a.num;
 	</select>
 	
 	
 	<select id="selectAllcategory" resultType="Category">
-		<!-- select c.refnum as num,(select name from category where num=c.refnum) as name,count(a.category) as total from Aauction a ,category c where a.category=c.num group by refnum; -->
-	select c.refnum as num,(select name from category where num=c.refnum) as name ,(select count(b.category)  from Aauction b  where b.category=c.num and b.pstatus='입찰중' ) as total from Aauction a ,category c  where NOT c.refnum IS NULL group by refnum;
+		
+select a.refnum as num,(select name from category where num = a.refnum) as name ,count(b.category) as total from category a left join (select * from Aauction where  pstatus='입찰중') b on a.num = b.category  where NOT a.refnum IS NULL   group by a.refnum;
 	</select>
 	
 	

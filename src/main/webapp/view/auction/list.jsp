@@ -33,10 +33,7 @@
 <link rel="stylesheet" href="css/style.css">
 <script type="text/javascript">
 	function check() {
-		var already = $
-		{
-			already
-		}
+		var already = ${already};
 		if (already == 1) {
 			alert('이미 등록된 상점입니다.')
 			return false;
@@ -63,6 +60,10 @@ function chat() {
 	<section class="cat_product_area section_padding">
 		<div class="container">
 
+	<c:if test="${pagename eq 'mywishseller'}">
+
+				<h1>${user.id}의 관심상점상품입니다.</h1>
+			</c:if>
 
 
 			<c:if test="${seller!=null}">
@@ -82,6 +83,7 @@ function chat() {
 
 
 			<c:if test="${seller==null}">
+			<c:if test="${pagename ne 'mywishseller'}">
 				<div class="row">
 					<div class="col-lg-3">
 						<div class="left_sidebar_area">
@@ -99,6 +101,7 @@ function chat() {
 								</div>
 							</aside>
 						</div>
+						</c:if>
 			</c:if>
 		</div>
 
@@ -125,7 +128,7 @@ function chat() {
 
  <c:if test="${secondcategory!=null}">
 <c:forEach var="secondcategory" items="${secondcategory}">
- <button class = "btn_3" onclick="location.href='secondcategorylist?cnum=${secondcategory.num}'">${secondcategory.name}</button> 
+ <button class = "btn_3" onclick="location.href='secondcategorylist?cnum=${secondcategory.num}'">${secondcategory.name}(${secondcategory.total})</button> 
 </c:forEach>
 </c:if> 
 
