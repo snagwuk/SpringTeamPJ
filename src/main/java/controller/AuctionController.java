@@ -62,7 +62,7 @@ public class AuctionController
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String auction_listGET(HttpServletRequest request, HttpSession session)
+    public String auction_listGET(HttpServletRequest request, HttpSession session,Model m)
     {
 
         int currentPage = 1;
@@ -94,7 +94,8 @@ public class AuctionController
         int endPage = startPage + bottomLine - 1;
 
         if (endPage > pageCount) endPage = pageCount;
-
+    	List<Category> c = cdao.selectAllcategory();
+    	m.addAttribute("category",c);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("startRow", startRow);
         request.setAttribute("endRow", endRow);
@@ -116,7 +117,6 @@ public class AuctionController
     public String auction_writeForm(Auction auction,Model m)
     {
     	List<Category> c = cdao.selectfirst();
-    	System.out.println(c);
     	m.addAttribute("category",c);
         return "auction/writeForm";
     }
@@ -130,7 +130,7 @@ public class AuctionController
         String filename = multi.getOriginalFilename();
         if (filename != null && !filename.equals(""))
         {
-            String uploadPath = multipart.getRealPath("/") + "/uploadFile";
+            String uploadPath = multipart.getRealPath("/") + "uploadFile";
             System.out.println(uploadPath);
 
             FileCopyUtils.copy(multi.getInputStream(), new FileOutputStream(uploadPath + "/" + multi.getOriginalFilename()));
@@ -184,6 +184,7 @@ public class AuctionController
     public String auction_delete(int num)
     {
         dbPro.deleteAuction(num);
+        
         return "redirect:/list";
     }
 
@@ -306,4 +307,7 @@ public class AuctionController
         return "auction/list";
     }
 
+   
+
+    
 }

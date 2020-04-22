@@ -11,4 +11,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="selectsecond" parameterType="Category" resultType="Category">
 		select *  from category where refnum = #{refnum};
 	</select>
+	
+	
+	<select id="selectAllcategory" resultType="Category">
+		<!-- select c.refnum as num,(select name from category where num=c.refnum) as name,count(a.category) as total from Aauction a ,category c where a.category=c.num group by refnum; -->
+	select c.refnum as num,(select name from category where num=c.refnum) as name ,(select count(b.category)  from Aauction b  where b.category=c.num and b.pstatus='입찰중' ) as total from Aauction a ,category c  where NOT c.refnum IS NULL group by refnum;
+	</select>
+	
+	
+	<select id="getCatagoryCount" parameterType="int" resultType="int">
+  select ifnull(count(a.category),0) as total from Aauction a ,category c where a.category=c.num  and  c.refnum = #{refnum} and a.pstatus='입찰중'group by refnum ;
+	</select>
+	
+	<select id="getSecondCatagoryCount" parameterType="int" resultType="int">
+select count(*) from Aauction where CATEGORY = #{num} and pstatus='입찰중' group by num ;
+
+	</select>
+	
+	<select id="selectbyCategory" parameterType="hashmap" resultType="Auction">
+	select a.* from category c ,Aauction a  where a.category = c.num and c.refnum=#{refnum} and a.pstatus='입찰중' order by a.num desc limit #{startRow} ,#{endRow};
+	</select>
+	
+	<select id="selectbysecondCategory" parameterType="hashmap" resultType="Auction">
+	select a.* from category c ,Aauction a  where a.category = c.num and a.category=#{num} and a.pstatus='입찰중' order by a.num desc limit #{startRow} ,#{endRow};
+	</select>
+
 </mapper>

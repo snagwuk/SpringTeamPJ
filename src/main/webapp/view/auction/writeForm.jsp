@@ -118,7 +118,7 @@ li {
 					enctype="multipart/form-data" method="POST">
 					<input type="hidden" name="seller" value="${user.id}"> <input
 						type="hidden" name="winid" value="cake"> <input
-						type="hidden" name="pstatus" value="입금전">
+						type="hidden" name="pstatus" value="입찰중">
 					 <div class="mt-10">
 						카테고리 <br> <select name="first" id="first" style="float: left; margin-right: 10px;"
 							onchange="aaaa(this.value);" required>

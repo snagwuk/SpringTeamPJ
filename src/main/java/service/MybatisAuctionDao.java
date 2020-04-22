@@ -567,5 +567,6 @@ public class MybatisAuctionDao
             sqlSession.close();
         }
     }
-    
+
+	
 }

@@ -63,6 +63,8 @@ function chat() {
 	<section class="cat_product_area section_padding">
 		<div class="container">
 
+
+
 			<c:if test="${seller!=null}">
 
 				<h1>${seller}님의상점입니다.</h1>
@@ -89,11 +91,10 @@ function chat() {
 								</div>
 								<div class="widgets_inner">
 									<ul class="list">
-										<li><a href="#">의류</a> <span>(0)</span></li>
-										<li><a href="#">전자제품</a> <span>(0)</span></li>
-										<li><a href="#">잡화</a> <span>(0)</span></li>
-										<li><a href="#">category4</a> <span>(0)</span></li>
-										<li><a href="#">category5</a> <span>(0)</span></li>
+									<c:forEach var="category" items="${category}">
+									<li><a href="categorylist?cnum=${category.num}">${category.name}</a> <span>(&nbsp${category.total}&nbsp)</span></li>
+									</c:forEach>
+										
 									</ul>
 								</div>
 							</aside>
@@ -121,6 +122,12 @@ function chat() {
 				</div>
 			</div>
 
+
+ <c:if test="${secondcategory!=null}">
+<c:forEach var="secondcategory" items="${secondcategory}">
+ <button class = "btn_3" onclick="location.href='secondcategorylist?cnum=${secondcategory.num}'">${secondcategory.name}</button> 
+</c:forEach>
+</c:if> 
 
 			<div class="row align-items-center latest_product_inner">
 
@@ -226,7 +233,7 @@ function chat() {
 	<script src="js/masonry.pkgd.js"></script>
 	<!-- particles js -->
 	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.nice-select.min.js"></script>
+
 	<!-- slick js -->
 	<script src="js/slick.min.js"></script>
 	<script src="js/jquery.counterup.min.js"></script>
