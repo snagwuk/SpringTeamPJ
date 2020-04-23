@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:context="http://www.springframework.org/schema/context"
-	 xmlns:websocket="http://www.springframework.org/schema/websocket"
-	      xmlns:aop="http://www.springframework.org/schema/aop"
-
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
@@ -21,7 +18,8 @@
 
 	<mvc:annotation-driven />
 	<context:component-scan base-package="controller,service,webservice,model" />
-<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+	<bean id="jacksonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
 
 
 
@@ -37,7 +35,7 @@
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/view/" /><!-- 여기 슬레시가 있으니까 java에
+		<property name="prefix" value="/view/" /><!-- 여기 슬레시가 있으니까 java에 
 			안써도 됨 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
@@ -59,20 +57,63 @@
 	</bean>
 
 
- <aop:aspectj-autoproxy proxy-target-class="true"/>
-    <bean id="profiler" class="service.ProfilingAspect"/>
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<bean id="profiler" class="service.ProfilingAspect" />
 
 
 
-   <bean id="chatHandler" class="webservice.ChatWebSocketHandler" />
-<!--    <bean id="messageHandler" class="webservice.MessageHandler" /> -->
-   <mvc:default-servlet-handler/>
+	<bean id="chatHandler" class="webservice.ChatWebSocketHandler" />
+	<!-- <bean id="messageHandler" class="webservice.MessageHandler" /> -->
+	<mvc:default-servlet-handler />
 
-   <websocket:handlers>
+	<websocket:handlers>
 
-      <websocket:mapping handler="chatHandler" path="/chat.sockjs" />
-   <!--      <websocket:mapping handler="messageHandler" path="/message.sockjs" /> -->
-      <websocket:sockjs />
-   </websocket:handlers>
+		<websocket:mapping handler="chatHandler" path="/chat.sockjs" />
+		<!-- <websocket:mapping handler="messageHandler" path="/message.sockjs" 
+			/> -->
+		<websocket:sockjs />
+	</websocket:handlers>
+
+
+	 <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/pay" />
+			<mvc:mapping path="/shippingInfo" />
+			<mvc:mapping path="/shippingComplete" />
+			<mvc:mapping path="/confirmShipping" />
+			<mvc:mapping path="/giveUpBidding" />
+			<mvc:mapping path="/refundbuyer" />
+			<mvc:mapping path="/refundseller" />
+			<mvc:mapping path="/bidding" />
+			<mvc:mapping path="/write" />
+			<mvc:mapping path="/message" />
+			<mvc:mapping path="/modify" />
+			<mvc:mapping path="/sellerstore" />
+			<mvc:mapping path="/charge" />
+			<mvc:mapping path="/withdraw" />
+			<mvc:mapping path="/cashlist" />
+			<mvc:mapping path="/startlive" />
+			<mvc:mapping path="/endlive" />
+			<mvc:mapping path="/mypage" />
+			<mvc:mapping path="/mySellList" />
+			<mvc:mapping path="/myPurchaseList" />
+			<mvc:mapping path="/myPenalty" />
+			<mvc:mapping path="/mywishseller" />
+			<mvc:mapping path="/addmyseller" />
+			<bean class="controller.AuthCheckInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/memberList" />
+			<mvc:mapping path="/grade" />
+			<mvc:mapping path="/cashchecklist" />
+			<bean class="controller.AdminCheckInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/write" />
+			<mvc:mapping path="/bidding" />
+			<bean class="controller.StatusCheckInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> 
+
 
 </beans>

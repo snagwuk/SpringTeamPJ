@@ -74,6 +74,8 @@
 		<param-name>org.apache.tomcat.websocket.binaryBufferSize</param-name>
 		<param-value>524288</param-value>
 	</context-param>
+	
+	
 
 
 </web-app>

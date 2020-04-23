@@ -1,8 +1,11 @@
 
 package controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +40,16 @@ public class PayController {
 	MybatisPenaltyDao penPro;
 
 	@RequestMapping(value = "pay", method = RequestMethod.GET)
-	public String payGET(HttpSession session, int num, Model m) {
+	public String payGET(HttpSession session, HttpServletResponse response, int num, Model m) throws IOException {
 
 		User user = (User) session.getAttribute("user");
-
+		if(user.getStatus()==1) {
+			response.setContentType("text/html; charset=UTF-8");			 
+			PrintWriter out = response.getWriter();			 
+			out.println("<script>alert('활동중지 회원입니다. 나의패널티기록을 확인하세요.'); history.go(-1);</script>");			 
+			out.flush();
+		}
+		
 		Auction myBidCompleteAuction = dbPro.getAuction(num);
 		m.addAttribute("myBidCompleteAuction", myBidCompleteAuction);
 
