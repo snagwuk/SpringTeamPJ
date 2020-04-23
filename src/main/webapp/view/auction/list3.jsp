@@ -49,27 +49,8 @@
 		}
 	}
 	
-	function searchTab() {
-		var inputValue = document.getElementById("inputGroupPrepend").value
-		var query = "";
-		query = "searchList?inputValue="+inputValue;
-		var xhttp = new XMLHttpRequest();
-		  xhttp.onreadystatechange = function() {
-			  console.log(this.readyState+":"+this.status)
-		    if (this.readyState == 4 && this.status == 200) {
-		    myFunction(this);
-		    }
-		  };
-		 
-		  xhttp.open("GET", query, true);
-		  xhttp.send();
-		}
 	
-		function myFunction(data) {
-		  var i;
-		  var text = data.responseText;		  
-		  document.getElementById("searchList").innerHTML = text;
-		}
+	
 </script>
 <script type="text/javascript">
 function chat() {
@@ -132,10 +113,10 @@ function chat() {
 						<div class="single_product_menu d-flex">
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="search"
-									aria-describedby="inputGroupPrepend" id="inputGroupPrepend">
+									aria-describedby="inputGroupPrepend">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><a href="#"><i
-										class="ti-search" onclick="searchTab()"></i></a></span>
+									<span class="input-group-text" id="inputGroupPrepend"><i
+										class="ti-search" onclick="searchTab()"></i></span>
 								</div>
 							</div>
 						</div>
@@ -146,55 +127,6 @@ function chat() {
 
 			<div class="row align-items-center latest_product_inner" id="searchList">
 
-				<c:if test="${count==0}">
-					<h4>등록된 물품이 없음</h4>
-				</c:if>
-				<c:if test="${count!=0}">
-					<c:forEach var="auction" items="${auctionList}">
-						<div class="col-lg-4 col-sm-6">
-							<div class="single_product_item">
-								<img
-									src="<%=request.getContextPath()%>/uploadFile/${auction.filename}"
-									width="200" height="200">
-								<div class="single_product_text">
-									${auction.pname}<br /> 즉시 입찰가 : ${auction.immediateprice} <a
-										href="${pageContext.request.contextPath}/content?num=${auction.num}"
-										class="add_cart">+ 상품 자세히 보기<i class="ti-heart"></i></a>
-
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</c:if>
-
-
-				<div class="col-lg-12">
-					<div class="pageination">
-						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-center">
-
-								<c:if test="${startPage > bottomLine}">
-									<li class="page-item"><a class="page-link"
-										href="${pagename}?pageNum=${startPage - bottomLine}"
-										aria-label="Previous"> <i class="ti-angle-double-left"></i>
-									</a></li>
-								</c:if>
-								<c:forEach var="i" begin="${startPage}" end="${endPage}">
-									<li class="page-item"><a class="page-link"
-										href="${pagename}?pageNum=${i}">${i}</a></li>
-
-								</c:forEach>
-
-								<c:if test="${endPage < pageCount}">
-									<li class="page-item"><a class="page-link"
-										href="${pagename}?pageNum=${startPage + bottomLine}"
-										aria-label="Next"> <i class="ti-angle-double-right"></i>
-									</a></li>
-								</c:if>
-							</ul>
-						</nav>
-					</div>
-				</div>
 
 
 			</div>
@@ -202,9 +134,38 @@ function chat() {
 		</div>
 		</div>
 	</section>
-	
+	<!--================End Category Product Area =================-->
 
-	
+
+	<!-- product_list part end-->
+
+	<!--::footer_part start::-->
+	<footer class="footer_part">
+
+		<div class="copyright_part">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-lg-4">
+						<div class="footer_icon social_icon">
+							<ul class="list-unstyled">
+								<li><a href="#" class="single_social_icon"><i
+										class="fab fa-facebook-f"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i
+										class="fab fa-twitter"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i
+										class="fas fa-globe"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i
+										class="fab fa-behance"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--::footer_part end::-->
+
 	<!-- jquery plugins here-->
 	<script src="js/jquery-1.12.1.min.js"></script>
 	<!-- popper js -->

@@ -65,7 +65,7 @@
          <form action="${pageContext.request.contextPath}/write" enctype="multipart/form-data" method="POST">
         			<input type="hidden" name="seller" value="${user.id}">
         			<input type="hidden" name="winid" value="admin">
-        			<input type="hidden" name="pstatus" value="입금전">
+        			<input type="hidden" name="pstatus" value="입찰중">
 
 				
 
@@ -110,28 +110,11 @@
                상품 설명
                <textarea class="single-textarea" name="pdetail"></textarea>
             </div>
+             <br>
             <div class="mt-10">
 					상품사진&nbsp&nbsp <input type="file" name="uploadfile"
 						class="single-input-parea">
-				</div>
-
-				<br>
-
-            <br>
-            <div class="mt-10">
-               배송 방법 선택 <br><br>
-               <li>
-               <input type="radio" name="dealtype" value="1" checked="checked" > 택배
-               <input type="radio" name="dealtype" value="2" > 직거래
-               </li>
-
-            </div>
-
-              <br>
-            <div class="mt-10" id = "postcost">
-             	   배송비&nbsp&nbsp
-               <input type="text" name="deliverypay" id = "postcost" class="single-input-parea"> -
-            </div>
+				</div> 
 
             <br><br><br><br>
             <input type="submit" name="confirm" value="글쓰기">

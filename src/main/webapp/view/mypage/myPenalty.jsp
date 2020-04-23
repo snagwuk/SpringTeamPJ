@@ -33,137 +33,218 @@
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
 
+<style>
+.confirmation_part .box {
+	background-color: #EFFBFB;
+	padding: 30px 40px;
+}
+.notification {
+background-color: #555;
+color: white;
+text-decoration: none;
+padding: 15px 26px;
+position: relative;
+display: inline-block;
+border-radius: 2px;
+}
+
+.notification:hover {
+background: red;
+}
+
+.notification .badge {
+position: absolute;
+top: -10px;
+right: -10px;
+padding: 5px 10px;
+border-radius: 50%;
+background: red;
+color: white;
+}
+</style>
+
 </head>
 
 <body>
-	<section class="cat_product_area section_padding"
-		style="text-align: center;">
-		<div class="container" style="margin-top: -5%;">
+
+
+
+	<section class="cat_product_area section_padding">
+		<div class="container">
 			<div class="row">
-				<div class="col-lg-9">
-					<div class="row align-items-center latest_product_inner">
-						<div style=margin-left:30%;>
-							<c:if test="${myPenaltyCount==0}">
-								<section class="cart_area padding_top">
-									<div class="container">
-										<div class="cart_inner">
-											<div class="table-responsive">
-												<table class="table">
-													<thead>
-														<tr>
-															<th scope="col">내 상태</th>
-															<th scope="col">패널티 날짜</th>
-															<th scope="col">패널티 사유</th>
-															<th scope="col">정지기한</th>
-														</tr>
-													</thead>
-													<tbody>
+				<div class="col-lg-3">
+					<div class="left_sidebar_area">
+						<aside class="left_widgets p_filter_widgets">
+							<div class="l_w_title">
+								<h2>Mypage</h2>
+							</div>
+							<br>
+							<div class="widgets_inner">
+								<ul class="list">
+									<li><a
+										href="${pageContext.request.contextPath}/beformodify">회원정보수정</a></li>
+									<li><a
+										href="${pageContext.request.contextPath}/mySellList">나의판매목록</a>
+										<span>(${myAuctionCount})</span></li>
+									<li><a
+										href="${pageContext.request.contextPath}/myPurchaseList">나의구매목록</a>
+										<span>(${myBidCount})</span></li>
+									<li><a
+										href="${pageContext.request.contextPath}/mywishseller">관심판매자상품목록</a></li>
+									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
+									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
+									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
+									<li><a
+										href="${pageContext.request.contextPath}/myPenalty?pageNum=1">나의패널티기록</a></li>
+									<a href="#" class="notification"> <span>Inbox</span> <span
+										class="badge">1</span>
+									</a>
+								</ul>
+							</div>
+						</aside>
+					</div>
+
+				</div>
+
+				<div class="col-lg-12"  style="margin-top:-60%; margin-left:10%;">
+
+					<section class="cat_product_area section_padding"
+						style="text-align: center;">
+						<div class="container">
+							<div class="row">
+								<div class="col-lg-9">
+									<div class="row align-items-center latest_product_inner">
+										<div style="margin-left: 30%;">
+											<c:if test="${myPenaltyCount==0}">
+												<section class="cart_area padding_top">
+													<div class="container">
+														<div class="cart_inner">
+															<div class="table-responsive">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th scope="col">내 상태</th>
+																			<th scope="col">패널티 날짜</th>
+																			<th scope="col">패널티 사유</th>
+																			<th scope="col">정지기한</th>
+																		</tr>
+																	</thead>
+																	<tbody>
 
 
-														<tr>
-															<td colspan="4">
-																<div class="media">
-																	<div class="media-body">
-																		<p>아직 나의 패널티가 없습니다.</p>
-																	</div>
-																</div>
-															</td>
-														</tr>
+																		<tr>
+																			<td colspan="4">
+																				<div class="media">
+																					<div class="media-body">
+																						<p>아직 나의 패널티가 없습니다.</p>
+																					</div>
+																				</div>
+																			</td>
+																		</tr>
 
 
-													</tbody>
-												</table>
+																	</tbody>
+																</table>
 
-											</div>
+															</div>
+														</div>
+												</section>
+											</c:if>
+											<c:if test="${myPenaltyCount!=0}">
+												<section class="cart_area padding_top">
+													<div class="container">
+														<div class="cart_inner">
+															<div class="table-responsive">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th scope="col">내 상태</th>
+																			<th scope="col">패널티 날짜</th>
+																			<th scope="col">패널티 사유</th>
+																			<th scope="col">정지기한</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+
+																		<c:forEach var="myPenaltyList"
+																			items="${myPenaltyList}">
+																			<tr>
+																				<td><c:if test="${member.status==1}">
+																						<h5>경매활동중지회원</h5>
+																					</c:if> <c:if test="${member.status==0}">
+																						<h5>정상회원</h5>
+																					</c:if></td>
+																				<td>
+																					<h5>${myPenaltyList.penaltyDate}</h5>
+																				</td>
+																				<td>
+																					<h5>${myPenaltyList.penaltyReason}</h5>
+																				</td>
+																				<td>
+
+																					<h5>${fn:replace(myPenaltyList.penaltyEndDate, 'T', ' ')}</h5>
+
+
+																				</td>
+																			</tr>
+																		</c:forEach>
+
+																	</tbody>
+																</table>
+
+															</div>
+														</div>
+												</section>
+
+											</c:if>
 										</div>
-								</section>
-							</c:if>
-							<c:if test="${myPenaltyCount!=0}">
-								<section class="cart_area padding_top">
-									<div class="container">
-										<div class="cart_inner">
-											<div class="table-responsive">
-												<table class="table">
-													<thead>
-														<tr>
-															<th scope="col">내 상태</th>
-															<th scope="col">패널티 날짜</th>
-															<th scope="col">패널티 사유</th>
-															<th scope="col">정지기한</th>
-														</tr>
-													</thead>
-													<tbody>
 
-														<c:forEach var="myPenaltyList" items="${myPenaltyList}">
-															<tr>
-																<td>
-																<c:if test="${member.status==1}">
-																	<h5>경매활동중지회원</h5>
-																</c:if>
-																<c:if test="${member.status==0}">
-																	<h5>정상회원</h5>
-																</c:if>
-																</td>
-																<td>
-																	<h5>${myPenaltyList.penaltyDate}</h5>
-																</td>
-																<td>
-																	<h5>${myPenaltyList.penaltyReason}</h5>
-																</td>
-																<td>
 
-																	<h5>${fn:replace(myPenaltyList.penaltyEndDate, 'T', ' ')}</h5>
-																	
+										<div class="col-lg-12" style="margin-left: 10%;">
+											<div class="pageination">
+												<nav aria-label="Page navigation example">
+													<ul class="pagination justify-content-center">
 
-																</td>
-															</tr>
+														<c:if test="${startPage > bottomLine}">
+															<li class="page-item"><a class="page-link"
+																href="${pageContext.request.contextPath}/${pagename}?pageNum=${startPage - bottomLine}"
+																aria-label="Previous"> <i
+																	class="ti-angle-double-left"></i>
+															</a></li>
+														</c:if>
+														<c:forEach var="i" begin="${startPage}" end="${endPage}">
+															<li class="page-item"><a class="page-link"
+																href="${pageContext.request.contextPath}/${pagename}?pageNum=${i}">${i}</a></li>
+
 														</c:forEach>
 
-													</tbody>
-												</table>
-
+														<c:if test="${endPage < pageCount}">
+															<li class="page-item"><a class="page-link"
+																href="${pageContext.request.contextPath}/${pagename}?pageNum=${startPage + bottomLine}"
+																aria-label="Next"> <i class="ti-angle-double-right"></i>
+															</a></li>
+														</c:if>
+													</ul>
+												</nav>
 											</div>
 										</div>
-								</section>
-
-							</c:if>
-						</div>
 
 
-						<div class="col-lg-12" style=margin-left:10%;>
-							<div class="pageination">
-								<nav aria-label="Page navigation example">
-									<ul class="pagination justify-content-center">
-
-										<c:if test="${startPage > bottomLine}">
-											<li class="page-item"><a class="page-link"
-												href="${pageContext.request.contextPath}/${pagename}?pageNum=${startPage - bottomLine}"
-												aria-label="Previous"> <i class="ti-angle-double-left"></i>
-											</a></li>
-										</c:if>
-										<c:forEach var="i" begin="${startPage}" end="${endPage}">
-											<li class="page-item"><a class="page-link"
-												href="${pageContext.request.contextPath}/${pagename}?pageNum=${i}">${i}</a></li>
-
-										</c:forEach>
-
-										<c:if test="${endPage < pageCount}">
-											<li class="page-item"><a class="page-link"
-												href="${pageContext.request.contextPath}/${pagename}?pageNum=${startPage + bottomLine}"
-												aria-label="Next"> <i class="ti-angle-double-right"></i>
-											</a></li>
-										</c:if>
-									</ul>
-								</nav>
+									</div>
+								</div>
 							</div>
 						</div>
-
-
-					</div>
+					</section>
 				</div>
 			</div>
 		</div>
 	</section>
+
+
+
+
+
+
 
 
 	<!-- jquery plugins here-->

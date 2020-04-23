@@ -568,4 +568,42 @@ public class MybatisAuctionDao
         }
     }
     
+    public List<Auction> getSearchAuctions(int startRow, int endRow, String inputValue)
+    {
+    	SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+        startRow = startRow - 1;
+        endRow = endRow - startRow;
+        Map map = new HashMap();
+        map.put("startRow", startRow);
+        map.put("endRow", endRow);
+        map.put("inputValue", inputValue);
+        
+        List<Auction> result = new ArrayList<>();
+        try
+        {
+            return sqlSession.selectList(namespace + ".getSearchAuctions", map);
+        }
+        finally
+        {
+            sqlSession.close();
+        }
+    	
+    }
+    
+    public int getSearchListCount(String inputValue)
+    {
+        SqlSession sqlSession = opendb.getSqlSessionFactory().openSession();
+        Map map = new HashMap();
+        map.put("inputValue", inputValue);
+        try
+        {
+            return sqlSession.selectOne(namespace + ".getSearchListCount",map );
+        }
+        finally
+        {
+            sqlSession.close();
+        }
+    }
+    
+    
 }

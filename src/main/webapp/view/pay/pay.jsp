@@ -33,9 +33,12 @@
 <link rel="stylesheet" href="css/style.css">
 
 <script>
-	function payCheck() {
-		
-		if (confirm("정말 결제하시겠습니까??") == true) { //확인
+	function payCheck() {	
+		var myBalance = ${myBalance}
+		if(myBalance < 0){
+			alert("캐시를 충전해주세요")
+			return false; } 
+		if (confirm("정말 결제하시겠습니까??") == true) {
 			var form = document.createElement('form');
 			form.setAttribute('method', 'post');
 			form.setAttribute('action', 'pay?&num=${myBidCompleteAuction.num}');
@@ -116,13 +119,14 @@
 								</td>
 
 								<td>
-								<c:if test="${myBalance<0}">
+								<c:choose>
+								<c:when test="${myBalance<0}">
 									<h5>캐시가 부족합니다. 충전해주세요!</h5>
-								</c:if>			
-								<c:if test="${myBalance>0}">
+								</c:when>	
+								<c:when test="${myBalance>0}">
 									<h5>${myBalance}원</h5>
-								</c:if>			
-									
+								</c:when>		
+								</c:choose>	
 								</td>
 								<c:if test="${myBidCompleteAuction.pstatus ne '입찰중'}">
 									<td>
