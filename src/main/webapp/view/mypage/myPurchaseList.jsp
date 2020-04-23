@@ -104,22 +104,24 @@ color: white;
 							</div>
 							<br>
 							<div class="widgets_inner">
-									<ul class="list">
+								<ul class="list">
 									<li><a href="${pageContext.request.contextPath}/beformodify">회원정보수정</a></li>
-									<li><a href="${pageContext.request.contextPath}/mySellList">나의판매목록</a>
+									<li><a href="${pageContext.request.contextPath}/myOnSale">나의판매목록</a>
 										<span>(${myAuctionCount})</span></li>
-									<li><a href="${pageContext.request.contextPath}/myPurchaseList">나의구매목록</a>
+									<li><a href="${pageContext.request.contextPath}/myBidding">나의구매목록</a>
 										<span>(${myBidCount})</span></li>
 									<li><a
 										href="${pageContext.request.contextPath}/mywishseller">관심판매자상품목록</a></li>
 									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
 									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
 									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
-									<li><a href="${pageContext.request.contextPath}/myPenalty?pageNum=1">나의패널티기록</a></li>
-									<a href="#" class="notification">
-									  <span>Inbox</span>
+									<li><a
+										href="${pageContext.request.contextPath}/myPenalty?pageNum=1">나의패널티기록</a></li>
+									<c:if test="${member.info==0}">
+									<a href="detailInfo" class="notification">
+									  <span>1,000받기!</span>
 									  <span class="badge">1</span>
-									</a>
+									</a></c:if>
 								</ul>
 							</div>
 						</aside>

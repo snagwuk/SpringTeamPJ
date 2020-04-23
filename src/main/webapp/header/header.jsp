@@ -155,12 +155,6 @@
 
 								</div></li>
 
-
-
-
-
-							<li class="nav-item"><a class="nav-link" href="contact.html">고객센터</a>
-							</li>
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/mypage">마이페이지</a>
 							<li class="nav-item"><a class="nav-link" href="logout">로그아웃(${user.id})</a>

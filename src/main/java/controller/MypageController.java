@@ -57,7 +57,7 @@ public class MypageController {
 		return "mypage/mypage";
 	}
 
-	@RequestMapping(value = "mySellList", method = RequestMethod.GET)
+	@RequestMapping(value = "myOnSale", method = RequestMethod.GET)
 	public String mySellList(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");
@@ -290,7 +290,7 @@ public class MypageController {
 	////////////////////////////////// 위는 판매 아래는 구매
 	////////////////////////////////// /////////////////////////////////
 
-	@RequestMapping(value = "myPurchaseList", method = RequestMethod.GET)
+	@RequestMapping(value = "myBidding", method = RequestMethod.GET)
 	public String myPurchaseList(HttpServletRequest req, Model m) {
 
 		User user = (User) req.getSession().getAttribute("user");

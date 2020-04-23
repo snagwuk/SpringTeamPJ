@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into aAuction
 		values
 		(#{num},#{category},#{seller},#{pname},#{pdetail},#{immediateprice},
-		#{bidunit},#{beginsprice},#{startdate},#{enddate},#{deliverypay},#{winid},#{pstatus},#{filename},#{filesize})
+		#{bidunit},#{beginsprice},#{startdate},#{enddate},#{winid},#{pstatus},#{filename},#{filesize})
 	</insert>
 
 	<select id="insertAuction_num" resultType="int">

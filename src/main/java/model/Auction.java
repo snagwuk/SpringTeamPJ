@@ -11,16 +11,7 @@ public class Auction implements Serializable
     
     private String seller;
     
-    private String pname;
-    
-    @Override
-	public String toString() {
-		return "Auction [num=" + num + ", category=" + category + ", seller=" + seller + ", pname=" + pname
-				+ ", pdetail=" + pdetail + ", immediateprice=" + immediateprice + ", bidunit=" + bidunit
-				+ ", beginsprice=" + beginsprice + ", startdate=" + startdate + ", enddate=" + enddate
-				+ ", deliverypay=" + deliverypay + ", winid=" + winid + ", pstatus=" + pstatus + ", filename="
-				+ filename + ", filesize=" + filesize + "]";
-	}
+    private String pname;  
 
 	private String pdetail;
     
@@ -29,8 +20,6 @@ public class Auction implements Serializable
     private int bidunit;
     
     private int beginsprice;
-    
-    private int deliverypay;
     
     private String startdate;
     
@@ -162,17 +151,8 @@ public class Auction implements Serializable
     public void setEnddate(String enddate)
     {
         this.enddate = enddate;
-    }
-    
-    public int getDeliverypay()
-    {
-        return deliverypay;
-    }
-    
-    public void setDeliverypay(int deliverypay)
-    {
-        this.deliverypay = deliverypay;
-    }
+    } 
+  
     
     public String getWinid()
     {
@@ -190,6 +170,14 @@ public class Auction implements Serializable
 
 	public void setPstatus(String pstatus) {
 		this.pstatus = pstatus;
+	}
+
+	@Override
+	public String toString() {
+		return "Auction [num=" + num + ", category=" + category + ", seller=" + seller + ", pname=" + pname
+				+ ", pdetail=" + pdetail + ", immediateprice=" + immediateprice + ", bidunit=" + bidunit
+				+ ", beginsprice=" + beginsprice + ", startdate=" + startdate + ", enddate=" + enddate + ", winid="
+				+ winid + ", pstatus=" + pstatus + ", filename=" + filename + ", filesize=" + filesize + "]";
 	}
     
     

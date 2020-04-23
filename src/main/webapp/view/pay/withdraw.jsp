@@ -65,6 +65,13 @@
 									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
 									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
 									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
+									<li><a
+										href="${pageContext.request.contextPath}/myPenalty?pageNum=1">나의패널티기록</a></li>
+									<c:if test="${member.info==0}">
+									<a href="detailInfo" class="notification">
+									  <span>1,000받기!</span>
+									  <span class="badge">1</span>
+									</a></c:if>
 								</ul>
 							</div>
 						</aside>
