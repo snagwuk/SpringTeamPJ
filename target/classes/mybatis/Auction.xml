@@ -160,12 +160,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 		<select id="getmyseller" parameterType="hashmap" resultType="Auction">
-	select * from aAuction a , wishseller w  where a.seller = w.seller and w.id = #{id} order by STARTDATE desc limit #{startRow},#{endRow};
+	select * from aAuction a , wishseller w  where a.seller = w.seller and w.id = #{id} and a.pstatus='입찰중' order by STARTDATE desc limit #{startRow},#{endRow};
 
 	</select>
 
 		<select id="getsellerstore" parameterType="hashmap" resultType="Auction">
-	select * from aAuction where seller = #{id} order by STARTDATE desc limit #{startRow},#{endRow};
+	select * from aAuction where seller = #{id} and pstatus='입찰중' order by STARTDATE desc limit #{startRow},#{endRow};
 
 	</select>
 

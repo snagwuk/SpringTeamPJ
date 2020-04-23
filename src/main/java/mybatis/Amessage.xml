@@ -67,6 +67,10 @@ where num = ( select num from amessage
   insert into amessage values ( (select ifnull(max(a.num),0)+1 from amessage a ),#{sender},#{receiver},"대화를 시작하세요",now(),now(),0)
   </insert>
   
+    <insert id="insertadminmessage" parameterType="Amessage">
+  insert into amessage values ( (select ifnull(max(a.num),0)+1 from amessage a ),'admin@naver.com',#{receiver},"안녕하세요 감성마켓입니다. 궁금하신 사항이 있으면 문의해 주세요.",now(),now(),1)
+  </insert>
+  
   <select id="selectchatnum" parameterType="Amessage" resultType="Integer">
 select num from amessage where sender = #{sender} and receiver = #{receiver} or sender = #{receiver} and receiver = #{sender} limit 1;
 </select>

@@ -525,9 +525,14 @@ ul {
 
 /* line 52, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_button.scss */
 .btn_3:hover {
-  background-color: red;
-  color: #fff;
+  background-color: white;
+  color: #ff3368;
+
+  
 }
+
+
+/* line 52, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_button.scss */
 
 /* line 57, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_button.scss */
 .btn_2 {

@@ -94,3 +94,33 @@ CREATE TABLE APENALTY(
         PENALTYDATE DATETIME,
         PENALTYREASON VARCHAR(100),
         penaltyEndDate datetime);
+        
+        
+        create table category(num int,name varchar(100),refnum int default Null);
+insert into category(num,name) values(100,'의류');
+insert into category(num,name) values(200,'잡화');
+insert into category(num,name) values(300,'뷰티');
+insert into category(num,name) values(400,'식품');
+insert into category(num,name) values(500,'가전');
+
+insert into category values(101,'남성의류',100);
+insert into category values(102,'여성의류',100);
+insert into category values(103,'아동의류',100);
+
+insert into category values(201,'신발',200);
+insert into category values(202,'가방',200);
+insert into category values(203,'시계',200);
+insert into category values(204,'기타악세사리',200);
+
+insert into category values(301,'화장품',300);
+insert into category values(302,'향수',300);
+insert into category values(303,'바디',300);
+insert into category values(304,'헤어',300);
+
+insert into category values(501,'전자기기',500);
+insert into category values(502,'생활가전',500);
+
+insert into category values(401,'가공품',400);
+insert into category values(402,'신선식품',400);
+insert into category values(403,'생필품',400);
+

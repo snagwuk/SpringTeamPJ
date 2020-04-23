@@ -24,10 +24,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import model.Auction;
 import model.Bid;
+import model.Category;
 import model.User;
 import model.Wishseller;
 import service.BidValidator;
 import service.MybatisAuctionDao;
+import service.MybatisCategoryDao;
 import service.MybatisMessageDao;
 
 @Controller
@@ -43,22 +45,25 @@ public class AuctionController
     @Autowired
     MybatisMessageDao mdao;
 
+    @Autowired
+    MybatisCategoryDao cdao;
+
     @InitBinder("bid")
     protected void initBinder(WebDataBinder binder)
     {
         binder.addValidators(bidvalidator);
     }
-    
-    
+
+
 
     @RequestMapping(value = "main", method = RequestMethod.GET)
     public String main(Auction auction)
     {
         return "auction/main";
     }
-  
+
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String auction_listGET(HttpServletRequest request, HttpSession session)
+    public String auction_listGET(HttpServletRequest request, HttpSession session,Model m)
     {
 
         int currentPage = 1;
@@ -90,7 +95,8 @@ public class AuctionController
         int endPage = startPage + bottomLine - 1;
 
         if (endPage > pageCount) endPage = pageCount;
-
+    	List<Category> c = cdao.selectAllcategory();
+    	m.addAttribute("category",c);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("startRow", startRow);
         request.setAttribute("endRow", endRow);
@@ -109,8 +115,10 @@ public class AuctionController
     }
 
     @RequestMapping(value = "write", method = RequestMethod.GET)
-    public String auction_writeForm(Auction auction)
+    public String auction_writeForm(Auction auction,Model m)
     {
+    	List<Category> c = cdao.selectfirst();
+    	m.addAttribute("category",c);
         return "auction/writeForm";
     }
 
@@ -123,7 +131,7 @@ public class AuctionController
         String filename = multi.getOriginalFilename();
         if (filename != null && !filename.equals(""))
         {
-            String uploadPath = multipart.getRealPath("/") + "/uploadFile";
+            String uploadPath = multipart.getRealPath("/") + "uploadFile";
             System.out.println(uploadPath);
 
             FileCopyUtils.copy(multi.getInputStream(), new FileOutputStream(uploadPath + "/" + multi.getOriginalFilename()));
@@ -177,6 +185,7 @@ public class AuctionController
     public String auction_delete(int num)
     {
         dbPro.deleteAuction(num);
+
         return "redirect:/list";
     }
 
@@ -298,7 +307,7 @@ public class AuctionController
         return "auction/list";
     }
 
-    
+
     @RequestMapping(value = "searchList", method = RequestMethod.GET)
     public String searchList(HttpServletRequest request, HttpSession session, Model m)
     {
@@ -321,13 +330,13 @@ public class AuctionController
          int startRow = (currentPage - 1) * pageSize + 1;
          int endRow = currentPage * pageSize;
 
-         
+
          int count = dbPro.getSearchListCount(inputValue);
          List<Auction> SearchSAuctionList = dbPro.getSearchAuctions(startRow, endRow, inputValue);
-         
+
          System.out.println(inputValue);
          System.out.println(count + SearchSAuctionList.toString());
-         
+
          int number = count - (currentPage - 1) * pageSize;
          int bottomLine = 3;
          int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
@@ -348,9 +357,9 @@ public class AuctionController
 
         m.addAttribute("auctionList", SearchSAuctionList);
         m.addAttribute("pagename", "searchList");
-         
+
     	return "myList/list2";
-    	
+
     }
-    
+
 }
