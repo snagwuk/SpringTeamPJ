@@ -27,5 +27,27 @@ public class MybatisInfoDao {
 	            sqlSession.close();
 	        }
 	    }
+	 public int allfemale(){
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try
+	        {
+	        	return sqlSession.selectOne(namespace + ".allfemale");
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
+	 public int allmale(){
+	        SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+	        try
+	        {
+	        	return sqlSession.selectOne(namespace + ".allmale");
+	        }
+	        finally
+	        {
+	            sqlSession.close();
+	        }
+	    }
 
 }
