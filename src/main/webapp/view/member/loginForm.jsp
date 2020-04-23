@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+var msg = '${msg}';
+if (msg=='a') alert("로그인이 필요합니다.");
+</script>
+
 <style>
 .col-lg-8 {flex:0 0 66.6666667%; margin:0 auto; max-width:80%;}
 .col-md-8 {margin-top:60px;}

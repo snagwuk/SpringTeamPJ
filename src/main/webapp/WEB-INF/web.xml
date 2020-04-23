@@ -69,7 +69,12 @@
 		<url-pattern>*.js</url-pattern>
 		<url-pattern>*.gif</url-pattern>
 	</servlet-mapping>
-
+  
+	<context-param>
+		<param-name>org.apache.tomcat.websocket.binaryBufferSize</param-name>
+		<param-value>524288</param-value>
+	</context-param>
+	
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/error/throwable</location>

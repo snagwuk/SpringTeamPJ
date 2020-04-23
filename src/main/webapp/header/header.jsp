@@ -120,10 +120,8 @@
 				<div class="collapse navbar-collapse main-menu-item"
 					id="navbarSupportedContent">
 					<ul class="navbar-nav">
-						<c:if test="${user.status!=1}">
 						<li class="nav-item"><a class="nav-link"
 							href="list?pageNum=1">경매</a></li>
-						</c:if>
 						<c:if test="${user==null }">
 							<li class="nav-item"><a class="nav-link" href="regist">회원가입</a></li>
 							<li class="nav-item"><a class="nav-link" href="login">로그인</a></li>
@@ -136,7 +134,7 @@
 								aria-haspopup="true" aria-expanded="false"> 마이갬성 </a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
 									<c:if test="${user.position!=2}">
-										<c:if test="${user.position!=3 and user.status!=1}">
+										<c:if test="${user.position!=3}">
 											<a class="dropdown-item"
 												href="${pageContext.request.contextPath}/write"> 상품등록</a>
 										</c:if>
@@ -145,7 +143,7 @@
 										<a class="dropdown-item"
 											href="${pageContext.request.contextPath}/tobeseller">판매자등록</a>
 									</c:if>
-									<c:if test="${user.status!=1}">
+									
 									<a class="dropdown-item"
 										href="${pageContext.request.contextPath}/liveview">방송보기</a>										
 										 <a
@@ -154,7 +152,7 @@
 										class="dropdown-item"
 										href="${pageContext.request.contextPath}/endlive">방송종료</a> <a
 										class="dropdown-item" href="elements.html">elements</a>
-										</c:if>
+									
 								</div></li>
 
 
@@ -165,7 +163,7 @@
 							</li>
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/mypage">마이페이지</a>
-							<li class="nav-item"><a class="nav-link" href="logout">로그아웃${user.id }</a>
+							<li class="nav-item"><a class="nav-link" href="logout">로그아웃(${user.id})</a>
 							</li>
 						</c:if>
 					</ul>

@@ -153,7 +153,7 @@ function chat() {
 				<div class="col-lg-5 col-xl-4">
 					<div class="s_product_text">
 
-						<h3>${auction.pname}(${auction.category})</h3>
+						<h3>${auction.pname}</h3>
 
 						<c:choose>
 							<c:when test="${auction.pstatus eq '입찰중'}">
