@@ -117,11 +117,40 @@ function inputPhoneNumber(obj) {
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-   
-<div class="section-top-border">
+<section class="cat_product_area section_padding">
+<div class="container">     
    <div class="row">
-      <div class="col-lg-8 col-md-8">
-         <h3 class="mb-30">판매자 등록</h3>
+   <div class="col-lg-3">
+					<div class="left_sidebar_area">
+						<aside class="left_widgets p_filter_widgets">
+							<div class="l_w_title">
+								<h2>Mypage</h2>
+							</div>
+							<br>
+							<div class="widgets_inner">
+								<ul class="list">
+									<li><a href="${pageContext.request.contextPath}/beformodify">회원정보수정</a></li>
+									<li><a href="${pageContext.request.contextPath}/myOnSale">나의판매목록</a>
+										<span>(${myAuctionCount})</span></li>
+									<li><a href="${pageContext.request.contextPath}/myBidding">나의구매목록</a>
+										<span>(${myBidCount})</span></li>
+									<li><a
+										href="${pageContext.request.contextPath}/mywishseller">관심판매자상품목록</a></li>
+									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
+									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
+									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
+						
+								</ul>
+							</div>
+						</aside>
+					</div>
+
+				</div>
+      <div
+					class="product_top_bar d-flex justify-content-between align-items-center">
+
+					<div class="col-lg-13">
+         <h3 class="mb-30">회원정보 수정</h3>
          <form action="${pageContext.request.contextPath}/modifyForm" method="POST">
        
    			<br>
@@ -135,11 +164,6 @@ function inputPhoneNumber(obj) {
                <input type="password" name="password" required class="single-input-parea">
             </div>
             <br>   
-            <!-- <div class="mt-10">
-               비밀번호 확인&nbsp&nbsp
-               <input type="password" name="password" required class="single-input-parea">
-            </div> -->
-            
             <br>   
             <div class="mt-10">
                이름&nbsp&nbsp
@@ -165,14 +189,42 @@ function inputPhoneNumber(obj) {
          
          	<input type="hidden" name="id" value="${member.id }">
             <br><br><br><br>
-            <input type="submit" name="confirm" value="수정하기">
-            <input type="submit" value="취소">
+            <input type="submit" name="confirm" value="수정하기" class="btn_3 modi">
+            <input type="submit" value="취소" onclick="location.href='mypage'" class="btn_3 modi">
             
          </form>
       </div>
    </div>
 </div>
-
-
+</div>
+</section>
+	<!-- jquery plugins here-->
+	<script src="js/jquery-1.12.1.min.js"></script>
+	<!-- popper js -->
+	<script src="js/popper.min.js"></script>
+	<!-- bootstrap js -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- easing js -->
+	<script src="js/jquery.magnific-popup.js"></script>
+	<!-- swiper js -->
+	<script src="js/swiper.min.js"></script>
+	<!-- swiper js -->
+	<script src="js/masonry.pkgd.js"></script>
+	<!-- particles js -->
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<!-- slick js -->
+	<script src="js/slick.min.js"></script>
+	<script src="js/jquery.counterup.min.js"></script>
+	<script src="js/waypoints.min.js"></script>
+	<script src="js/contact.js"></script>
+	<script src="js/jquery.ajaxchimp.min.js"></script>
+	<script src="js/jquery.form.js"></script>
+	<script src="js/jquery.validate.min.js"></script>
+	<script src="js/mail-script.js"></script>
+	<script src="js/stellar.js"></script>
+	<script src="js/price_rangs.js"></script>
+	<!-- custom js -->
+	<script src="js/custom.js"></script>
 </body>
 </html>

@@ -57,7 +57,7 @@
 							<br>
 							<div class="widgets_inner">
 								<ul class="list">
-									<li><a href="#">회원정보수정</a></li>
+									<li><a href="${pageContext.request.contextPath}/beformodify">회원정보수정</a></li>
 									<li><a href="${pageContext.request.contextPath}/myOnSale">나의판매목록</a>
 										<span>(${myAuctionCount})</span></li>
 									<li><a href="${pageContext.request.contextPath}/myBidding">나의구매목록</a>

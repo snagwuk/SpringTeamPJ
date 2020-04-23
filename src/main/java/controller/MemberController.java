@@ -19,6 +19,7 @@ import model.Amessage;
 import model.Cash;
 import model.Member;
 import model.User;
+import service.MybatisAuctionDao;
 import service.MybatisCashDao;
 import service.MybatisMemberDao;
 import service.MybatisMessageDao;
@@ -35,6 +36,9 @@ public class MemberController {
 
 	@Autowired
 	MybatisCashDao cashPro;
+	
+	@Autowired
+	MybatisAuctionDao aucPro;
 
 	@Autowired
 	MybatisMessageDao mePro;
@@ -150,6 +154,10 @@ public class MemberController {
 	public String beformodify(Model m, HttpSession session){
 		User user = (User) session.getAttribute("user");
 		m.addAttribute("user", user);
+		int myAuctionCount = aucPro.getMyAuctionCount(user.getId());
+	    int myBidCount = aucPro.getMyBidCount(user.getId());
+	    m.addAttribute("myAuctionCount", myAuctionCount);
+	    m.addAttribute("myBidCount", myBidCount);
 		return "member/beforModify";
 	}
 	@RequestMapping(value = "beformodify", method = RequestMethod.POST)
@@ -167,6 +175,10 @@ public class MemberController {
 		User user = (User) session.getAttribute("user");
 		Member member = dbPro.selectmember(user.getId());
 		m.addAttribute("member", member);
+		int myAuctionCount = aucPro.getMyAuctionCount(user.getId());
+	    int myBidCount = aucPro.getMyBidCount(user.getId());
+	    m.addAttribute("myAuctionCount", myAuctionCount);
+	    m.addAttribute("myBidCount", myBidCount);
 		return "member/modifyForm";
 	}
 	@RequestMapping(value = "modifyForm", method = RequestMethod.POST)
