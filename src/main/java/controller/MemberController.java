@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.Amessage;
 import model.Cash;
+import model.Info;
 import model.Member;
 import model.User;
 import service.MybatisAuctionDao;
 import service.MybatisCashDao;
+import service.MybatisInfoDao;
 import service.MybatisMemberDao;
 import service.MybatisMessageDao;
 import service.MybatisPenaltyDao;
@@ -37,12 +39,18 @@ public class MemberController {
 
 	@Autowired
 	MybatisCashDao cashPro;
+	
+	@Autowired
+	MybatisAuctionDao aucPro;
 
 	@Autowired
 	MybatisMessageDao mePro;
 	
 	@Autowired
 	MybatisPenaltyDao penPro;
+	
+	@Autowired
+	MybatisInfoDao infoPro;
 
 	@RequestMapping(value = "regist",method = RequestMethod.GET)
 	public String member_registForm(Member member){
@@ -155,6 +163,10 @@ public class MemberController {
 	public String beformodify(Model m, HttpSession session){
 		User user = (User) session.getAttribute("user");
 		m.addAttribute("user", user);
+		int myAuctionCount = aucPro.getMyAuctionCount(user.getId());
+	    int myBidCount = aucPro.getMyBidCount(user.getId());
+	    m.addAttribute("myAuctionCount", myAuctionCount);
+	    m.addAttribute("myBidCount", myBidCount);
 		return "member/beforModify";
 	}
 	@RequestMapping(value = "beformodify", method = RequestMethod.POST)
@@ -172,12 +184,38 @@ public class MemberController {
 		User user = (User) session.getAttribute("user");
 		Member member = dbPro.selectmember(user.getId());
 		m.addAttribute("member", member);
+		int myAuctionCount = aucPro.getMyAuctionCount(user.getId());
+	    int myBidCount = aucPro.getMyBidCount(user.getId());
+	    m.addAttribute("myAuctionCount", myAuctionCount);
+	    m.addAttribute("myBidCount", myBidCount);
 		return "member/modifyForm";
 	}
 	@RequestMapping(value = "modifyForm", method = RequestMethod.POST)
 	public String modifyPro(Member member){
 		dbPro.modifymember(member);
 		return "redirect:/main";
+	}
+	@RequestMapping(value = "detailInfo",method = RequestMethod.GET)
+	public String detailInfo(Model m, HttpSession session){
+		User user = (User) session.getAttribute("user");
+		int myAuctionCount = aucPro.getMyAuctionCount(user.getId());
+	    int myBidCount = aucPro.getMyBidCount(user.getId());
+	    m.addAttribute("myAuctionCount", myAuctionCount);
+	    m.addAttribute("myBidCount", myBidCount);
+		return "member/detailInfo";
+	}
+	@RequestMapping(value = "detailInfo", method = RequestMethod.POST)
+	public String detailInfoPro(Info info){
+		dbPro.updateinfo(info.getId());
+		infoPro.insertInfo(info);
+		Cash cash = new Cash();
+		cash.setCashdate(LocalDateTime.now());
+		cash.setCash(1000);
+		cash.setId(info.getId());
+		cash.setReason("설문조사");
+		cash.setCstatus(1);
+		cashPro.insertCash(cash);
+		return "redirect:/mypage";
 	}
 
 	

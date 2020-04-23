@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import model.Cash;
 import model.User;
+import service.MybatisAuctionDao;
 import service.MybatisCashDao;
 
 @Controller
@@ -23,12 +24,19 @@ public class CashController
     @Autowired
     MybatisCashDao dbPro;
     
+    @Autowired
+	MybatisAuctionDao aucPro;
+    
     @RequestMapping(value = "charge", method = RequestMethod.GET)
     public String cash_chargeForm(HttpSession session, String winid, Model m)
     {
         User user = (User) session.getAttribute("user");
         int mycash = dbPro.myCash(user.getId());
         m.addAttribute("mycash", mycash);
+        int myAuctionCount = aucPro.getMyAuctionCount(user.getId());
+	    int myBidCount = aucPro.getMyBidCount(user.getId());
+	    m.addAttribute("myAuctionCount", myAuctionCount);
+	    m.addAttribute("myBidCount", myBidCount);
         return "pay/charge";
     }
     
@@ -47,6 +55,10 @@ public class CashController
         User user = (User) session.getAttribute("user");
         int mycash = dbPro.myCash(user.getId());
         m.addAttribute("mycash", mycash);
+        int myAuctionCount = aucPro.getMyAuctionCount(user.getId());
+	    int myBidCount = aucPro.getMyBidCount(user.getId());
+	    m.addAttribute("myAuctionCount", myAuctionCount);
+	    m.addAttribute("myBidCount", myBidCount);
         return "pay/withdraw";
     }
     
@@ -68,6 +80,10 @@ public class CashController
         m.addAttribute("mycash", mycash);
         int count = dbPro.getMyCashCount(user.getId());
         m.addAttribute("count", count);
+        int myAuctionCount = aucPro.getMyAuctionCount(user.getId());
+	    int myBidCount = aucPro.getMyBidCount(user.getId());
+	    m.addAttribute("myAuctionCount", myAuctionCount);
+	    m.addAttribute("myBidCount", myBidCount);
         if(count != 0)
         {
             List<Cash> cashlist = dbPro.getMyCashList(user.getId());

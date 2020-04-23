@@ -38,5 +38,11 @@ public class AdminController {
 		m.addAttribute("memberList", memberList);
 		return "admin/memberList";
 	}
+	@RequestMapping(value = "memberChart", method = RequestMethod.GET)
+	public String memberChart(Model m){
+		List<Member> memberList = dbPro.selectposition();
+		m.addAttribute("memberList", memberList);
+		return "admin/chart";
+	}
 
 }

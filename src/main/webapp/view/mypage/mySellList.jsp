@@ -39,8 +39,8 @@
 						'child',
 						'toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
 	}
-	
-	
+
+
 	function movetab(tabname) {
 		  var xhttp = new XMLHttpRequest();
 		  xhttp.onreadystatechange = function() {
@@ -54,10 +54,10 @@
 		}
 		function myFunction(data) {
 		  var i;
-		  var text = data.responseText;		  
+		  var text = data.responseText;
 		  document.getElementById("mtab").innerHTML = text;
 		}
-		
+
 </script>
 
 <style>
@@ -138,7 +138,7 @@
 								<div class="single_product_menu d-flex">
 
 									<a href="#"  onclick="movetab('myOnSaleTab1')"
-										class="genric-btn primary">판매중&nbsp;(${myOnSaleCount})</a>&nbsp;&nbsp; 
+										class="genric-btn primary">판매중&nbsp;(${myOnSaleCount})</a>&nbsp;&nbsp;
 										<a href="#" onclick="movetab('myDealingTab2')"
 										class="genric-btn primary">거래중&nbsp;(${myDealingCount})</a>									&nbsp;&nbsp; <a
 										href="#" onclick="movetab('myEndSaleTab3')"

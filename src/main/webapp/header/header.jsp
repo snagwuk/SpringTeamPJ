@@ -143,16 +143,16 @@
 										<a class="dropdown-item"
 											href="${pageContext.request.contextPath}/tobeseller">판매자등록</a>
 									</c:if>
-									
+
 									<a class="dropdown-item"
-										href="${pageContext.request.contextPath}/liveview">방송보기</a>										
+										href="${pageContext.request.contextPath}/liveview">방송보기</a>
 										 <a
 										class="dropdown-item"
 										href="${pageContext.request.contextPath}/startlive">방송시작</a> <a
 										class="dropdown-item"
 										href="${pageContext.request.contextPath}/endlive">방송종료</a> <a
 										class="dropdown-item" href="elements.html">elements</a>
-									
+
 								</div></li>
 
 
@@ -177,8 +177,8 @@
 								<i class="ti-comment" onclick="chat()"></i>
 							</a>
 						</div>
-					
-					
+
+
 					<a href="mywishseller"><i class="ti-heart"></i></a>
 					</c:if>
 				</div>
@@ -225,13 +225,15 @@
 	<script src="js/mail-script.js"></script>
 	<!-- custom js -->
 	<script src="js/custom.js"></script>
-	<c:if test="${user.position==0 }">
-		<div class="sidenav">
-			<a href="#">관리자</a> <a href="memberList">회원정보</a> <a
-				href="memberList">회원통계</a> <a href="grade">등급관리</a> <a
-				href="cashchecklist">캐쉬관리</a>
-		</div>
-	</c:if>
+<c:if test="${user.position==0 }">
+<div class="sidenav">
+  <a href="#">관리자</a>
+  <a href="memberList">회원정보</a>
+  <a href="memberChart">회원통계</a>
+  <a href="grade">등급관리</a>
+  <a href="cashchecklist">캐쉬관리</a>
+</div>
+</c:if>
 </body>
 
 </html>

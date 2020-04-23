@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import model.Auction;
+import model.Info;
 import model.Member;
 import mybatis.AbstractRepository;
 
@@ -138,4 +139,14 @@ public class MybatisMemberDao {
 	            sqlSession.close();
 	        }
 	    }
+	 public void updateinfo(String id) {
+			SqlSession sqlSession = dbPro.getSqlSessionFactory().openSession();
+			try {
+				sqlSession.update(namespace + ".updateinfo",id);
+				sqlSession.commit();
+			} finally {
+				sqlSession.close();
+			}
+		}
+
 }

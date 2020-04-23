@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -40,7 +41,7 @@
 						'child',
 						'toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
 	}
-	
+
 	function movetab(tabname) {
 		  var xhttp = new XMLHttpRequest();
 		  xhttp.onreadystatechange = function() {
@@ -54,7 +55,7 @@
 		}
 		function myFunction(data) {
 		  var i;
-		  var text = data.responseText;		  
+		  var text = data.responseText;
 		  document.getElementById("mtab").innerHTML = text;
 		}
 </script>
@@ -151,7 +152,7 @@ color: white;
 
 					<div class="row align-items-center latest_product_inner" id="mtab">
 
-						
+
 
 
 					</div>

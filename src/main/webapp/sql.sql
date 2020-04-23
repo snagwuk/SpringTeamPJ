@@ -18,6 +18,7 @@ filesize int
 
 --position 관리자:0/판매자:1/구매자:2/구매자가 판매지 신청중:3/거절당한 구매자:4
 --status 가능:0/불가:1
+--info 설문조사 하지않음:0/함:1
 create table amember(
 id varchar(100) primary key,
 password varchar(100) not null,
@@ -31,9 +32,10 @@ extraAddress varchar(100),
 position int,
 status int,
 account varchar(20),
-bank varchar(10));
+bank varchar(10),
+info int);
 --관리자 아이디 admin 비밀번호 1111 등록
-insert into amember values("admin@naver.com",hex(aes_encrypt('1111','password')),"관리자",now(),010,1234,"집주소","자세히","참고",0,0,123,"국민");
+insert into amember values("admin@naver.com",hex(aes_encrypt('1111','password')),"관리자",now(),010,1234,"집주소","자세히","참고",0,0,123,"국민",1);
 
 create table aCash(
 cnum int,
@@ -86,16 +88,16 @@ CREATE EVENT IF NOT EXISTS AAUCTION_CHECK
         deliveryStar int ,
         serviceStar int
         );
-        
-        
+
+
 CREATE TABLE APENALTY(
         ID VARCHAR(100),
         PENALTYCOUNT INT,
         PENALTYDATE DATETIME,
         PENALTYREASON VARCHAR(100),
         penaltyEndDate datetime);
-        
-        
+
+
         create table category(num int,name varchar(100),refnum int default Null);
 insert into category(num,name) values(100,'의류');
 insert into category(num,name) values(200,'잡화');
@@ -123,4 +125,8 @@ insert into category values(502,'생활가전',500);
 insert into category values(401,'가공품',400);
 insert into category values(402,'신선식품',400);
 insert into category values(403,'생필품',400);
-
+  
+  create table aInfo(
+  	id varchar(100) primary key,
+  	gender varchar(10) not null,
+  	howToKnow varchar(20) not null);

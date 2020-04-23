@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <style>
@@ -15,27 +15,8 @@
                background:#f9f9ff; padding:0 20px; }
 .jb-bold {  font-weight: bold;     } 
 </style>
-<meta charset="UTF-8">
-<!-- Required meta tags -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>회원가입</title>
-  <link rel="icon" href="img/favicon.png">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- animate CSS --> 
-  <link rel="stylesheet" href="css/animate.css">
-  <!-- owl carousel CSS -->
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/lightslider.min.css">
-  <!-- font awesome CSS -->
-  <link rel="stylesheet" href="css/all.css">
-  <!-- flaticon CSS -->
-  <link rel="stylesheet" href="css/flaticon.css">
-  <link rel="stylesheet" href="css/themify-icons.css">
-  <!-- font awesome CSS -->
-  <link rel="stylesheet" href="css/magnific-popup.css">
-  <!-- style CSS -->
-  <link rel="stylesheet" href="css/style.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
 <section class="cat_product_area section_padding">
@@ -66,41 +47,31 @@
 					</div>
 
 				</div>
-     <div
-					class="product_top_bar d-flex justify-content-between align-items-center">
-
-					<div class="col-lg-13">
-         <h3 class="mb-30">현재 비밀번호 확인</h3>
-         <form action="${pageContext.request.contextPath}/beformodify" method="POST">
-       
-   			<br>
+ <div class="product_top_bar d-flex justify-content-between align-items-center">
+ <div class="col-lg-13">
+         <h3 class="mb-30">설문조사</h3>
+         <form action="${pageContext.request.contextPath}/detailInfo" method="POST">
+         <div class="mt-10 jb-bold">
+              1. 성별 <br></div>
+               <input type="radio" name="gender" value="여성" required> 여성 &nbsp&nbsp
+               <input type="radio" name="gender" value="남성"> 남성
+            <br><br>
             <div class="mt-10 jb-bold">
-               아이디 : &nbsp&nbsp&nbsp ${user.id }
-            </div>
-            
-            <br>   
-            <div class="mt-10">
-               현재 비밀번호&nbsp&nbsp
-               <input type="password" name="password" required class="single-input-parea">
-            </div>
-            <br>   
-         
-         
-           
-         <input type="hidden" name="id" value="${user.id }">
+              2. 가입하게된 경로 <br></div>
+               <input type="radio" name="howToKnow" value="SNS" required> SNS(인스타, 페이스북 등) &nbsp&nbsp
+               <input type="radio" name="howToKnow" value="친구추천"> 친구추천 &nbsp&nbsp
+                <input type="radio" name="howToKnow" value="카페"> 카페 &nbsp&nbsp
+               <input type="radio" name="howToKnow" value="이메일"> 이메일 광고 &nbsp&nbsp
+               <input type="radio" name="howToKnow" value="기타"> 기타
+               
+            <input type="hidden" name="id" value="${user.id }">
             <br><br><br><br>
+            <input type="submit" name="confirm" value="1000원 받기" class="btn_3 modi">
+            <input type="reset" value="취소" class="btn_3 modi">
             
-            
-            <input type="submit" name="confirm" value="확인" class="btn_3 modi">
-            <input type="button" value="취소" onclick="location.href='mypage'" class="btn_3 modi">
-            
-         </form>
-      </div>
-   </div>
-</div>
-</div>
-
-	</section>
-
+        </form>
+ </div>
+</div>				
+</div></div></section>
 </body>
 </html>
