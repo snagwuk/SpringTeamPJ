@@ -4,131 +4,197 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mybatis.Auction">
 
-	<insert id="insertAuction" parameterType="Auction">
-		insert into aAuction
-		values
-		(#{num},#{category},#{seller},#{pname},#{pdetail},#{immediateprice},
-		#{bidunit},#{beginsprice},#{startdate},#{enddate},#{deliverypay},#{winid},#{pstatus},#{filename},#{filesize})
-	</insert>
+   <insert id="insertAuction" parameterType="Auction">
+      insert into aAuction
+      values
+      (#{num},#{category},#{seller},#{pname},#{pdetail},#{immediateprice},
+      #{bidunit},#{beginsprice},#{startdate},#{enddate},#{winid},#{pstatus},#{filename},#{filesize})
+   </insert>
 
-	<select id="insertAuction_num" resultType="int">
-		select ifnull(max(num)+1,1) from aAuction
-	</select>	
-	
-
-	<select id="getAuctionCount" resultType="int">
-		select ifnull(count(*),0) from aAuction where pstatus='입찰중'
-	</select>
+   <select id="insertAuction_num" resultType="int">
+      select
+      nvl(max(num)+1,1) from aAuction
+   </select>
 
 
-	<select id="getAuctions_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where pstatus='입찰중' order by num desc limit #{startRow} ,#{endRow}
-	</select>
+   <select id="getAuctionCount" resultType="int">
+      select
+      nvl(count(*),0) from aAuction where pstatus='입찰중'
+   </select>
 
-	<select id="getAuctions_id" parameterType="String" resultType="Auction">
-		select * from aAuction where seller = #{seller} order by num desc
-	</select>
 
-	<select id="getAuction" parameterType="int" resultType="Auction">
-		select * from aAuction where num = #{num}
-	</select>
-	
-	<update id="updateContent" parameterType="Auction">
-		update aAuction set pname=#{pname},  pdetail=#{pdetail}, pstatus=#{pstatus} where
-		num=#{num}
-	</update>
+   <select id="getAuctions_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT *  FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where pstatus='입찰중'
+      ORDER BY num desc) 
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
 
-	<delete id="deleteAuction" parameterType="int">
-		delete from aAuction
-		where num=#{num}
-	</delete>
-	
-	<!--  진희   -->
-	
-	<select id="getMyAuctionCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where seller = #{seller}
-	</select>
-	
-	<select id="getMyOnSaleCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where seller = #{seller} and pstatus='입찰중'
-	</select>
-	
-	<select id="getMyDealingCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where seller = #{seller} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료')
-	</select>
-	
-	<select id="getMyEndSaleCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where seller = #{seller} and pstatus='거래종료'
-	</select>
-	
-	<select id="getMyFailureSaleCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where seller = #{seller} and (pstatus='유찰' or pstatus='거래취소')
-	</select>	
-	
-	<select id="getMyOnSaleList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where seller = #{seller} and pstatus='입찰중' order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	<select id="getMyDealingList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where seller = #{seller} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료') order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	<select id="getMyEndSaleList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where seller = #{seller} and pstatus='거래종료' order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	<select id="getMyFailureSaleList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where seller = #{seller} and (pstatus='유찰' or pstatus='거래취소') order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ위는 판매상품 아래는 구매상품ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-	
-	<select id="getMyBidCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where winid = #{winid}
-	</select>
-	
-	<select id="getMyBiddingCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where winid = #{winid} and pstatus='입찰중'
-	</select>
-	
-	<select id="getMyBiddingDealingCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where winid = #{winid} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료')
-	</select>
-	
-	<select id="getMyBiddingCompleteCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where winid = #{winid} and pstatus='거래종료'
-	</select>
-	
-	<select id="getMyFailureBiddingCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aAuction where winid = #{winid} and (pstatus='유찰' or pstatus='거래취소')
-	</select>
-	
-	<select id="getMyBidList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where winid = #{winid} order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	<select id="getMyBiddingList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where winid = #{winid} and pstatus='입찰중' order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	<select id="getMyBiddingDealingList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where winid = #{winid} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료') order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	<select id="getMyBiddingCompleteList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where winid = #{winid} and pstatus='거래종료' order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	<select id="getMyFailureBiddingList_limit" parameterType="hashmap" resultType="Auction">
-		select * from aAuction where winid = #{winid} and (pstatus='유찰' or pstatus='거래취소') order by num desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	
-	<update id="updateAuctionStatus" parameterType="Auction">
-		update aAuction set pstatus=#{pstatus} where seller=#{seller} and num=#{num}
-	</update>
-	
-	
+   <select id="getAuctions_id" parameterType="String" resultType="Auction">
+      select * from aAuction where seller = #{seller} order by num desc
+   </select>
+
+   <select id="getAuction" parameterType="int" resultType="Auction">
+      select * from aAuction where num = #{num}
+   </select>
+
+   <update id="updateContent" parameterType="Auction">
+      update aAuction set
+      pname=#{pname}, pdetail=#{pdetail}, pstatus=#{pstatus} where
+      num=#{num}
+   </update>
+
+   <delete id="deleteAuction" parameterType="int">
+      delete from aAuction
+      where num=#{num}
+   </delete>
+
+   <!-- 진희 -->
+
+   <select id="getMyAuctionCount" parameterType="String"
+      resultType="int">
+      select nvl(count(*),0) from aAuction where seller =
+      #{seller}
+   </select>
+
+   <select id="getMyOnSaleCount" parameterType="String" resultType="int">
+      select nvl(count(*),0) from aAuction where seller = #{seller} and
+      pstatus='입찰중'
+   </select>
+
+   <select id="getMyDealingCount" parameterType="String"
+      resultType="int">
+      select nvl(count(*),0) from aAuction where seller =
+      #{seller} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or
+      pstatus='발송완료')
+   </select>
+
+   <select id="getMyEndSaleCount" parameterType="String"
+      resultType="int">
+      select nvl(count(*),0) from aAuction where seller =
+      #{seller} and pstatus='거래종료'
+   </select>
+
+   <select id="getMyFailureSaleCount" parameterType="String"
+      resultType="int">
+      select nvl(count(*),0) from aAuction where seller =
+      #{seller} and (pstatus='유찰' or pstatus='거래취소')
+   </select>
+
+   <select id="getMyOnSaleList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT * FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where seller = #{seller} and pstatus='입찰중'
+      ORDER BY num desc)
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+   <select id="getMyDealingList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT * FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where seller = #{seller} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료')
+      ORDER BY num desc)
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+   <select id="getMyEndSaleList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT * FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where seller = #{seller} and pstatus='거래종료'
+      ORDER BY num desc)
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+   <select id="getMyFailureSaleList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT * FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where seller = #{seller} and (pstatus='유찰' or pstatus='거래취소')
+      ORDER BY num desc)
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+   <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ위는 판매상품 아래는 구매상품ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+
+   <select id="getMyBidCount" parameterType="String" resultType="int">
+      select nvl(count(*),0) from aAuction where winid = #{winid}
+   </select>
+
+   <select id="getMyBiddingCount" parameterType="String"
+      resultType="int">
+      select nvl(count(*),0) from aAuction where winid = #{winid} and pstatus='입찰중'
+   </select>
+
+   <select id="getMyBiddingDealingCount" parameterType="String"
+      resultType="int">
+      select nvl(count(*),0) from aAuction where winid = #{winid} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료')
+   </select>
+
+   <select id="getMyBiddingCompleteCount" parameterType="String"
+      resultType="int">
+      select nvl(count(*),0) from aAuction where winid = #{winid} and pstatus='거래종료'
+   </select>
+
+   <select id="getMyFailureBiddingCount" parameterType="String"
+      resultType="int">
+      select nvl(count(*),0) from aAuction where winid = #{winid} and (pstatus='유찰' or pstatus='거래취소')
+   </select>
+
+   <select id="getMyBidList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT *  FROM (
+        SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+        FROM aAuction A where winid = #{winid}
+        ORDER BY num desc)
+       WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+   <select id="getMyBiddingList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT *  FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where winid = #{winid} and pstatus='입찰중'
+      ORDER BY num desc) 
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+   <select id="getMyBiddingDealingList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT *  FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where winid = #{winid} and (pstatus='입금전' or pstatus='입금완료' or pstatus='배송중' or pstatus='발송완료')
+      ORDER BY num desc) 
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+   <select id="getMyBiddingCompleteList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT *  FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where winid = #{winid} and pstatus='거래종료'
+      ORDER BY num desc) 
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+   <select id="getMyFailureBiddingList_limit" parameterType="hashmap"
+      resultType="Auction">
+      SELECT *  FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY num desc) RNUM, A.*
+      FROM aAuction A where winid = #{winid} and (pstatus='유찰' or pstatus='거래취소')
+      ORDER BY num desc) 
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
+
+
+   <update id="updateAuctionStatus" parameterType="Auction">
+      update aAuction
+      set pstatus=#{pstatus} where seller=#{seller} and num=#{num}
+   </update>
 	
 	
 	
@@ -139,7 +205,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 <select id="gethightprice" parameterType="int" resultType="int">
-		select ifnull(max(b.bidprice),a.beginsprice) from abid b,Aauction a where a.num=#{num} and b.num=#{num};
+		select nvl(max(b.bidprice),a.beginsprice) from abid b,Aauction a where a.num=#{num} and b.num=#{num}
 	</select>
 	
 
@@ -150,22 +216,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 <select id="getbidlist" parameterType="int" resultType="Bid">
-		select * from abid where num=#{num} order by bidprice desc;
+		select * from abid where num=#{num} order by bidprice desc
 	</select>
 	
 <select id="getbidunit" parameterType="int" resultType="int">
-		select bidunit from Aauction where num=#{num};
+		select bidunit from Aauction where num=#{num}
 	</select>
 	
 
 
 		<select id="getmyseller" parameterType="hashmap" resultType="Auction">
-	select * from aAuction a , wishseller w  where a.seller = w.seller and w.id = #{id} and a.pstatus='입찰중' order by STARTDATE desc limit #{startRow},#{endRow};
+	select * from (select  row_number() over (order by num) rnum, a.* from aAuction a , wishseller w  where a.seller = w.seller and w.id = #{id} and a.pstatus='입찰중' order by STARTDATE desc) where rnum between #{startRow} and #{endRow}
 
 	</select>
 
 		<select id="getsellerstore" parameterType="hashmap" resultType="Auction">
-	select * from aAuction where seller = #{id} and pstatus='입찰중' order by STARTDATE desc limit #{startRow},#{endRow};
+	select * from (select  row_number() over (order by num) rnum, a.* from aAuction a where seller = #{id} and pstatus='입찰중' order by STARTDATE desc) where rnum between #{startRow} and #{endRow}
 
 	</select>
 
@@ -177,8 +243,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <select id="selectseller" parameterType="Wishseller" resultType="int">
-		select count(*) from wishseller where seller=#{seller} and id = #{id};
+		select count(*) from wishseller where seller=#{seller} and id = #{id}
 	</select>
+
+<select id="getSearchListCount" parameterType="hashmap"
+      resultType="int">
+      SELECT nvl(COUNT(*),0) FROM AAUCTION 
+      WHERE PNAME LIKE '%'||#{inputValue}||'%' or Pdetail LIKE '%'||#{inputValue}||'%'
+   </select>
+
+   <select id="getSearchAuctions" parameterType="hashmap"
+      resultType="Auction">
+      SELECT * FROM aauction 
+      WHERE PNAME LIKE '%'||#{inputValue}||'%' or Pdetail LIKE '%'||#{inputValue}||'%'
+   </select>
 
 
 </mapper>

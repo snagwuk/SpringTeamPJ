@@ -116,8 +116,7 @@ li {
 				<h3 class="mb-30">상품 등록</h3>
 				<form action="${pageContext.request.contextPath}/write"
 					enctype="multipart/form-data" method="POST">
-					<input type="hidden" name="seller" value="${user.id}"> <input
-						type="hidden" name="winid" value="cake"> <input
+					<input type="hidden" name="seller" value="${user.id}">  <input
 						type="hidden" name="pstatus" value="입찰중">
 					 <div class="mt-10">
 						카테고리 <br> <select name="first" id="first" style="float: left; margin-right: 10px;"

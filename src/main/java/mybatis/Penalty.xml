@@ -4,42 +4,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mybatis.Penalty">
 
-	<insert id="insertPenalty" parameterType="Penalty">
-		insert into aPenalty
-		values
-		(#{id},#{penaltyDate},#{penaltyReason},#{penaltyEndDate})
-	</insert>
-	
-	<select id="penaltyCount" parameterType="String" resultType="int">
-		select ifnull(count(id),0) from aPenalty where id = #{id} order by penaltyenddate desc
-	</select>
-	
-	<select id="getRecentPenalty" parameterType="String" resultType="Penalty">
-		select * from aPenalty where id = #{id} order by penaltyenddate desc limit 1
-	</select>
-	
-	<select id="getMyPenaltyCount" parameterType="String" resultType="int">
-		select ifnull(count(id),0) from aPenalty where id = #{id}
-	</select>
-	
-	<select id="getMyPenaltyList" parameterType="hashmap" resultType="Penalty">
-		select * from aPenalty where id = #{id} order by penaltyDate desc limit #{startRow} ,#{endRow}
-	</select>
-	
-	
+   <insert id="insertPenalty" parameterType="Penalty">
+      insert into aPenalty
+      values
+      (#{id},#{penaltyDate},#{penaltyReason},#{penaltyEndDate})
+   </insert>
 
-	
+   <select id="penaltyCount" parameterType="String" resultType="int">
+      select nvl(count(id),0) from aPenalty where id = #{id} order by
+      penaltyenddate desc
+   </select>
 
-	
+   <select id="getRecentPenalty" parameterType="String" resultType="Penalty">
+      select * from (select * from aPenalty where id = #{id} order by
+      penaltyenddate desc) where rownum = 1
+   </select>
 
-	
+   <select id="getMyPenaltyCount" parameterType="String"
+      resultType="int">
+      select nvl(count(id),0) from aPenalty where id = #{id}
+   </select>
 
-	
-
-
-	
-
+   <select id="getMyPenaltyList" parameterType="hashmap"
+      resultType="Penalty">
+      SELECT *
+      FROM (
+      SELECT ROW_NUMBER() OVER (ORDER BY penaltyDate desc) RNUM
+      , A.*
+      FROM aPenalty A where id = #{id}
+      ORDER BY penaltyDate desc
+      )
+      WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+   </select>
 
 </mapper>
-
 

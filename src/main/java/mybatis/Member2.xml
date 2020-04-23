@@ -7,9 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertMember" parameterType="Member">
 		insert into aMember
 		values
-		(#{id},#{password},#{name},SYSTIMESTAMP,#{phone},#{postcode},
+		(#{id},hex(aes_encrypt(#{password},'password')),#{name},now(),#{phone},#{postcode},
 		#{address},#{detailAddress},#{extraAddress},#{position},
-		#{status},null,null)
+		#{status},#{account},#{bank})
 	</insert>
 	
 	<select id="idcheck" parameterType="String" resultType="int">
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	 <select id="authenticate" parameterType="String" resultType="String">
-		select password  from amember where id = #{id}
+		select hex(aes_encrypt(#{password},'password')) from dual
 	</select>
 
 	<select id="selectmember" parameterType="String" resultType="Member">
@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update amember set position=2 where id=#{id}
 	</update>
 	<update id="modifymember" parameterType="Member">
-		update amember set password=#{password},
+		update amember set password=hex(aes_encrypt(#{password},'password')),
 		name=#{name}, phone=#{phone}, address=#{address},detailAddress=#{detailAddress},
 		extraAddress=#{extraAddress} where id=#{id}
 	</update>

@@ -43,7 +43,7 @@
 	</bean>
 
 	<bean class="mybatis.AbstractRepository">
-		<constructor-arg value="Mysql" />
+		<constructor-arg value="Oracle" />
 	</bean>
 
 

@@ -88,8 +88,8 @@ public class MemberController {
 	public String loginPro(Member member, HttpSession session, HttpServletRequest req){
 			Member check = dbPro.selectmember(member.getId());
 			if(check!=null){
-				String encryption = dbPro.authenticate(member.getPassword());
-					if(encryption.equals(check.getPassword())){
+				/*String encryption = dbPro.authenticate(member.getPassword());*/
+					if(member.getPassword().equals(check.getPassword())){
 						User user = new User(check.getId(), check.getPosition(), check.getStatus());
 						session.setAttribute("user", user);
 

@@ -26,13 +26,13 @@
 	</environments>
 	<mappers>
 
-		<mapper resource="mybatis/Auction.xml" />
-		<mapper resource="mybatis/Cash.xml" />
-		<mapper resource="mybatis/Member.xml" />
-		<mapper resource="mybatis/Review.xml" />
-		<mapper resource="mybatis/Amessage.xml" />
-		<mapper resource="mybatis/Penalty.xml" />
-		<mapper resource="mybatis/Category.xml" />
+		<mapper resource="mybatis/Auction2.xml" />
+		<mapper resource="mybatis/Cash2.xml" />
+		<mapper resource="mybatis/Member2.xml" />
+		<mapper resource="mybatis/Review2.xml" />
+		<mapper resource="mybatis/Amessage2.xml" />
+		<mapper resource="mybatis/Penalty2.xml" />
+		<mapper resource="mybatis/Category2.xml" />
 	</mappers>
 
 </configuration>

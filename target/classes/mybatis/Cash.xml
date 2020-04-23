@@ -4,57 +4,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mybatis.Cash">
 
-	<insert id="insertCash" parameterType="Cash">
-		insert into aCash
-		values
-		(#{cnum},#{id},#{cash},#{reason},#{cashdate},#{cstatus})
-	</insert>
-	
-	<select id="getCnum" resultType="int">
-		select ifnull(max(cnum)+1,1) from aCash
-	</select>
+   <insert id="insertCash" parameterType="Cash">
+      insert into aCash
+      values
+      (#{cnum},#{id},#{cash},#{reason},#{cashdate},#{cstatus})
+   </insert>
+   
+   <select id="getCnum" resultType="int">
+      select nvl(max(cnum)+1,1) from aCash
+   </select>
 
-	<select id="myCash" parameterType="String" resultType="int">
-		select ifnull(sum(cash),0) from aCash where id = #{id} and cstatus = 1
-	</select>	
-	
+   <select id="myCash" parameterType="String" resultType="int">
+      select nvl(sum(cash),0) from aCash where id = #{id} and cstatus = 1
+   </select>   
+   
 
-	<select id="getMyCashList" parameterType="String" resultType="Cash">
-		select * from aCash where id = #{id} order by cashdate;
-	</select>
-	
-	<select id="getMyCashCount" parameterType="String" resultType="int">
-		select ifnull(count(*),0) from aCash where id = #{id}
-	</select>
-	
-	<select id="getCashCheckList" resultType="Cash">
-		select * from aCash where cstatus = 0 order by cashdate;
-	</select>
-	
-	<update id="adminCheck" parameterType="Cash">
-		update aCash set cstatus =#{cstatus} where id=#{id} and cashdate =#{cashdate} and cash=#{cash} and cnum=#{cnum}
-	</update>
-	
-	<select id="getCashCnum" parameterType="int" resultType="Cash">
-		select * from aCash where cnum = #{id}
-	</select>
-	
-	<select id="getPayCash" parameterType="hashmap" resultType="int">
-		select cash from acash where id=#{id} and reason like CONCAT(#{num},'%')
-	</select>
-
-	
-
-	
-
-	
-
-	
-
-
-	
-
+   <select id="getMyCashList" parameterType="String" resultType="Cash">
+      select * from aCash where id = #{id} order by cashdate;
+   </select>
+   
+   <select id="getMyCashCount" parameterType="String" resultType="int">
+      select nvl(count(*),0) from aCash where id = #{id}
+   </select>
+   
+   <select id="getCashCheckList" resultType="Cash">
+      select * from aCash where cstatus = 0 order by cashdate;
+   </select>
+   
+   <update id="adminCheck" parameterType="Cash">
+      update aCash set cstatus =#{cstatus} where id=#{id} and cashdate =#{cashdate} and cash=#{cash} and cnum=#{cnum}
+   </update>
+   
+   <select id="getCashCnum" parameterType="int" resultType="Cash">
+      select * from aCash where cnum = #{id}
+   </select>
+   
+   <select id="getPayCash" parameterType="hashmap" resultType="int">
+      select cash from acash where id=#{id} and reason like CONCAT(#{num},'%')
+   </select>
 
 </mapper>
-
 

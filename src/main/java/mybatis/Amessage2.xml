@@ -5,16 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="mybatis.Amessage">
 
 <select id="getunreaccount" parameterType="String" resultType="int">
-		select count(readcount) from amessage where readcount=0 and receiver = #{receiver}
+		select count(readcount) from amessage where readcount=0 and receiver = #{receiver};
 	</select>
 
 <update id="readcountupdate" parameterType="hashMap" >
-update amessage set readcount = 1 where receiver = #{receiver} and num = #{num}
+update amessage set readcount = 1 where receiver = #{receiver} and num = #{num};
 </update>
 
 
 <update id="deleteintromessage" parameterType="Amessage" >
-delete from amessage where receiver = #{receiver} and content='대화를 시작하세요'
+delete from amessage where receiver = #{receiver} and content='대화를 시작하세요';
 </update>
 
 
@@ -28,7 +28,7 @@ where sender = #{receiver}  or receiver = #{receiver}
 ORDER BY sendtime DESC
 ) AS A
 GROUP BY num
-ORDER BY sendtime DESC
+ORDER BY sendtime DESC;
   
   
 <!-- SELECT *
@@ -39,48 +39,48 @@ where sender = #{receiver} or receiver = #{receiver}
 ORDER BY sendtime DESC
 ) AS A
 GROUP BY num
-ORDER BY sendtime DESC -->
+ORDER BY sendtime DESC; -->
 </select>
 
 <select id="recentsender" parameterType="Amessage" resultType="Amessage">
 select * from amessage 
 where num = ( select num from amessage 
- where sender = #{receiver} or receiver = #{receiver} ORDER BY sendtime DESC )and rownum 1 ORDER BY sendtime 
+ where sender = #{receiver} or receiver = #{receiver} ORDER BY sendtime DESC limit 1) ORDER BY sendtime ;
 </select>
 
 <select id="recentnum" parameterType="Amessage" resultType="Integer">
 select num from amessage 
 where num = ( select num from amessage 
- where sender = #{receiver} or receiver = #{receiver} ORDER BY sendtime DESC ) and rownum 1 ORDER BY sendtime
+ where sender = #{receiver} or receiver = #{receiver} ORDER BY sendtime DESC limit 1) ORDER BY sendtime limit 1;
 </select>
 
 <select id="selectAllms" parameterType="Amessage" resultType="Amessage">
-    SELECT * FROM amessage where num = #{num} ORDER BY sendtime 
+    SELECT * FROM amessage where num = #{num} ORDER BY sendtime ;
 </select>
 
 
   <insert id="insertmessage" parameterType="Amessage">
-  insert into amessage values(#{num}, #{sender},#{receiver},#{content},systimestamp,systimestamp,0)
+  insert into amessage values(#{num}, #{sender},#{receiver},#{content},now(),now(),0);
   </insert>
   
   <insert id="insertnewmessage" parameterType="Amessage">
-  insert into amessage values ( (select nvl(max(a.num),0)+1 from amessage a ),#{sender},#{receiver},'대화를 시작하세요',systimestamp,systimestamp,0)
+  insert into amessage values ( (select ifnull(max(a.num),0)+1 from amessage a ),#{sender},#{receiver},"대화를 시작하세요",now(),now(),0)
   </insert>
   
     <insert id="insertadminmessage" parameterType="Amessage">
-  insert into amessage values ( (select nvl(max(a.num),0)+1 from amessage a ),'admin@naver.com',#{receiver},'안녕하세요 감성마켓입니다. 궁금하신 사항이 있으면 문의해 주세요.',SYSTIMESTAMP,SYSTIMESTAMP,1)
+  insert into amessage values ( (select ifnull(max(a.num),0)+1 from amessage a ),'admin@naver.com',#{receiver},"안녕하세요 감성마켓입니다. 궁금하신 사항이 있으면 문의해 주세요.",now(),now(),1)
   </insert>
   
   <select id="selectchatnum" parameterType="Amessage" resultType="Integer">
-select num from amessage where sender = #{sender} and receiver = #{receiver} or sender = #{receiver} and receiver = #{sender} and rownum = 1
+select num from amessage where sender = #{sender} and receiver = #{receiver} or sender = #{receiver} and receiver = #{sender} limit 1;
 </select>
 
   <select id="checkchatnum" parameterType="Amessage" resultType="Integer">
-select count(num) from amessage where sender = #{sender} and receiver = #{receiver} or sender = #{receiver} and receiver = #{sender} and rownum 1
+select count(num) from amessage where sender = #{sender} and receiver = #{receiver} or sender = #{receiver} and receiver = #{sender} limit 1;
 </select>
 
   <select id="selectReceiver" parameterType="Amessage" resultType="String">
-select receiver from amessage where sender = #{sender} and num = #{num} and rownum = 1
+select receiver from amessage where sender = #{sender} and num = #{num} limit 1;
 </select>
   
   

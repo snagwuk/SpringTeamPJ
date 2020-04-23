@@ -16,23 +16,22 @@
 		<environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url"
-					value="jdbc:mysql://localhost:3306/jspdb?serverTimezone=UTC" />
-				<property name="username" value="scott" />
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				 <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+				<property name="username" value="gauction" />
 				<property name="password" value="1111" />
 			</dataSource>
 		</environment>
 	</environments>
 	<mappers>
 
-		<mapper resource="mybatis/Auction2.xml" />
-		<mapper resource="mybatis/Cash2.xml" />
-		<mapper resource="mybatis/Member2.xml" />
-		<mapper resource="mybatis/Review2.xml" />
-		<mapper resource="mybatis/Amessage2.xml" />
-		<mapper resource="mybatis/Penalty2.xml" />
-		<mapper resource="mybatis/Category2.xml" />
+		<mapper resource="mybatis/Auction.xml" />
+		<mapper resource="mybatis/Cash.xml" />
+		<mapper resource="mybatis/Member.xml" />
+		<mapper resource="mybatis/Review.xml" />
+		<mapper resource="mybatis/Amessage.xml" />
+		<mapper resource="mybatis/Penalty.xml" />
+		<mapper resource="mybatis/Category.xml" />
 	</mappers>
 
 </configuration>
