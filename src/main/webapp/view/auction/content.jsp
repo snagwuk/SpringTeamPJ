@@ -113,7 +113,9 @@ function shippingCompleteCheck() {
 		return false;
 	}
 }
-
+function chat() {
+	window.open('message/messagelist?seller='+'${auction.seller}','child','toolbar=no,location=center,status=no,menubar=no,resizable=no,scrollbars=no,width=1200,height=900')
+	}
 	
 </script>
 
@@ -311,11 +313,11 @@ function shippingCompleteCheck() {
 				<li class="nav-item"><a class="nav-link active" id="home-tab"
 					data-toggle="tab" href="#home" role="tab" aria-controls="home"
 					aria-selected="true">상품설명</a></li>
-
-				<li class="nav-item"><a class="nav-link" id="contact-tab"
-					data-toggle="tab" href="#contact" role="tab"
-					aria-controls="contact" aria-selected="false">문의하기</a></li>
-
+<c:if test="${auction.seller ne user.id}">
+				<li class="nav-item"><button class="nav-link" id="contact-tab"
+					data-toggle="tab"  onclick = "chat()"role="tab"
+					aria-controls="contact" aria-selected="false">문의하기</button></li>
+</c:if>
 			</ul>
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade active show" id="home" role="tabpanel"

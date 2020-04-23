@@ -33,10 +33,7 @@
 <link rel="stylesheet" href="css/style.css">
 <script type="text/javascript">
 	function check() {
-		var already = $
-		{
-			already
-		}
+		var already = ${already};
 		if (already == 1) {
 			alert('이미 등록된 상점입니다.')
 			return false;
@@ -48,7 +45,7 @@
 			return false;
 		}
 	}
-	
+
 	function searchTab() {
 		var inputValue = document.getElementById("inputGroupPrepend").value
 		var query = "";
@@ -60,14 +57,14 @@
 		    myFunction(this);
 		    }
 		  };
-		 
+
 		  xhttp.open("GET", query, true);
 		  xhttp.send();
 		}
-	
+
 		function myFunction(data) {
 		  var i;
-		  var text = data.responseText;		  
+		  var text = data.responseText;
 		  document.getElementById("searchList").innerHTML = text;
 		}
 </script>
@@ -84,6 +81,12 @@ function chat() {
 	<!--================Category Product Area =================-->
 	<section class="cat_product_area section_padding">
 		<div class="container">
+
+	<c:if test="${pagename eq 'mywishseller'}">
+
+				<h1>${user.id}의 관심상점상품입니다.</h1>
+			</c:if>
+
 
 			<c:if test="${seller!=null}">
 
@@ -103,23 +106,29 @@ function chat() {
 
 			<c:if test="${seller==null}">
 				<div class="row">
-					<div class="col-lg-3">
-						<div class="left_sidebar_area">
+
+
+
+			<c:if test="${pagename ne 'mywishseller'}">
+			<div class="left_sidebar_area">
+				<aside class="left_widgets p_filter_widgets">
+							<div class="col-lg-12">
+								<div class="col-lg-3">
 							<aside class="left_widgets p_filter_widgets">
 								<div class="l_w_title">
 									<h3>카테고리</h3>
 								</div>
 								<div class="widgets_inner">
 									<ul class="list">
-										<li><a href="#">의류</a> <span>(0)</span></li>
-										<li><a href="#">전자제품</a> <span>(0)</span></li>
-										<li><a href="#">잡화</a> <span>(0)</span></li>
-										<li><a href="#">category4</a> <span>(0)</span></li>
-										<li><a href="#">category5</a> <span>(0)</span></li>
+									<c:forEach var="category" items="${category}">
+									<li><a href="categorylist?cnum=${category.num}">${category.name}</a> <span>(&nbsp${category.total}&nbsp)</span></li>
+									</c:forEach>
+
 									</ul>
 								</div>
 							</aside>
 						</div>
+						</c:if>
 			</c:if>
 		</div>
 
@@ -144,7 +153,13 @@ function chat() {
 			</div>
 
 
-			<div class="row align-items-center latest_product_inner" id="searchList">
+ <c:if test="${secondcategory!=null}">
+<c:forEach var="secondcategory" items="${secondcategory}">
+ <button class = "btn_3" onclick="location.href='secondcategorylist?cnum=${secondcategory.num}'">${secondcategory.name}(${secondcategory.total})</button>
+</c:forEach>
+</c:if>
+
+			<div class="row align-items-center latest_product_inner">
 
 				<c:if test="${count==0}">
 					<h4>등록된 물품이 없음</h4>
@@ -202,9 +217,9 @@ function chat() {
 		</div>
 		</div>
 	</section>
-	
 
-	
+
+
 	<!-- jquery plugins here-->
 	<script src="js/jquery-1.12.1.min.js"></script>
 	<!-- popper js -->
@@ -219,7 +234,7 @@ function chat() {
 	<script src="js/masonry.pkgd.js"></script>
 	<!-- particles js -->
 	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.nice-select.min.js"></script>
+
 	<!-- slick js -->
 	<script src="js/slick.min.js"></script>
 	<script src="js/jquery.counterup.min.js"></script>

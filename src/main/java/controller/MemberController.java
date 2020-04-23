@@ -20,6 +20,7 @@ import model.Amessage;
 import model.Cash;
 import model.Member;
 import model.User;
+import service.MybatisAuctionDao;
 import service.MybatisCashDao;
 import service.MybatisMemberDao;
 import service.MybatisMessageDao;
@@ -61,7 +62,9 @@ public class MemberController {
 		cash.setReason("회원가입");
 		cash.setCstatus(1);
 		cashPro.insertCash(cash);
-
+		Amessage am = new Amessage();
+		am.setReceiver(member.getId());
+		mePro.insertadminmessage(am);
 		return "redirect:/main";
 	}
 	@ResponseBody

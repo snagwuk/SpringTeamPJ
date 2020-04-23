@@ -159,7 +159,7 @@ function removeCommas(x) {
                      <c:forEach var="bidlist" items="${bidlist}">
 
                                  <tr>
-                              <td>${bidlist.id}</td><td>${sf.format(bidlist.biddate)}</td><td><fmt:formatNumber value="${bidlist.bidprice}" pattern="#,###" /></td>
+                              <td>${bidlist.id}</td><td><fmt:formatDate value="${bidlist.biddate}" pattern="yyyy-MM-dd HH:mm:ss"/></td><td><fmt:formatNumber value="${bidlist.bidprice}" pattern="#,###" /></td>
                               </tr>
 
 

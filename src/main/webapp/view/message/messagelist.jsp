@@ -87,13 +87,21 @@
 	   }
 	   if(msg.receiver==sender){
 		   msgajax();
+		   if(msg.sender.equals("admin")){
+			   $("#chatMessageArea").append(
+					   "<div class="+"incoming_msg"+"><div class="+"incoming_msg_img"+">"+
+			             "<img src="+"https://ptetutorials.com/images/user-profile.png"+" alt="+"sunil"+"> </div><div class="+"received_msg"+"><p>"
+			             +"갬성마켓"+"</p><div class="+"received_withd_msg"+">"+
+			                 "<p>"+msg.content+"</p>"+
+			                 "<span class="+"time_date"+">"+nowtime+"</span></div></div></div>");
+		   }else{
 		   $("#chatMessageArea").append(
 				   "<div class="+"incoming_msg"+"><div class="+"incoming_msg_img"+">"+
 		             "<img src="+"https://ptetutorials.com/images/user-profile.png"+" alt="+"sunil"+"> </div><div class="+"received_msg"+"><p>"
 		             +msg.sender+"</p><div class="+"received_withd_msg"+">"+
 		                 "<p>"+msg.content+"</p>"+
 		                 "<span class="+"time_date"+">"+nowtime+"</span></div></div></div>");
-
+		   }
 
 	   }
 
@@ -289,7 +297,14 @@ function change(){
             <div class="incoming_msg">
               <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
               <div class="received_msg">
+              <c:choose>
+               <c:when test="${list.sender eq 'admin@naver.com'}">
+                   <p>갬성마켓</p>
+                  </c:when>
+                  <c:otherwise>
              <p>${list.sender}</p>
+             </c:otherwise>
+             </c:choose>
                 <div class="received_withd_msg">
                   <p>${list.content}</p>
                   <span class="time_date">
