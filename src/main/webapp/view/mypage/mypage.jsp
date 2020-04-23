@@ -128,6 +128,7 @@
 													<h2>${member.name}님
 														<h3>
 															현재
+															<c:if test="${member.status!=1}">
 															<c:if test="${member.position==1}">
 													[구매/판매가능] 상태입니다.
 													</c:if>
@@ -136,6 +137,12 @@
 													</c:if>
 															<c:if test="${member.position==3}">
 													[판매자 신청 중] 상태입니다.
+													</c:if>
+													
+													
+													</c:if>
+													<c:if test="${member.status==1}">
+													[활동 중지] 상태입니다. <br>('나의패널티기록' 을 확인하세요)
 													</c:if>
 														</h3>
 													</h2>

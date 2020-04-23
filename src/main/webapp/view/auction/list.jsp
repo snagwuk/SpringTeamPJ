@@ -62,7 +62,6 @@
 		  };
 		 
 		  xhttp.open("GET", query, true);
-		  alert(query);
 		  xhttp.send();
 		}
 	
