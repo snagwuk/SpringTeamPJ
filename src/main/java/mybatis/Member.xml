@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values
 		(#{id},hex(aes_encrypt(#{password},'password')),#{name},now(),#{phone},#{postcode},
 		#{address},#{detailAddress},#{extraAddress},#{position},
-		#{status},#{account},#{bank})
+		#{status},#{account},#{bank},0)
 	</insert>
 	
 	<select id="idcheck" parameterType="String" resultType="int">
@@ -55,6 +55,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="memberList" resultType="Member">
 		select * from amember
 	</select>
-
+	<update id="updateinfo" parameterType="String">
+		update amember set info=1 where id=#{id}
+	</update>
 
 </mapper>

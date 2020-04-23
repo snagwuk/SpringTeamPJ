@@ -94,10 +94,11 @@
 									<li><a href="${pageContext.request.contextPath}/charge">캐시충전</a></li>
 									<li><a href="${pageContext.request.contextPath}/cashlist">나의캐시이력</a></li>
 									<li><a href="${pageContext.request.contextPath}/withdraw">출금신청</a></li>
-									<a href="#" class="notification">
-									  <span>Inbox</span>
+									<c:if test="${member.info==0}">
+									<a href="detailInfo" class="notification">
+									  <span>1,000받기!</span>
 									  <span class="badge">1</span>
-									</a>
+									</a></c:if>
 								</ul>
 							</div>
 						</aside>
@@ -151,7 +152,7 @@
 												<span class="contact-info__icon"><i class="ti-email"></i></span>
 												<div class="media-body">
 													<h3>Email</h3>
-													<p>나중에이메일가져오기</p>
+													<p>${user.id }</p>
 												</div>
 											</div>
 											<div class="media contact-info">

@@ -226,7 +226,7 @@ function chat() {
 <div class="sidenav">
   <a href="#">관리자</a>
   <a href="memberList">회원정보</a>
-  <a href="memberList">회원통계</a>
+  <a href="memberChart">회원통계</a>
   <a href="grade">등급관리</a>
   <a href="cashchecklist">캐쉬관리</a>
 </div>

@@ -21,12 +21,14 @@ public class Member implements Serializable{
 	private int status;
 	private String account;
 	private String bank;
+	private int info;
+	
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", password=" + password + ", name=" + name + ", registdate=" + registdate
 				+ ", phone=" + phone + ", postcode=" + postcode + ", address=" + address + ", detailAddress="
 				+ detailAddress + ", extraAddress=" + extraAddress + ", position=" + position + ", status=" + status
-				+ ", account=" + account + ", bank=" + bank + "]";
+				+ ", account=" + account + ", bank=" + bank + ", info=" + info + "]";
 	}
 	public String getId() {
 		return id;
@@ -106,6 +108,13 @@ public class Member implements Serializable{
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
+	public int getInfo() {
+		return info;
+	}
+	public void setInfo(int info) {
+		this.info = info;
+	}
+	
 
 	
 }

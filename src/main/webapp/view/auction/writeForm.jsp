@@ -100,10 +100,10 @@
             <br>
             <div class="mt-10">
                배송 방법 선택 <br><br>
-               <li>
+
                <input type="radio" name="dealtype" value="택배"> 택배
                <input type="radio" name="dealtype" value="직거래"> 직거래
-               </li>
+
 
             </div>
 
@@ -114,8 +114,8 @@
             </div>
 
             <br><br><br><br>
-            <input type="submit" name="confirm" value="글쓰기">
-            <input type="submit" value="Cancel">
+            <input type="submit" name="confirm" value="글쓰기" class="btn_3 modi">
+            <input type="submit" value="취소" onclick="location.href='main'" class="btn_3 modi">
 
          </form>
       </div>
