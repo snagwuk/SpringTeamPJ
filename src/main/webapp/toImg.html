@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="UTF-8">
+<head>
+<style type="text/css">
+#messageWindow 
+{
+	float: left;
+	width: 500px;
+	height: 500px;
+	border: 1px solid grey; overflow: auto;
+}
+</style>
+</head>
+<body>
+<div class="w3-container  w3-cell">
+  <div class="w3-pale-blue" id="messageWindow">
+  </div>
+</div>
+<div class="w3-padding">
+
+이름:<input id="name" type="text" required="required" size="6"  value="noname"/>
+	<input id="inputMessage" type="text" />
+	<input type="button" value="send" onclick="send()" />
+
+</div>
+
+</body>
+<script >
+	var textarea = document.getElementById("messageWindow");
+
+	var webSocket = new WebSocket('ws://211.63.89.94:9080/SpringTeamPJ/weball');
+	
+	webSocket.onerror = function(event) {		onError2(event)	};
+	webSocket.onopen = function(event) {		onOpen2(event)	};
+	webSocket.onmessage = function(event) {	onMessage2(event)};
+	function onMessage2(event) {
+		textarea.innerHTML +=textarea.innerHTML += "<div  id='you'  class='w3-white "
+		    +"w3-border w3-round-large w3-padding-small' "
+		    +"style='width:"+(event.data.length*12)+"px;'>"
+		    +event.data + "</div><br>";
+		textarea.scrollTop = textarea.scrollHeight;
+	}
+	function onOpen2(event) {
+		textarea.innerHTML += "연결 성공<br>";
+		webSocket.send(inputname+":입장 하였습니다");
+	}
+	function onError2(event) {
+		alert(event.data);
+	}
+	function send() {
+		var inputname = document.getElementById("name").value;
+		var inputMessage = document.getElementById('inputMessage');
+		
+		textarea.innerHTML += "<div  class='w3-container w3-yellow w3-border "
+				+ "w3-round-large w3-padding-small w3-right' "
+				+ " id='me'> 나: "
+				+ inputMessage.value
+				+ "&nbsp;</div><p>&nbsp;</p>";
+		textarea.scrollTop = textarea.scrollHeight;
+		webSocket.send(inputname+":" + inputMessage.value);
+		inputMessage.value = "";
+	}
+</script>
+
+</html>
