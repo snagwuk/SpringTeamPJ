@@ -92,8 +92,7 @@
 			<mvc:mapping path="/charge" />
 			<mvc:mapping path="/withdraw" />
 			<mvc:mapping path="/cashlist" />
-			<mvc:mapping path="/startlive" />
-			<mvc:mapping path="/endlive" />
+			
 			<mvc:mapping path="/mypage" />
 			<mvc:mapping path="/mySellList" />
 			<mvc:mapping path="/myPurchaseList" />

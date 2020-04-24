@@ -87,7 +87,7 @@ public class PayController {
 		myAuction.setPstatus("입금완료");
 		dbPro.updateContent(myAuction); // 상품 상태 "입금완료" 로 변경
 
-		return "redirect:/myBiddingDealing";
+		return "redirect:/mypage";
 	}
 
 	@RequestMapping(value = "shippingInfo", method = RequestMethod.GET)
@@ -199,7 +199,7 @@ public class PayController {
 		cash.setCstatus(1);
 		cashPro.insertCash(cash);
 
-		return "redirect:/myBidding";
+		return "redirect:/mypage";
 
 	}
 
@@ -241,7 +241,7 @@ public class PayController {
 		}
 	
 
-		return "redirect:/myOnSale";
+		return "redirect:/mypage";
 
 	}
 }
