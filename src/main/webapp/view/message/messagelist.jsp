@@ -23,7 +23,7 @@
    var wsocket;
 
    function connect() {
-      wsocket = new SockJS("http://211.63.89.92:8088/SpringTeamPJ/chat.sockjs");
+      wsocket = new SockJS("http://121.135.204.130:8080/SpringTeamPJ/chat.sockjs");
       wsocket.onopen = onOpen;
       wsocket.onmessage = onMessage;
       wsocket.onclose = onClose;
