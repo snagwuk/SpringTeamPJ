@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -33,8 +32,8 @@
 <link rel="stylesheet" href="css/price_rangs.css">
 <!-- style CSS -->
 <link rel="stylesheet" href="css/style.css">
-<script src="http://code.jquery.com/jquery-1.10.2.js">
-
+<script src="http://code.jquery.com/jquery-1.10.2.js"/>
+<script>
 function addCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -47,6 +46,12 @@ function removeCommas(x) {
 
 
 
+$("#bidtable td:first-child").css({
+    
+    "background":" #DEEBF4"
+
+    
+});     
 
 
 
@@ -54,6 +59,34 @@ function removeCommas(x) {
 
 </script>
 
+<style>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+
+
+ 
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+#bidtable tr:nth-child(2) {
+  background-color: #FFB2D9;
+  font-size : medium;
+    border-collapse: collapse;
+   border: 2px solid;
+     
+   border-color : gray;
+}
+
+.col-lg-8 {flex:0 0 66.6666667%; margin:0 auto; max-width:80%;}
+.col-md-8 {margin-top:60px;}
+</style>
 </head>
 
 <body>
@@ -65,18 +98,8 @@ function removeCommas(x) {
             <div class="col-lg-3">
                <div class="left_sidebar_area">
                   <aside class="left_widgets p_filter_widgets">
-                     <div class="l_w_title">
-                        <h3>카테고리</h3>
-                     </div>
-                     <div class="widgets_inner">
-                        <ul class="list">
-                           <li><a href="#">의류</a> <span>(0)</span></li>
-                           <li><a href="#">전자제품</a> <span>(0)</span></li>
-                           <li><a href="#">잡화</a> <span>(0)</span></li>
-                           <li><a href="#">category4</a> <span>(0)</span></li>
-                           <li><a href="#">category5</a> <span>(0)</span></li>
-                        </ul>
-                     </div>
+                     
+                  
                   </aside>
 
 
@@ -84,23 +107,12 @@ function removeCommas(x) {
 
 
                   <aside class="left_widgets p_filter_widgets price_rangs_aside">
-                     <div class="l_w_title">
-                        <h3>가격</h3>
-                     </div>
+                    
                      <div class="widgets_inner">
                         <div class="range_item">
                            <!-- <div id="slider-range"></div> -->
-                           <input type="text" class="js-range-slider" value="" />
-                           <div class="d-flex">
-                              <div class="price_text">
-                                 <p>가격 :</p>
-                              </div>
-                              <div class="price_value d-flex justify-content-center">
-                                 <input type="text" class="js-input-from" id="amount" readonly />
-                                 <span>to</span> <input type="text" class="js-input-to"
-                                    id="amount" readonly />
-                              </div>
-                           </div>
+                          
+                         
                         </div>
                      </div>
                   </aside>
@@ -145,15 +157,15 @@ function removeCommas(x) {
 </form:form>
 <c:set var="sf" value="${sf}"/>
 
-               <div class="row align-items-center latest_product_inner">
+               <div class="row align-items-center latest_product_inner" >
                   <c:if test="${bidlist.isEmpty()}">
                      <h4>입찰내역이 없습니다.</h4>
                   </c:if>
                   <c:if test="${!bidlist.isEmpty()}">
 
-                           <table class="single_product_item">
+                           <table id = "bidtable" class="single_product_item">
                               <tr>
-                              <td>아이디</td><td>입찰일시</td><td>입찰금액</td>
+                              <th>아이디</th><th>입찰일시</th><th>입찰금액</th>
                               </tr>
 
                      <c:forEach var="bidlist" items="${bidlist}">
