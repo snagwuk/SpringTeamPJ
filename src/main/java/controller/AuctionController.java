@@ -153,8 +153,9 @@ public class AuctionController
     public String auction_content(int num, Model m)
     {
         Auction auction = dbPro.getAuction(num);
+        int hightprice = dbPro.gethightprice(num);
         m.addAttribute("auction", auction);
-
+        m.addAttribute("hightprice", hightprice);
         return "auction/content";
 
     }
