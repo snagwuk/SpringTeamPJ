@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="zxx">
 
@@ -157,8 +158,8 @@ function chat() {
 
 						<c:choose>
 							<c:when test="${auction.pstatus eq '입찰중'}">
-								<h2>현재가: ${auction.beginsprice}</h2>
-								<h2>즉시구매가: ${auction.immediateprice} 원</h2>
+								<h2>현재가:  <fmt:formatNumber value="${hightprice}" pattern="#,###" /> 원</h2>
+								<h5 style = "color : black;">즉시구매가: <fmt:formatNumber value="${auction.immediateprice}" pattern="#,###" /> 원</h5>
 								<a class="active" href="#"> <span>남은시간 </span><span
 									id="demo"></span></a>
 								<br>
